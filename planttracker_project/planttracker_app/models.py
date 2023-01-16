@@ -9,7 +9,7 @@ class Tag(models.Model):
         return self.value
 
 class Plant(models.Model):
-    scientific_name = models.TextField()
+    scientific_name = models.TextField(unique=True)
     family = models.TextField()
     common_name_de = models.TextField()
     common_name_fr = models.TextField()

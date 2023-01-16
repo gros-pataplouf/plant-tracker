@@ -13,7 +13,7 @@ class TagSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ["first_name", "last_name", "email"]
+        fields = ["username"]
 
 
 class PlantSerializer(serializers.ModelSerializer):
@@ -25,6 +25,8 @@ class PlantSerializer(serializers.ModelSerializer):
 
 
 class LocationSerializer(serializers.ModelSerializer):
+    author = serializers.SlugRelatedField(queryset=User.objects.all(), many=False, slug_field='username')
+    plant = serializers.SlugRelatedField(queryset=Plant.objects.all(), many=False, slug_field='scientific_name')
     class Meta: 
         model = Location
         fields = "__all__"

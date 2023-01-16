@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'planttracker_app',
+    'drf_yasg',
 
 ]
 

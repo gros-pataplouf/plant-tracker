@@ -17,6 +17,8 @@ class PlantDetail(generics.RetrieveUpdateDestroyAPIView):
 class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    lookup_field = "username"
+
 
 
 class LocationList(generics.ListCreateAPIView):
