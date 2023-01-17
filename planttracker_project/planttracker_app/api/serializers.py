@@ -18,6 +18,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 class PlantSerializer(serializers.ModelSerializer):
     tags = serializers.SlugRelatedField(queryset=Tag.objects.all(), many = True, slug_field='value')
+
     class Meta:
         model = Plant
         fields = "__all__"
