@@ -9,7 +9,6 @@ export default function Header () {
               <li>About</li>
           </ul>
       </nav>
-      <h1>Plant Tracker</h1>
     </div>
   )
 }
