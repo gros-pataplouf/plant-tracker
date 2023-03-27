@@ -3,35 +3,53 @@ import { MapContainer, TileLayer, Marker, useMap, useMapEvents } from 'react-lea
 import { useEffect, useState } from 'react';
 import { useGeolocated } from "react-geolocated";
 import { debounce } from "../helpers/utils"
-import { API_OSM_NOMINATIM, API_URL_LOCATIONS } from '../constants';
+import { API_OSM_NOMINATIM, API_URL_LOCATIONS, API_URL_PLANTS } from '../constants';
+
+// const selection = document.getElementById('plant');
+// console.log(selection.options[selection.selectedIndex].dataindex);
+
+function Form(props) {
+  const {location} = props.location;
+  console.log(location);
+  const [plantList, setPlantList] = useState([]);
+  useEffect(() => {axios.get(API_URL_PLANTS).then(res => setPlantList(res.data))}, []);
+  function submitHandler(e){
+    e.preventDefault();
+    const selection = document.getElementById('plant');
+    console.log(selection.options[selection.selectedIndex].id);
+    axios.post(API_URL_LOCATIONS, {
+      withCredentials: true,
+      author: 1,
+      location: {
+        type: "Point",
+        coordinates: [location.lat, location.lng]
+    },
+      area: parseInt(document.getElementById('area').value),
+      description: document.getElementById('description').value,
+      plant: selection.options[selection.selectedIndex].id
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
 
 
-// location model
-// class Location(models.Model):
-//     location = models.PointField()
-//     area = models.IntegerField()
-//     image = models.ImageField(blank=True) #upload_to='users/%Y/%m/%d/', 
-//     description = models.CharField(max_length=100)
-//     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
-//     plant = models.ForeignKey(Plant, on_delete=models.PROTECT)
-
-
-function Form({location}) {
   return (
     <form method="post">
-      <input type="hidden" name="location" value={location} />
-      <input type="number" name="area" />
-      <input type="text" name="description" />
-      <select name="plant" id="plant-selection">
+      <label for="location">Surface</label>
+      <input type="number" name="area" id="area" />
+      <label for="description">Add a comment</label>
+      <input type="text" name="description" id="description" />
+      <select name="plant" id="plant">
           <option value="">Select a species</option>
-          <option ></option>
-          <option ></option>
-          <option ></option>
-          <option ></option>
-          <option ></option>
-          <option ></option>
+          {plantList.map(plant => {
+            return (
+          <option key={plant.id} id={plant.id} name={plant.common_name_en}>{plant.common_name_en}</option>)})}
       </select>
-      <input type="submit" value="Submit" />
+      <button type="submit" value="Submit" onClick={submitHandler}>Submit</button>
     </form>
   )
 }
@@ -92,7 +110,7 @@ function SearchField({props}) {
         inputField.value = "";
       }
       
-      function clickHandlerButton(e) {
+      function clickHandlerButton() {
         inputField.value = "";
         setResults([]);
         setLocation([coords.latitude, coords.longitude]);
@@ -110,8 +128,9 @@ function SearchField({props}) {
 }
 
 function ContinueButton({props}) {
-  const {setDisplay} = props;
+  const {location, setDisplay} = props;
   function clickHandler() {
+    console.log(location)
     setDisplay("form");
   }
   return (
@@ -156,13 +175,11 @@ export default function Track() {
     positionOptions: {
         enableHighAccuracy: false,
     },
-    userDecisionTimeout: 5000,
-    watchPosition: true
+    userDecisionTimeout: 5000
 });
 
 if (display === "map"){
-
-return (!isGeolocationAvailable || !isGeolocationEnabled || coords) ? (
+  return (!isGeolocationAvailable || !isGeolocationEnabled || coords) ? (
   <>
   <SearchField props={{setLocation, location, coords}}/>
   <Map props={{location, setLocation, coords}}/>
@@ -174,6 +191,6 @@ return (!isGeolocationAvailable || !isGeolocationEnabled || coords) ? (
 );
 } else if (display === "form") {
   return (
-    <Form props={{location}}/>
+    <Form location={{location}}/>
   )
 }} 

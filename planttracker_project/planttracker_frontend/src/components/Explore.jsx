@@ -3,18 +3,16 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { API_URL_LOCATIONS } from '../constants';
 
-// SRID=4326;POINT (9.86409912109375 54.06325355147857)
-
 export default function Explore() {
 
 
     const [locationList, setLocationList] = useState([]);
-    useEffect(() => {axios.get(API_URL_LOCATIONS).then(res => setLocationList(res.data))}, locationList);
+    
+    useEffect(() => {axios.get(API_URL_LOCATIONS).then(res => setLocationList(res.data))}, []);
+    console.log(locationList);
     const markUp = locationList.map(location => {
-        // let longlat = location.location.replace("SRID=4326;POINT (","").replace(")","").split(" ").reverse()
-
         return (
-            <Marker key={location.id} position={location.location.replace("SRID=4326;POINT (","").replace(")","").split(" ").reverse()}>
+            <Marker key={location.pk} position={location.location.coordinates.reverse()}>
                 <Popup> {location.author} {location.area} {location.plant} </Popup>
             </Marker>
         )
