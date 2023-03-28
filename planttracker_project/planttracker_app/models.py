@@ -1,7 +1,5 @@
 from django.contrib.gis.db import models
 from django.conf import settings
-# Create your models here.
-
 
 class Tag(models.Model):
     value = models.TextField(max_length=15)
@@ -30,3 +28,8 @@ class Location(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
     plant = models.ForeignKey(Plant, on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
+
+class ActivationUUID(models.Model):
+    id=models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    active=models.BooleanField(default=True)
+    email=models.EmailField(blank=False)

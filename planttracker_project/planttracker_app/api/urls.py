@@ -3,7 +3,7 @@ from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
 from django.urls import path
-from .views import PlantDetail, PlantList, LocationDetail, LocationList, UserDetail
+from .views import PlantDetail, PlantList, LocationDetail, LocationList, UserDetail, UserCreate
 
 schema_view = get_schema_view(
    openapi.Info(
@@ -20,6 +20,7 @@ urlpatterns = [
     path("users/<str:username>/", UserDetail.as_view(), name="api_user_detail"),
     path('locations/', LocationList.as_view(), name="api_location_list"),
     path('locations/<int:pk>', LocationDetail.as_view(), name="api_location_detail"),
+    path('register/', UserCreate.as_view(), name="api_user_create")
    ]
 
 urlpatterns += [
