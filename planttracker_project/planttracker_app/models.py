@@ -1,6 +1,7 @@
 import uuid
 from django.contrib.gis.db import models
 from django.conf import settings
+import datetime
 
 class Tag(models.Model):
     value = models.TextField(max_length=15)
@@ -32,5 +33,5 @@ class Location(models.Model):
 
 class ActivationUUID(models.Model):
     id=models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    active=models.BooleanField(default=True)
     email=models.EmailField(blank=False)
+    expiry_time=models.DateTimeField(default=datetime.datetime.now() + datetime.timedelta(hours=2))

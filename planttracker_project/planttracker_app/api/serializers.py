@@ -1,7 +1,11 @@
-from ..models import Tag, Plant, Location
+from ..models import Tag, Plant, Location, ActivationUUID
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
+class ActivationUUIDSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ActivationUUID
+        fields = "__all__"
 
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
