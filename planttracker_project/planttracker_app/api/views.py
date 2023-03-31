@@ -1,6 +1,7 @@
+from datetime import datetime
+
 from django.core.mail import send_mail
-from django.dispatch import receiver
-from django.db.models.signals import post_save
+from django.shortcuts import get_object_or_404
 
 from rest_framework.throttling import AnonRateThrottle
 from rest_framework.response import Response
@@ -74,5 +75,18 @@ class UserCreate(generics.ListCreateAPIView):
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
 class UserActivate(generics.RetrieveAPIView):
-    def get():
-        print("hello api")
+    queryset = ActivationUUID.objects.all()
+    throttle_classes = [ AnonBurstRateThrottle, AnonSustainedRateThrottle ]
+    permission_classes = [ AllowAny ]
+    def get(self, request, id):
+        uuid_instance = get_object_or_404(ActivationUUID, id=id)
+        if uuid_instance:
+            if datetime.now() < uuid_instance.expiry_time.replace(tzinfo=None):
+                uuid_instance.expiry_time = datetime.now()
+                uuid_instance.save()
+                user_instance = get_object_or_404(User, email=uuid_instance.email)
+                user_instance.is_active = True
+                user_instance.save()               
+                return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
