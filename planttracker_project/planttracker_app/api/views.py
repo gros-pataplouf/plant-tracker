@@ -1,5 +1,4 @@
 from datetime import datetime
-
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404
 
@@ -9,7 +8,7 @@ from rest_framework import generics, status
 
 from rest_framework.decorators import permission_classes, authentication_classes
 from rest_framework.authentication import SessionAuthentication
-from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny, IsAuthenticated
 
 from planttracker_app.api.throttles import AnonBurstRateThrottle, AnonSustainedRateThrottle
 
@@ -18,10 +17,11 @@ from ..models import Tag, Plant, Location, ActivationUUID
 from .serializers import UserSerializer, TagSerializer, PlantSerializer, LocationSerializer, RegisterUserSerializer, ActivationUUIDSerializer
 
 
-
 class PlantList(generics.ListCreateAPIView):
     queryset = Plant.objects.all()
     serializer_class = PlantSerializer
+    permission_classes = [ IsAuthenticated ]
+
 
 class PlantDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Plant.objects.all()
@@ -57,7 +57,7 @@ class UserCreate(generics.ListCreateAPIView):
             uuid_serializer = ActivationUUIDSerializer(data={"email": request.data["email"]})
             if uuid_serializer.is_valid():
                 uuid_serializer.save()
-                uuid = ActivationUUID.objects.filter(email=request.data["email"], active=True).values()[0]["id"]
+                uuid = ActivationUUID.objects.filter(email=request.data["email"]).values()[0]["id"]
             newuser = reg_serializer.save()
             user_instance = User.objects.get(email=request.data["email"])
             user_instance.is_active = False
@@ -66,12 +66,12 @@ class UserCreate(generics.ListCreateAPIView):
                 send_mail(
                     'Welcome to the Planttracker Project',
                     f"Please click on the following link to activate your account:\
-                    localhost:8000/activate/{uuid}",
+                    localhost:5173/activate?{uuid}",
                     'planttrackerapp@gmx.de',
                     [request.data['email']],
                     fail_silently=False,
                 )                
-            return Response(status=status.HTTP_201_CREATED)
+            return Response("Your account has been created. An email with an activation code has been sent.", status=status.HTTP_201_CREATED)
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
 class UserActivate(generics.RetrieveAPIView):
@@ -82,11 +82,10 @@ class UserActivate(generics.RetrieveAPIView):
         uuid_instance = get_object_or_404(ActivationUUID, id=id)
         if uuid_instance:
             if datetime.now() < uuid_instance.expiry_time.replace(tzinfo=None):
-                uuid_instance.expiry_time = datetime.now()
-                uuid_instance.save()
+                uuid_instance.delete()
                 user_instance = get_object_or_404(User, email=uuid_instance.email)
                 user_instance.is_active = True
                 user_instance.save()               
-                return Response(status=status.HTTP_204_NO_CONTENT)
-        return Response(status=status.HTTP_404_NOT_FOUND)
+                return Response("Your account has been activated.", status=status.HTTP_204_NO_CONTENT)
+        return Response("Something went wrong, request another activation token.", status=status.HTTP_404_NOT_FOUND)
 
