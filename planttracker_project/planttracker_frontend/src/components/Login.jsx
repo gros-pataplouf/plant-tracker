@@ -1,15 +1,30 @@
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 export default function Login() {
-    function submitHandler() {
-        
+    const navigate = useNavigate();
+    function submitHandler(e) {
+        e.preventDefault();
+        axios.post('http://localhost:8000/api/token/', document.querySelector('#loginForm'), {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          })
+          .then(res => {
+            localStorage.setItem('planttrackerAccess', res.data.access);
+            localStorage.setItem('planttrackerRefresh', res.data.refresh);
+            return navigate('/');
+          })
+          .catch(error => console.log(error.response.data))
     }
 
     return (
-        <form action="">
-            <label htmlFor="">Please enter your email</label>
-            <input type="text" />
-            <label htmlFor="">Please enter your password</label>
-            <input type="text" />
-            <button type="submit" onSubmit={submitHandler}>Submit</button>
+        <form id="loginForm" onSubmit={submitHandler}>
+            <label htmlFor="username">Please enter your username</label>
+            <input id="username" name="username" type="text" />
+            <label htmlFor="password">Please enter your password</label>
+            <input id="password" name="password" type="text" />
+            <button type="submit">Submit</button>
          </form>
     )
 }

@@ -7,7 +7,6 @@ from rest_framework.response import Response
 from rest_framework import generics, status
 
 from rest_framework.decorators import permission_classes, authentication_classes
-from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny, IsAuthenticated
 
 from planttracker_app.api.throttles import AnonBurstRateThrottle, AnonSustainedRateThrottle
@@ -15,17 +14,21 @@ from planttracker_app.api.throttles import AnonBurstRateThrottle, AnonSustainedR
 from django.contrib.auth.models import User
 from ..models import Tag, Plant, Location, ActivationUUID
 from .serializers import UserSerializer, TagSerializer, PlantSerializer, LocationSerializer, RegisterUserSerializer, ActivationUUIDSerializer
+from .permissions import IsAuthorOrReadOnly
 
+from rest_framework_simplejwt.authentication import JWTAuthentication
+JWT_authenticator = JWTAuthentication()
 
 class PlantList(generics.ListCreateAPIView):
     queryset = Plant.objects.all()
     serializer_class = PlantSerializer
-    permission_classes = [ IsAuthenticated ]
+    permission_classes = [ IsAuthorOrReadOnly ]
 
 
 class PlantDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Plant.objects.all()
     serializer_class = PlantSerializer
+    permission_classes = [ IsAuthorOrReadOnly ]
 
 class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
@@ -35,7 +38,7 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
 class LocationList(generics.ListCreateAPIView):
     queryset = Location.objects.all()
     serializer_class = LocationSerializer
-    permission_classes = [ IsAuthenticatedOrReadOnly ]
+    permission_classes = [ IsAuthorOrReadOnly ]
 
 class LocationDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Location.objects.all()
