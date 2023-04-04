@@ -1,9 +1,16 @@
-import Explore from "./components/Explore"
+import { Outlet } from 'react-router-dom';
+import Header from './components/Header';
+
 
 function App() {
 
   return (
- <Explore/>
+  <>
+  <Header/>
+  <div id="detail">
+  <Outlet/>
+  </div>
+  </>
   )
 }
 

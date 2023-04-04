@@ -7,28 +7,43 @@ import Track from "./components/Track"
 import Login from "./components/Login"
 import Register from "./components/Register"
 import Activate from "./components/Activate"
-
-
 import './index.css'
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import ErrorPage from './components/ErrorPage'
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <App/>,
+    errorElement: <ErrorPage/>, 
+    children: [
+      {
+        path:'register/',
+        element: <Register/>
+      },
+      {
+        path:'login/',
+        element: <Login/>
+      },
+      {
+        path:'track/',
+        element: <Track/>
+      },
+      {
+        path:'activate/',
+        element: <Activate/>
+      },
+      {
+        path:'explore/',
+        element: <Explore/>
+      },
+    ]
+  }, 
+])
 
 
-
-const routing = 
-  <Router>
+ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-      <Header/>
-      <Routes>
-        <Route path="/" element={<App/>}/>
-        <Route path="register/" element={<Register/>}/>
-        <Route path="login/" element={<Login/>}/>
-        <Route path="track/" element={<Track/>}/>
-        <Route path="activate/" element={<Activate/>}/>
-
-      </Routes>
-    </React.StrictMode>
-  
-  </Router>
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(routing);
+    <RouterProvider router={router}/>
+  </React.StrictMode>
+)
