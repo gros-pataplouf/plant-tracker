@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 export default function Login() {
     const navigate = useNavigate();
@@ -19,6 +19,7 @@ export default function Login() {
     }
 
     return (
+        <>
         <form id="loginForm" onSubmit={submitHandler}>
             <label htmlFor="username">Please enter your username</label>
             <input id="username" name="username" type="text" />
@@ -26,5 +27,12 @@ export default function Login() {
             <input id="password" name="password" type="text" />
             <button type="submit">Submit</button>
          </form>
+         <div>
+          <p>No account yet?</p>
+          <Link to='/register'>Register</Link>
+         </div>
+        
+         </>
+
     )
 }

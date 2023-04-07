@@ -10,11 +10,12 @@ export default function Activate() {
         if (res.status === 204) {
             window.alert("Your account has been activated, please log in.")
             return navigate('/login')
-        };
+        }
     })
 
     return (
+        <>
         <h1>Activation Page </h1>
-
+        </>
     )
 }

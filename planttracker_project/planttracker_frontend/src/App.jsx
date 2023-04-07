@@ -1,14 +1,15 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 
 
-function App() {
 
+function App() {
+  let location = useLocation();
   return (
   <>
   <Header/>
   <div id="detail">
-  <Outlet/>
+  <Outlet props={{location, useLocation}}/>
   </div>
   </>
   )

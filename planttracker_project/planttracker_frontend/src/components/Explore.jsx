@@ -1,12 +1,13 @@
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { API_URL_LOCATIONS } from '../constants';
 
-export default function Explore() {
+export default function Explore() {  
 
     const navigate = useNavigate();
+    const location = useLocation();
 
     const [locationList, setLocationList] = useState([]);
     const accessToken = localStorage.getItem('planttrackerAccess');
@@ -21,8 +22,8 @@ export default function Explore() {
       )
       .then(res => setLocationList(res.data))
       .catch(err => {
-        window.alert("you need to be logged in");
-        return navigate('/login');
+        window.alert("you need to be logged in to view this page!");
+        return navigate(`/login?redirect=${location.pathname}`);
 
       })
     }, [])

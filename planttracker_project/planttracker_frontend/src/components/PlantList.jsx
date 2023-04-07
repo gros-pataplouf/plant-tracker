@@ -24,8 +24,6 @@ export default function PlantList (props) {
                     ) 
                 ))}
         </div>
-
-
       </div>
     );
   }
