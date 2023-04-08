@@ -10,23 +10,21 @@ import { API_OSM_NOMINATIM, API_URL_LOCATIONS, API_URL_PLANTS } from '../constan
 
 function Form(props) {
   const {location} = props.location;
-  console.log(location);
+  const [lat, lng] = location;
   const [plantList, setPlantList] = useState([]);
   useEffect(() => {axios.get(API_URL_PLANTS).then(res => setPlantList(res.data))}, []);
   function submitHandler(e){
     e.preventDefault();
     const selection = document.getElementById('plant');
-    console.log(selection.options[selection.selectedIndex].id);
     axios.post(API_URL_LOCATIONS, {
-      withCredentials: true,
       author: 1,
+      plant: selection.options[selection.selectedIndex].id,
       location: {
         type: "Point",
-        coordinates: [location.lat, location.lng]
+        coordinates: [lat, lng]
     },
       area: parseInt(document.getElementById('area').value),
       description: document.getElementById('description').value,
-      plant: selection.options[selection.selectedIndex].id
     })
     .then(function (response) {
       console.log(response);
@@ -39,9 +37,9 @@ function Form(props) {
 
   return (
     <form method="post">
-      <label for="location">Surface</label>
+      <label htmlFor="location">Surface</label>
       <input type="number" name="area" id="area" />
-      <label for="description">Add a comment</label>
+      <label htmlFor="description">Add a comment</label>
       <input type="text" name="description" id="description" />
       <select name="plant" id="plant">
           <option value="">Select a species</option>
@@ -130,7 +128,6 @@ function SearchField({props}) {
 function ContinueButton({props}) {
   const {location, setDisplay} = props;
   function clickHandler() {
-    console.log(location)
     setDisplay("form");
   }
   return (
@@ -155,7 +152,7 @@ function DynamicMarker(props) {
     const map = useMapEvents({
       drag() {
         center = map.getCenter();
-        setLocation(center);
+        setLocation([center.lat, center.lng]);
       }
     })
     return (<Marker position={location}/>)

@@ -23,7 +23,7 @@ export default function Explore() {
       .then(res => setLocationList(res.data))
       .catch(err => {
         window.alert("you need to be logged in to view this page!");
-        return navigate(`/login?redirect=${location.pathname}`);
+        return navigate(`/login?${location.pathname}`);
 
       })
     }, [])

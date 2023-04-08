@@ -38,7 +38,8 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
 class LocationList(generics.ListCreateAPIView):
     queryset = Location.objects.all()
     serializer_class = LocationSerializer
-    permission_classes = [ IsAuthorOrReadOnly ]
+    
+
 
 class LocationDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Location.objects.all()

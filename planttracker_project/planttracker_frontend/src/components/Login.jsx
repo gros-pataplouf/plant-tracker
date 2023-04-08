@@ -1,19 +1,18 @@
 import axios from 'axios';
-import { useNavigate, Link } from 'react-router-dom';
+import { axiosInstance } from '../helpers/axios';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
+
 
 export default function Login() {
     const navigate = useNavigate();
+    const location = useLocation();
     function submitHandler(e) {
         e.preventDefault();
-        axios.post('http://localhost:8000/api/token/', document.querySelector('#loginForm'), {
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          })
+        axiosInstance.post('token/', document.querySelector('#loginForm'))
           .then(res => {
             localStorage.setItem('planttrackerAccess', res.data.access);
             localStorage.setItem('planttrackerRefresh', res.data.refresh);
-            return navigate('/');
+            return navigate(`${location.search.slice(1,)}`);
           })
           .catch(error => console.log(error.response.data))
     }
@@ -31,7 +30,7 @@ export default function Login() {
           <p>No account yet?</p>
           <Link to='/register'>Register</Link>
          </div>
-        
+      
          </>
 
     )
