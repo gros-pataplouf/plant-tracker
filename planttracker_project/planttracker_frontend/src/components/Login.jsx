@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { axiosInstance } from '../helpers/axios';
-import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { useNavigate, useLocation, Link, redirect } from 'react-router-dom';
 
 
 export default function Login() {
@@ -12,9 +12,10 @@ export default function Login() {
           .then(res => {
             localStorage.setItem('planttrackerAccess', res.data.access);
             localStorage.setItem('planttrackerRefresh', res.data.refresh);
-            return navigate(`${location.search.slice(1,)}`);
+            console.log(location.search.slice(1,))
+            return navigate(`/${location.search.slice(1,)}`);
           })
-          .catch(error => console.log(error.response.data))
+          .catch(error => console.error(error.response.data))
     }
 
     return (

@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'planttracker_app',
     'drf_yasg',
+    'rest_framework_simplejwt.token_blacklist',
 
 ]
 
@@ -144,8 +145,8 @@ REST_FRAMEWORK = {
     'planttracker_app.api.throttles.AnonSustainedRateThrottle'
     ],
     'DEFAULT_THROTTLE_RATES': {
-        'burst': '20/min',
-        'sustained': '1000/day'
+        'burst': '2000/min',
+        'sustained': '100000/day'
     }
 }
 

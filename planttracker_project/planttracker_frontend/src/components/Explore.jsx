@@ -1,7 +1,7 @@
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import axios from 'axios';
+import { axiosInstance } from '../helpers/axios';
 import { API_URL_LOCATIONS } from '../constants';
 
 export default function Explore() {  
@@ -13,18 +13,10 @@ export default function Explore() {
     const accessToken = localStorage.getItem('planttrackerAccess');
     const refreshToken = localStorage.getItem('planttrackerRefresh');
     
-    useEffect(() => {axios.get(
-      API_URL_LOCATIONS, {
-        headers: {
-           Authorization: 'JWT ' + accessToken
-        }
-     }
-      )
+    useEffect(() => {axiosInstance.get('locations/')
       .then(res => setLocationList(res.data))
       .catch(err => {
-        window.alert("you need to be logged in to view this page!");
-        return navigate(`/login?${location.pathname}`);
-
+        console.error(err);
       })
     }, [])
 ;

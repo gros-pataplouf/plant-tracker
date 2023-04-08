@@ -1,6 +1,7 @@
 from datetime import datetime
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404
+from datetime import datetime
 
 from rest_framework.throttling import AnonRateThrottle
 from rest_framework.response import Response
@@ -38,7 +39,6 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
 class LocationList(generics.ListCreateAPIView):
     queryset = Location.objects.all()
     serializer_class = LocationSerializer
-    
 
 
 class LocationDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -92,4 +92,14 @@ class UserActivate(generics.RetrieveAPIView):
                 user_instance.save()               
                 return Response("Your account has been activated.", status=status.HTTP_204_NO_CONTENT)
         return Response("Something went wrong, request another activation token.", status=status.HTTP_404_NOT_FOUND)
+
+class AuthTest(generics.RetrieveAPIView):
+    def get(self, request):
+        auth_data = JWT_authenticator.authenticate(request)
+        if auth_data is not None:
+            [user, token] = auth_data
+            return Response(status=status.HTTP_200_OK)
+        else:
+            print("no token is provided in the header or the header is missing")
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
 

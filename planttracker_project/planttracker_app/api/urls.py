@@ -7,7 +7,7 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
-from .views import PlantDetail, PlantList, LocationDetail, LocationList, UserDetail, UserCreate, UserActivate
+from .views import PlantDetail, PlantList, LocationDetail, LocationList, UserDetail, UserCreate, UserActivate, AuthTest
 
 urlpatterns = [
     path('plants/', PlantList.as_view(), name="api_plant_list"),
@@ -19,6 +19,7 @@ urlpatterns = [
     path('activate/<str:id>', UserActivate.as_view(), name="api_user_activate"),
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('token/authtest/', AuthTest.as_view(), name='auth_test'),
    ]
 
 urlpatterns += [

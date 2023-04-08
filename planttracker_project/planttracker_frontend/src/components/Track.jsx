@@ -1,5 +1,7 @@
 import axios from 'axios';
+import { axiosInstance } from '../helpers/axios';
 import { MapContainer, TileLayer, Marker, useMap, useMapEvents } from 'react-leaflet';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useGeolocated } from "react-geolocated";
 import { debounce } from "../helpers/utils"
@@ -12,11 +14,12 @@ function Form(props) {
   const {location} = props.location;
   const [lat, lng] = location;
   const [plantList, setPlantList] = useState([]);
-  useEffect(() => {axios.get(API_URL_PLANTS).then(res => setPlantList(res.data))}, []);
+  useEffect(() => {
+    axiosInstance.get('plants/').then(res => setPlantList(res.data))}, []);
   function submitHandler(e){
     e.preventDefault();
     const selection = document.getElementById('plant');
-    axios.post(API_URL_LOCATIONS, {
+    axiosInstance.post('locations/', {
       author: 1,
       plant: selection.options[selection.selectedIndex].id,
       location: {
@@ -59,7 +62,8 @@ function CenterAutomatically({location, setLocation}) {
    }, [location]);
    return null;
  }
- 
+
+
 function Map({props}) {
   const  {location, setLocation, coords} = props;
   useEffect(() => {
@@ -159,6 +163,20 @@ function DynamicMarker(props) {
   }
 
 export default function Track() {
+  const navigate = useNavigate();
+  const currentURL = useLocation();
+  useEffect(() => {axiosInstance.get('token/authtest/')
+  .then(res => {console.log(res)})
+  .catch(err => {
+    if (err.response.status === 401) {
+      window.alert("You need to be logged in to submit data.")
+      return navigate(`/login?${currentURL.pathname.slice(1,)}`)
+    }
+  })
+}, [])
+
+  
+
   const [location, setLocation] = useState([50, 10]);
   const [display, setDisplay] = useState('map');
   const {
