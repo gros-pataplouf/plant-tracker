@@ -1,5 +1,19 @@
-import { Link } from "react-router-dom"
-export default function Header () {
+import { Link } from "react-router-dom";
+import { axiosInstance } from '../helpers/axios';
+export default function Header ({props}) {
+  const {isLoggedIn, setIsLoggedIn} = props;
+  function logOutHandler(e) {
+    axiosInstance.post('token/blacklist/', {
+      'refresh': localStorage.getItem("planttrackerRefresh"),
+
+    })
+    .then(res => { console.log(res);
+    localStorage.removeItem('planttrackerAccess');
+    localStorage.removeItem('planttrackerRefresh');
+    setIsLoggedIn(false);
+  })
+
+  }
   return (
     <div>
       <nav>
@@ -10,6 +24,10 @@ export default function Header () {
               <li><Link to={'about/'}>About</Link></li>
           </ul>
       </nav>
+      <div>
+        {isLoggedIn?<button onClick={logOutHandler}>Log out</button>:<Link to={'login/'}><button>Log in</button></Link>}
+      </div>
+
     </div>
   )
 }

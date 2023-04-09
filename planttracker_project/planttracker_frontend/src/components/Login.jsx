@@ -1,9 +1,10 @@
-import axios from 'axios';
 import { axiosInstance } from '../helpers/axios';
-import { useNavigate, useLocation, Link, redirect } from 'react-router-dom';
+import { useNavigate, useLocation, Link, useOutletContext } from 'react-router-dom';
 
 
 export default function Login() {
+    const [isLoggedIn, setIsLoggedIn] = useOutletContext();
+    
     const navigate = useNavigate();
     const location = useLocation();
     function submitHandler(e) {
@@ -12,7 +13,7 @@ export default function Login() {
           .then(res => {
             localStorage.setItem('planttrackerAccess', res.data.access);
             localStorage.setItem('planttrackerRefresh', res.data.refresh);
-            console.log(location.search.slice(1,))
+            setIsLoggedIn(true);
             return navigate(`/${location.search.slice(1,)}`);
           })
           .catch(error => console.error(error.response.data))

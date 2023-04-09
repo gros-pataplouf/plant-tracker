@@ -9,7 +9,7 @@ export default function Activate() {
     .then(res => {
         if (res.status === 204) {
             window.alert("Your account has been activated, please log in.")
-            return navigate('/login')
+            return window.location.href = 'login/'
         }
     })
 

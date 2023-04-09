@@ -1,15 +1,15 @@
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
+import { useState } from 'react';
 import Header from './components/Header';
 
 
-
 function App() {
-  let location = useLocation();
+  const [ isLoggedIn, setIsLoggedIn ] = useState(Boolean(localStorage.getItem('planttrackerAccess')));
   return (
   <>
-  <Header/>
+  <Header props={{ isLoggedIn, setIsLoggedIn }}/>
   <div id="detail">
-  <Outlet props={{location, useLocation}}/>
+  <Outlet context={[isLoggedIn, setIsLoggedIn]}/>
   </div>
   </>
   )
