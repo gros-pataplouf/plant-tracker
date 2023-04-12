@@ -2,7 +2,13 @@ import uuid
 from django.contrib.gis.db import models
 from django.conf import settings
 import datetime
+from django.utils.translation import gettext_lazy as _
 
+def upload_to(instance, filename):
+    extension=filename.split('.')[-1]
+    file_id=uuid.uuid4()
+    return f'images/{file_id}.{extension}'
+# why is this not an f string? what does format do? 
 class Tag(models.Model):
     value = models.TextField(max_length=15)
     def __str__(self):
@@ -17,7 +23,7 @@ class Plant(models.Model):
     description_de = models.TextField()
     description_fr = models.TextField()
     description_en = models.TextField()
-    photo = models.ImageField(blank=True)
+    photo = models.ImageField(_("Photo"), upload_to=upload_to, blank=True)
     tags = models.ManyToManyField(Tag, related_name="plants")
     def __str__(self):
         return self.scientific_name
@@ -25,7 +31,8 @@ class Plant(models.Model):
 class Location(models.Model):
     location = models.PointField()
     area = models.IntegerField()
-    image = models.ImageField(blank=True) #upload_to='users/%Y/%m/%d/', 
+    image = models.ImageField(_("Photo"), upload_to=upload_to, blank=True)
+ #upload_to='users/%Y/%m/%d/', 
     description = models.CharField(max_length=100)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
     plant = models.ForeignKey(Plant, on_delete=models.PROTECT)

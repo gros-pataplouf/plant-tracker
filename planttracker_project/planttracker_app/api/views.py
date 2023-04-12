@@ -9,7 +9,7 @@ from rest_framework import generics, status
 
 from rest_framework.decorators import permission_classes, authentication_classes
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny, IsAuthenticated
-
+from rest_framework.parsers import MultiPartParser, FormParser
 from planttracker_app.api.throttles import AnonBurstRateThrottle, AnonSustainedRateThrottle
 
 from django.contrib.auth.models import User
@@ -42,6 +42,21 @@ class LocationList(generics.ListCreateAPIView):
     queryset = Location.objects.all()
     serializer_class = LocationSerializer
     permission_classes = [ IsAuthenticatedOrReadOnly ]
+    permission_classes = [ AllowAny ]
+    parser_classes = [ MultiPartParser, FormParser ]
+    def post(self, request, format=None):
+        auth_data = JWT_authenticator.authenticate(request)
+        if auth_data is not None:
+            [user, token] = auth_data
+            print(user, token)
+            return Response("meaningless 200", status=status.HTTP_200_OK)
+            
+        serializer = LocationSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+        print(serializer.errors)
+        return Response("meaningless 200", status=status.HTTP_200_OK)
+
 
 
 
@@ -102,12 +117,15 @@ class UserActivate(generics.RetrieveAPIView):
         return Response("Something went wrong, request another activation token.", status=status.HTTP_404_NOT_FOUND)
 
 class AuthTest(generics.RetrieveAPIView):
+    permission_classes = [ AllowAny ]
     def get(self, request):
+        print("hello authtest", request)
         auth_data = JWT_authenticator.authenticate(request)
         if auth_data is not None:
             [user, token] = auth_data
             return Response(status=status.HTTP_200_OK)
         else:
+            print(request, auth_data)
             print("no token is provided in the header or the header is missing")
             return Response(status=status.HTTP_401_UNAUTHORIZED)
 

@@ -7,6 +7,9 @@
 ☐ fix problem with axios interceptor 
 ☐ refactor Track.jsx
 ☐ Login: block submission if form empty
+☐ read up on from django.utils.translation import gettext_lazy as _
+☐ read up on def post(self, request, format=None)
+
 
 
 
