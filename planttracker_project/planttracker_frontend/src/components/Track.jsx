@@ -34,6 +34,8 @@ if (display === "map"){
   )
 }
 else if (display === "confirm") {
+  return (
   <TrackConfirm/>
+  )
 }
 } 

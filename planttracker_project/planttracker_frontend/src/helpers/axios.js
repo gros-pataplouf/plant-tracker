@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 const accessToken = localStorage.getItem('planttrackerAccess');
 const axiosInstance = axios.create({
     baseURL: 'http://localhost:8000/api/',
@@ -23,13 +24,12 @@ axiosInstance.interceptors.response.use(function(response) {
 },
 async function(error) {
   switch(error.response.status) {
+    case 400:
+      window.alert("Bad request ⛔ ");
+      return;
     case 401:
       const initialRequest = error.config;
-      if (initialRequest.url === 'http://localhost:8000/api/token/refresh/') {
-        window.location.href = '/login/' 
-        return Promise.reject(error)
-      }
-      if (error.response.data.code === 'token_not_valid') {
+      if (initialRequest.url === 'http://localhost:8000/api/token/refresh/'&& error.response.data.code === 'token_not_valid') {
         return axiosInstance.post('token/refresh/', {
         refresh: localStorage.getItem('planttrackerRefresh')
         })
@@ -39,23 +39,26 @@ async function(error) {
           originalRequest.headers['Authorization'] = 'JWT ' + response.data.access;
           return axiosInstance(originalRequest);
         })
-        //this part still generates random redirects to login page ???!!!
+        //this part still generates redirects to login page ???!!!
         .catch(err => {
           console.error(err);
-          // window.location.href = '/login/' 
-          return Promise.reject(error)
-
+          return window.location.href = '/login/' 
+          
         })
 
-      }
+      } 
+      console.log(initialRequest);
+      break;
 
-      window.alert("Please log in to perform this action!");
-      
-      
-      return window.location.href = `http://localhost:5173/login?${window.location.pathname.slice(1,)}`;
 
-    case 404:
-      return window.location.href = "http://localhost:5173/notfound";
+      // window.alert("Please log in to perform this action!");
+           
+      // return window.location.href = `http://localhost:5173/login?${window.location.pathname.slice(1,)}`;
+
+
+    // case 404:
+    //   return window.location.href = "http://localhost:5173/notfound";
+      
     default:
       return error;
 
