@@ -18,9 +18,7 @@ axiosInstance.interceptors.request.use(function(config) {
   });
 
 axiosInstance.interceptors.response.use(function(response) {
-  // modify the response object
   console.log(response.status);
-
   return response;
 },
 async function(error) {
@@ -41,9 +39,11 @@ async function(error) {
           originalRequest.headers['Authorization'] = 'JWT ' + response.data.access;
           return axiosInstance(originalRequest);
         })
+        //this part still generates random redirects to login page ???!!!
         .catch(err => {
           console.error(err);
-          window.location.href = '/login/' 
+          // window.location.href = '/login/' 
+          return Promise.reject(error)
 
         })
 

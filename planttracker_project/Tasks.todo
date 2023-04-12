@@ -4,6 +4,9 @@
 ☐ image upload to S3 bucket
 ☐ register > password validation
 ☐ feedback for successful submission
+☐ fix problem with axios interceptor 
+☐ refactor Track.jsx
+
 
 
 

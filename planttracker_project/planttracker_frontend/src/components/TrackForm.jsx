@@ -1,8 +1,8 @@
 import { axiosInstance } from "../helpers/axios";
 import { useState, useEffect } from "react";
 
-export default function Form(props) {
-    const {location} = props.location;
+export default function TrackForm({props}) {
+    const {location, setDisplay} = props;
     const [lat, lng] = location;
     const [plantList, setPlantList] = useState([]);
     useEffect(() => {
@@ -22,6 +22,7 @@ export default function Form(props) {
       })
       .then(function (response) {
         console.log(response);
+        setDisplay("confirm");
       })
       .catch(function (error) {
         console.log(error);
