@@ -18,18 +18,20 @@ from .serializers import UserSerializer, TagSerializer, PlantSerializer, Locatio
 from .permissions import IsAuthorOrReadOnly
 
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework_simplejwt.views import TokenBlacklistView
+
 JWT_authenticator = JWTAuthentication()
 
-class PlantList(generics.ListCreateAPIView):
+class PlantList(generics.ListAPIView):
     queryset = Plant.objects.all()
     serializer_class = PlantSerializer
-    permission_classes = [ IsAuthorOrReadOnly ]
+    permission_classes = [ IsAuthenticatedOrReadOnly ]
 
 
-class PlantDetail(generics.RetrieveUpdateDestroyAPIView):
+class PlantDetail(generics.RetrieveAPIView):
     queryset = Plant.objects.all()
     serializer_class = PlantSerializer
-    permission_classes = [ IsAuthorOrReadOnly ]
+    permission_classes = [ IsAuthenticatedOrReadOnly ]
 
 class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
@@ -39,6 +41,8 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
 class LocationList(generics.ListCreateAPIView):
     queryset = Location.objects.all()
     serializer_class = LocationSerializer
+    permission_classes = [ IsAuthenticatedOrReadOnly ]
+
 
 
 class LocationDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -85,7 +89,11 @@ class UserActivate(generics.RetrieveAPIView):
     def get(self, request, id):
         uuid_instance = get_object_or_404(ActivationUUID, id=id)
         if uuid_instance:
+            print("instance", uuid_instance)
+            print(datetime.now() < uuid_instance.expiry_time.replace(tzinfo=None))
+            print(uuid_instance.expiry_time)
             if datetime.now() < uuid_instance.expiry_time.replace(tzinfo=None):
+                print("valid")
                 uuid_instance.delete()
                 user_instance = get_object_or_404(User, email=uuid_instance.email)
                 user_instance.is_active = True

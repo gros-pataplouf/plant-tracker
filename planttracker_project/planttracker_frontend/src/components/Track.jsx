@@ -5,64 +5,16 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useGeolocated } from "react-geolocated";
 import { debounce } from "../helpers/utils"
-import { API_OSM_NOMINATIM, API_URL_LOCATIONS, API_URL_PLANTS } from '../constants';
+import { API_OSM_NOMINATIM } from '../constants';
+import TrackForm from './TrackForm';
 
-// const selection = document.getElementById('plant');
-// console.log(selection.options[selection.selectedIndex].dataindex);
-
-function Form(props) {
-  const {location} = props.location;
-  const [lat, lng] = location;
-  const [plantList, setPlantList] = useState([]);
-  useEffect(() => {
-    axiosInstance.get('plants/').then(res => setPlantList(res.data))}, []);
-  function submitHandler(e){
-    e.preventDefault();
-    const selection = document.getElementById('plant');
-    axiosInstance.post('locations/', {
-      author: 1,
-      plant: selection.options[selection.selectedIndex].id,
-      location: {
-        type: "Point",
-        coordinates: [lat, lng]
-    },
-      area: parseInt(document.getElementById('area').value),
-      description: document.getElementById('description').value,
-    })
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-  }
-
-
-  return (
-    <form method="post">
-      <label htmlFor="location">Surface</label>
-      <input type="number" name="area" id="area" />
-      <label htmlFor="description">Add a comment</label>
-      <input type="text" name="description" id="description" />
-      <select name="plant" id="plant">
-          <option value="">Select a species</option>
-          {plantList.map(plant => {
-            return (
-          <option key={plant.id} id={plant.id} name={plant.common_name_en}>{plant.common_name_en}</option>)})}
-      </select>
-      <button type="submit" value="Submit" onClick={submitHandler}>Submit</button>
-    </form>
-  )
-}
-
-function CenterAutomatically({location, setLocation}) {
+function CenterAutomatically({location}) {
   const map = useMap();
    useEffect(() => {
     map.flyTo(location, map.getZoom())
    }, [location]);
    return null;
  }
-
 
 function Map({props}) {
   const  {location, setLocation, coords} = props;
@@ -72,16 +24,11 @@ function Map({props}) {
     }
   }, [coords])
   return(
-  <MapContainer 
-  id="map"
-  center={location}
-  zoom={5}
-  scrollWheelZoom={true}
-  >  <TileLayer
+  <MapContainer id="map" center={location} zoom={5} scrollWheelZoom={true}>
+    <TileLayer
     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" 
-  />
-
+    />
   <DynamicMarker location={location} setLocation={setLocation}/>
   <CenterAutomatically location={location} setLocation={setLocation} props={{location, setLocation}}/>
 
@@ -139,16 +86,6 @@ function ContinueButton({props}) {
   )
 }
 
-function BackButton({props}) {
-  const {setDisplay} = props;
-  function clickHandler() {
-    setDisplay("map");
-  }
-  return (
-    <button onClick={clickHandler}>Back</button>
-  )
-}
-
 
 function DynamicMarker(props) {
     const {location, setLocation} = props;
@@ -174,9 +111,6 @@ export default function Track() {
     }
   })
 }, [])
-
-  
-
   const [location, setLocation] = useState([50, 10]);
   const [display, setDisplay] = useState('map');
   const {
@@ -206,6 +140,10 @@ if (display === "map"){
 );
 } else if (display === "form") {
   return (
-    <Form location={{location}}/>
+    <TrackForm location={{location}}/>
   )
-}} 
+}
+else if (display === "confirm") {
+  <TrackConfirm/>
+}
+} 

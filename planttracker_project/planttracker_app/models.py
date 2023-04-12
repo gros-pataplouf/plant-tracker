@@ -34,4 +34,4 @@ class Location(models.Model):
 class ActivationUUID(models.Model):
     id=models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email=models.EmailField(blank=False)
-    expiry_time=models.DateTimeField(default=datetime.datetime.now() + datetime.timedelta(hours=2))
+    expiry_time=models.DateTimeField(default=datetime.datetime.now() + datetime.timedelta(days=1))

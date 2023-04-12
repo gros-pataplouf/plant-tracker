@@ -42,7 +42,7 @@ async function(error) {
           return axiosInstance(originalRequest);
         })
         .catch(err => {
-          console.err(err);
+          console.error(err);
           window.location.href = '/login/' 
 
         })
