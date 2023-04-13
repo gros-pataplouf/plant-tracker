@@ -42,20 +42,18 @@ class LocationList(generics.ListCreateAPIView):
     queryset = Location.objects.all()
     serializer_class = LocationSerializer
     permission_classes = [ IsAuthenticatedOrReadOnly ]
-    permission_classes = [ AllowAny ]
     parser_classes = [ MultiPartParser, FormParser ]
     def post(self, request, format=None):
         auth_data = JWT_authenticator.authenticate(request)
         if auth_data is not None:
             [user, token] = auth_data
-            print(user, token)
-            return Response("meaningless 200", status=status.HTTP_200_OK)
-            
-        serializer = LocationSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-        print(serializer.errors)
-        return Response("meaningless 200", status=status.HTTP_200_OK)
+            request.data['author'] = token.payload['user_id']
+            serializer = LocationSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                print(serializer.validated_data)
+                return Response("Submission successful", status=status.HTTP_201_CREATED)
+        return Response("Unauthorized", status=status.HTTP_401_UNAUTHORIZED)
 
 
 
@@ -116,10 +114,12 @@ class UserActivate(generics.RetrieveAPIView):
                 return Response("Your account has been activated.", status=status.HTTP_204_NO_CONTENT)
         return Response("Something went wrong, request another activation token.", status=status.HTTP_404_NOT_FOUND)
 
-class AuthTest(generics.RetrieveAPIView):
-    permission_classes = [ AllowAny ]
+class AuthTest(generics.GenericAPIView):
+    permission_classes = [ IsAuthenticated ]
+    authentication_classes = [ JWTAuthentication]
+    queryset = Plant.objects.all()
     def get(self, request):
-        print("hello authtest", request)
+        print(request.META)
         auth_data = JWT_authenticator.authenticate(request)
         if auth_data is not None:
             [user, token] = auth_data
@@ -128,4 +128,3 @@ class AuthTest(generics.RetrieveAPIView):
             print(request, auth_data)
             print("no token is provided in the header or the header is missing")
             return Response(status=status.HTTP_401_UNAUTHORIZED)
-

@@ -7,22 +7,21 @@ import TrackMap from './TrackMap';
 
 
 export default function Track() {
-  const navigate = useNavigate();
-  const currentURL = useLocation();
-  useEffect(() => {
-  
-  axiosInstance.get('token/authtest/')
-  .then(res => {console.log(res)})
-  .catch(err => {
-    if (err.response.status === 401) {
-      window.alert("You need to be logged in to submit data.")
-      return navigate(`/login?${currentURL.pathname.slice(1,)}`)
-    }
-  })
-}, [])
+
   const [location, setLocation] = useState([50, 10]);
   const [display, setDisplay] = useState('map');
-  console.log(display);
+  useEffect(() => {
+    axiosInstance.get('token/authtest/')
+    .then(res => {console.log(res)})
+    .catch(err => {
+        console.error(err);
+        window.alert("You need to be logged in to submit data.")
+        window.location.pathname=`/login?${currentURL.pathname.slice(1,)}`
+    })
+  
+  }, [])
+
+
 
 
 if (display === "map"){
