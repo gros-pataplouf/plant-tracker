@@ -7,8 +7,13 @@ export default function TrackForm({props}) {
     const [lat, lng] = location;
     const [plantList, setPlantList] = useState([]);
     const [ image, setImage ] = useState(null);
+    const [ cam, setCam ] = useState(false);
     function handleChange(e) {
       setImage(e.target.files[0]);
+    };
+    function goToCam(e) {
+      e.preventDefault();
+      setCam("stream");
     }
     useEffect(() => {
       axiosInstance.get('plants/').then(res => setPlantList(res.data))}, []);
@@ -37,7 +42,9 @@ export default function TrackForm({props}) {
   
   
     return (
-      <form method="post">
+      <>
+      {! cam && 
+      <form method="post">    
         <label htmlFor="location">Surface</label>
         <input type="number" name="area" id="area" />
         <label htmlFor="description">Add a comment</label>
@@ -50,10 +57,12 @@ export default function TrackForm({props}) {
         </select>
         <label htmlFor="image">Upload a photo</label>
         <input accept='image/' id="image" name="image" type="file" onChange={handleChange}/>
-        <TrackFormCamera/>
+        <button onClick={goToCam}>Take a photo</button>
+        <img src={image} alt='preview' />
         <button type="submit" value="Submit" onClick={submitHandler}>Submit</button>
-
-      </form>
+      </form>}
+        {cam && <TrackFormCamera props={{ image, setImage, cam, setCam }}/>}
+      </>
     )
   }
   
