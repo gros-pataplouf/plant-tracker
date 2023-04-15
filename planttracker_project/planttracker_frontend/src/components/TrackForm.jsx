@@ -1,5 +1,6 @@
 import { axiosInstance } from "../helpers/axios";
 import { useState, useEffect } from "react";
+import TrackFormCamera from "./TrackFormCamera";
 
 export default function TrackForm({props}) {
     const {location, setDisplay} = props;
@@ -17,7 +18,7 @@ export default function TrackForm({props}) {
 
       const selection = document.getElementById('plant');
       //get a string for location to be able to post it as form data (json not allowed in multipart form)
-      const location = `{"type": "Point", "coordinates": [${lng}, ${lat}]}`
+      const location = `{"type": "Point", "coordinates": [${lat}, ${lng}]}`
       axiosInstance.post('locations/', {
         plant: selection.options[selection.selectedIndex].id,
         location: location,
@@ -49,7 +50,9 @@ export default function TrackForm({props}) {
         </select>
         <label htmlFor="image">Upload a photo</label>
         <input accept='image/' id="image" name="image" type="file" onChange={handleChange}/>
+        <TrackFormCamera/>
         <button type="submit" value="Submit" onClick={submitHandler}>Submit</button>
+
       </form>
     )
   }
