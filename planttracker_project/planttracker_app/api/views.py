@@ -1,7 +1,8 @@
 from datetime import datetime
+import json
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404
-from datetime import datetime
+
 
 from rest_framework.throttling import AnonRateThrottle
 from rest_framework.response import Response
@@ -47,16 +48,17 @@ class LocationList(generics.ListCreateAPIView):
         auth_data = JWT_authenticator.authenticate(request)
         if auth_data is not None:
             [user, token] = auth_data
+            #make multipart query set mutable in order to add author
+            setattr(request.data, '_mutable', True)
             request.data['author'] = token.payload['user_id']
+            print(request.data)
             serializer = LocationSerializer(data=request.data)
             if serializer.is_valid():
                 serializer.save()
-                print(serializer.validated_data)
                 return Response("Submission successful", status=status.HTTP_201_CREATED)
+            else: 
+                print(serializer.errors)
         return Response("Unauthorized", status=status.HTTP_401_UNAUTHORIZED)
-
-
-
 
 class LocationDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Location.objects.all()

@@ -1,15 +1,17 @@
 import axios from 'axios';
+const baseURL = 'http://localhost:8000/api/'
 const axiosInstance = axios.create({
-    baseURL: 'http://localhost:8000/api/',
+    baseURL: baseURL,
     timeout: 20000,
   });
 
 axiosInstance.interceptors.request.use(function(config) {
   const accessToken = localStorage.getItem('planttrackerAccess');
   const refreshToken = localStorage.getItem('planttrackerRefresh');
-    config.headers.Authorization = accessToken? `JWT ${accessToken}`: null;
-    console.log(config.headers['Authorization'])
-    return config;
+  config.headers.Authorization = accessToken? `JWT ${accessToken}`: null;
+  config.headers['Content-Type'] = 'multipart/form-data';
+ 
+  return config;
   });
 
 

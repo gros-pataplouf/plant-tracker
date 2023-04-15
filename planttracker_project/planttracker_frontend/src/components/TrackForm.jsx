@@ -5,20 +5,25 @@ export default function TrackForm({props}) {
     const {location, setDisplay} = props;
     const [lat, lng] = location;
     const [plantList, setPlantList] = useState([]);
+    const [ image, setImage ] = useState(null);
+    function handleChange(e) {
+      setImage(e.target.files[0]);
+    }
     useEffect(() => {
       axiosInstance.get('plants/').then(res => setPlantList(res.data))}, []);
     function submitHandler(e){
       e.preventDefault();
+      console.log(image)
+
       const selection = document.getElementById('plant');
+      //get a string for location to be able to post it as form data (json not allowed in multipart form)
+      const location = `{"type": "Point", "coordinates": [${lng}, ${lat}]}`
       axiosInstance.post('locations/', {
-        author: 1,
         plant: selection.options[selection.selectedIndex].id,
-        location: {
-          type: "Point",
-          coordinates: [lat, lng]
-      },
+        location: location,
         area: parseInt(document.getElementById('area').value),
         description: document.getElementById('description').value,
+        image: image,
       })
       .then(function (response) {
         console.log(response);
@@ -42,6 +47,8 @@ export default function TrackForm({props}) {
               return (
             <option key={plant.id} id={plant.id} name={plant.common_name_en}>{plant.common_name_en}</option>)})}
         </select>
+        <label htmlFor="image">Upload a photo</label>
+        <input accept='image/' id="image" name="image" type="file" onChange={handleChange}/>
         <button type="submit" value="Submit" onClick={submitHandler}>Submit</button>
       </form>
     )
