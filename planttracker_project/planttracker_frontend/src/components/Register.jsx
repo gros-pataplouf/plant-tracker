@@ -39,9 +39,7 @@ export default function Register() {
   
       } 
 
-      if (formData.get('password') && formData.get('passwordConfirmation') && formData.get('password') !==  formData.get('passwordConfirmation')) {
-        console.log(formData.get('password'));
-        console.log(formData.get('passwordConfirmation'))
+      if (document.getElementById('password').value.trim() !==  document.getElementById('passwordConfirmation').value.trim()) {
         setPwdErr('Passwords must match')
 
       }

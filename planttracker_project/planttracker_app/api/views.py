@@ -1,5 +1,5 @@
 from datetime import datetime
-import json
+import json, re
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404
 
@@ -70,11 +70,20 @@ class UserCreate(generics.ListCreateAPIView):
     permission_classes = [ AllowAny ]
     def post(self, request):
         uuid=""
-        reg_serializer = RegisterUserSerializer(data=request.data)
+        pwd = request.data['password']
+# \W any non alphanumeric character \d decimal [a-z] [A-Z]
+        cond1 = re.compile('\W')
+        cond2 = re.compile('[A-Z]')
+        cond3 = re.compile('[a-z]')
+        cond4 = re.compile('[0-9]')
+        if len(pwd) < 8 or not cond1.match(pwd) or not cond2.match(pwd) or not cond3.match(pwd) or not cond4.match(pwd):
+            return Response("Your password does not meet the requirements.", status=status.HTTP_400_BAD_REQUEST)
+
         existing_users = User.objects.filter(username=request.data['username']) | User.objects.filter(email=request.data['email'])
         if bool(existing_users.values()):
             error = "Something went wrong, please try again. If the issue persists, you may want to choose another username."
             return Response(error, status=status.HTTP_403_FORBIDDEN)
+        reg_serializer = RegisterUserSerializer(data=request.data)
         if reg_serializer.is_valid():
             uuid_serializer = ActivationUUIDSerializer(data={"email": request.data["email"]})
             if uuid_serializer.is_valid():
@@ -85,14 +94,17 @@ class UserCreate(generics.ListCreateAPIView):
             user_instance.is_active = False
             user_instance.save()
             if newuser:
-                send_mail(
+                try:
+                    send_mail(
                     'Welcome to the Planttracker Project',
                     f"Please click on the following link to activate your account:\
                     localhost:5173/activate?{uuid}",
                     'planttrackerapp@gmx.de',
                     [request.data['email']],
                     fail_silently=False,
-                )                
+                    )
+                except Exception as err:
+                    return Response("An error occured while sending the activation mail. This may be due to an invalid email address.", status=status.HTTP_500_INTERNAL_SERVER_ERROR)                
             return Response("Your account has been created. An email with an activation code has been sent.", status=status.HTTP_201_CREATED)
         return Response(status=status.HTTP_400_BAD_REQUEST)
 

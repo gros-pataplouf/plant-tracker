@@ -5,7 +5,7 @@
 
 
 export function testMail(mail) {
-    const re = /\S*@\S*\.[A-Za-z]*/
+    const re = /\S*@\S*\.[A-Za-z]/
     return re.exec(mail)
 }
 
