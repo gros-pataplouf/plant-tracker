@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { axiosInstance } from '../helpers/axios';
+import axiosInstance from '../helpers/axios';
 
 
 

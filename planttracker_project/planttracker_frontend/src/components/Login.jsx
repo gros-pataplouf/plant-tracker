@@ -1,4 +1,4 @@
-import { axiosInstance } from '../helpers/axios';
+import axiosInstance from '../helpers/axios';
 import { useLocation, Link, useOutletContext } from 'react-router-dom';
 import { useState } from 'react';
 

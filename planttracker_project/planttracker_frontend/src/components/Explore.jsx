@@ -1,6 +1,6 @@
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import { useState, useEffect } from 'react';
-import { axiosInstance } from '../helpers/axios';
+import axiosInstance from '../helpers/axios';
 
 export default function Explore() {  
 

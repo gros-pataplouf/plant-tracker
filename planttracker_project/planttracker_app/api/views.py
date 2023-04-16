@@ -57,6 +57,7 @@ class LocationList(generics.ListCreateAPIView):
                 return Response("Submission successful", status=status.HTTP_201_CREATED)
             else: 
                 print(serializer.errors)
+                return Response("Data submitted are invalid or incomplete.", status=status.HTTP_400_BAD_REQUEST)
         return Response("Unauthorized", status=status.HTTP_401_UNAUTHORIZED)
 
 class LocationDetail(generics.RetrieveUpdateDestroyAPIView):

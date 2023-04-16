@@ -30,10 +30,10 @@ class Plant(models.Model):
 
 class Location(models.Model):
     location = models.PointField()
-    area = models.IntegerField()
+    area = models.PositiveIntegerField()
     image = models.ImageField(_("Photo"), upload_to=upload_to, blank=True)
  #upload_to='users/%Y/%m/%d/', 
-    description = models.CharField(max_length=100)
+    description = models.CharField(max_length=100, blank=True)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
     plant = models.ForeignKey(Plant, on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)

@@ -1,4 +1,4 @@
-import { axiosInstance } from '../helpers/axios';
+import axiosInstance from '../helpers/axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import TrackForm from './TrackForm';

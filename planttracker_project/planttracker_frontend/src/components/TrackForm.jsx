@@ -1,4 +1,4 @@
-import { axiosInstance } from "../helpers/axios";
+import axiosInstance from "../helpers/axios";
 import { useState, useEffect } from "react";
 
 export default function TrackForm({props}) {
@@ -18,21 +18,34 @@ export default function TrackForm({props}) {
       e.preventDefault();
       const selection = document.getElementById('plant');
       //get a string for location to be able to post it as form data (json not allowed in multipart form)
-      const location = `{"type": "Point", "coordinates": [${lat}, ${lng}]}`
-      axiosInstance.post('locations/', {
-        plant: selection.options[selection.selectedIndex].id,
-        location: location,
-        area: parseInt(document.getElementById('area').value),
-        description: document.getElementById('description').value,
-        image: image,
-      })
+      const formData = new FormData();
+      formData.append('plant', selection.options[selection.selectedIndex].id);
+      formData.append('area', parseInt(document.getElementById('area').value));
+      formData.append('location', `{"type": "Point", "coordinates": [${lat}, ${lng}]}`)
+      image && formData.append('image', image);
+      formData.append('description', document.getElementById('description').value);
+
+      // check for missing fields 
+      const required = ['plant', 'area', 'location'];
+      for (let key of required) {
+        let value = formData.get(key);
+        if (!value) {
+          window.alert(`Field ${key} is mandatory.`);
+          return setMessage('Please fill in the required fields!')
+        }
+      }
+      
+
+
+
+      axiosInstance.post('locations/', formData )
       .then(function (response) {
         setSuccess(true);
         setMessage(response.data);
       })
       .catch(function (error) {
         console.log(error);
-        // setMessage(error);
+        setMessage(error.response.data);
       });
     }
   
@@ -40,7 +53,7 @@ export default function TrackForm({props}) {
     return (
       <> {!success && <form method="post">    
         <label htmlFor="location">Surface</label>
-        <input type="number" name="area" id="area" />
+        <input type="number" min='0' name="area" id="area" />
         <label htmlFor="description">Add a comment</label>
         <input type="text" name="description" id="description" />
         <select name="plant" id="plant">

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { axiosInstance } from '../helpers/axios';
+import axiosInstance from '../helpers/axios';
 export default function Header ({props}) {
   const {isLoggedIn, setIsLoggedIn} = props;
   function logOutHandler(e) {
