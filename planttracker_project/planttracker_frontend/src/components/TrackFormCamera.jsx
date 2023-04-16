@@ -94,7 +94,6 @@ export default function TrackFormCamera({props}) {
 
   return (
     <div id="camcontainer">
-       
       <video></video>
       <div id='photoContainer' style={{display:'none'}}>
         <img src="" className="blob" alt="" />

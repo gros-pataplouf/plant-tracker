@@ -51,7 +51,6 @@ class LocationList(generics.ListCreateAPIView):
             #make multipart query set mutable in order to add author
             setattr(request.data, '_mutable', True)
             request.data['author'] = token.payload['user_id']
-            print(request.data)
             serializer = LocationSerializer(data=request.data)
             if serializer.is_valid():
                 serializer.save()
@@ -76,7 +75,6 @@ class UserCreate(generics.ListCreateAPIView):
             error = "Something went wrong, please try again. If the issue persists, you may want to choose another username."
             return Response(error, status=status.HTTP_403_FORBIDDEN)
         if reg_serializer.is_valid():
-            print(reg_serializer.validated_data)
             uuid_serializer = ActivationUUIDSerializer(data={"email": request.data["email"]})
             if uuid_serializer.is_valid():
                 uuid_serializer.save()
@@ -104,9 +102,6 @@ class UserActivate(generics.RetrieveAPIView):
     def get(self, request, id):
         uuid_instance = get_object_or_404(ActivationUUID, id=id)
         if uuid_instance:
-            print("instance", uuid_instance)
-            print(datetime.now() < uuid_instance.expiry_time.replace(tzinfo=None))
-            print(uuid_instance.expiry_time)
             if datetime.now() < uuid_instance.expiry_time.replace(tzinfo=None):
                 print("valid")
                 uuid_instance.delete()
@@ -121,12 +116,9 @@ class AuthTest(generics.GenericAPIView):
     authentication_classes = [ JWTAuthentication]
     queryset = Plant.objects.all()
     def get(self, request):
-        print(request.META)
         auth_data = JWT_authenticator.authenticate(request)
         if auth_data is not None:
             [user, token] = auth_data
             return Response(status=status.HTTP_200_OK)
         else:
-            print(request, auth_data)
-            print("no token is provided in the header or the header is missing")
             return Response(status=status.HTTP_401_UNAUTHORIZED)
