@@ -16,9 +16,9 @@ export default function TrackForm({props}) {
       axiosInstance.get('plants/').then(res => setPlantList(res.data))}, []);
     function submitHandler(e){
       e.preventDefault();
-      const selection = document.getElementById('plant');
       //get a string for location to be able to post it as form data (json not allowed in multipart form)
       const formData = new FormData();
+      const selection = document.getElementById('plant');
       formData.append('plant', selection.options[selection.selectedIndex].id);
       formData.append('area', parseInt(document.getElementById('area').value));
       formData.append('location', `{"type": "Point", "coordinates": [${lat}, ${lng}]}`)
