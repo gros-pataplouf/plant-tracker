@@ -11,6 +11,7 @@ export default function Header ({props}) {
     localStorage.removeItem('planttrackerAccess');
     localStorage.removeItem('planttrackerRefresh');
     setIsLoggedIn(false);
+    return window.location.href = '/'
   })
 
   }

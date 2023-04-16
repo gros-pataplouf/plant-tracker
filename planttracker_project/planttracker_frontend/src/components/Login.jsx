@@ -1,12 +1,10 @@
 import { axiosInstance } from '../helpers/axios';
-import { useNavigate, useLocation, Link, useOutletContext } from 'react-router-dom';
+import { useLocation, Link, useOutletContext } from 'react-router-dom';
 import { useState } from 'react';
 
 export default function Login() {
     const [isLoggedIn, setIsLoggedIn] = useOutletContext();
     const [ message, setMessage ] = useState();
-    
-    const navigate = useNavigate();
     const location = useLocation();
     function submitHandler(e) {
         e.preventDefault();
@@ -15,7 +13,11 @@ export default function Login() {
             localStorage.setItem('planttrackerAccess', res.data.access);
             localStorage.setItem('planttrackerRefresh', res.data.refresh);
             setIsLoggedIn(true);
-            if (location.search) {return navigate(`/${location.search.slice(1,)}}`);
+            setMessage("Login successful ✅")
+            if (location.search) {console.log(location.search)
+              return window.location.href =(`/${location.search.slice(1,)}`);
+          } else {
+            return window.location.href = '/'
           }})
           .catch(
             error =>{

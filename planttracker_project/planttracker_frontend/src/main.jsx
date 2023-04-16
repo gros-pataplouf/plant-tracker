@@ -7,6 +7,7 @@ import Track from "./components/Track"
 import Login from "./components/Login"
 import Register from "./components/Register"
 import Activate from "./components/Activate"
+import PlantList from './components/PlantList'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ErrorPage from './components/ErrorPage'
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
     element: <App/>,
     errorElement: <ErrorPage/>, 
     children: [
+      {
+        path:'/',
+        element: <PlantList/>
+      },
       {
         path:'register/',
         element: <Register/>

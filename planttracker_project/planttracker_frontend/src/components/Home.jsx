@@ -1,7 +1,6 @@
 import PlantList from "./PlantList";
 import axios from "axios";
 import { useState, useEffect } from 'react';
-
 import { API_URL_PLANTS } from "../constants";
 
 export default function  Home()  {

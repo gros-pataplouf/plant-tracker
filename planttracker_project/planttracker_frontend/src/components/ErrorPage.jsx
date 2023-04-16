@@ -5,6 +5,6 @@ export default function ErrorPage() {
     console.error(error);
     return <div id='error-page'>
         <h2>{error.statusText || error.message}</h2>
-        <img src={"https://http.cat/" + error.status} alt='' />
+        {/* <img src={"https://http.cat/" + error.status} alt='' /> */}
      </div>
 }

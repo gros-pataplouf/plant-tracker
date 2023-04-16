@@ -1,17 +1,10 @@
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
 import { axiosInstance } from '../helpers/axios';
-import { API_URL_LOCATIONS } from '../constants';
 
 export default function Explore() {  
 
-    const navigate = useNavigate();
-    const location = useLocation();
-
     const [locationList, setLocationList] = useState([]);
-    const accessToken = localStorage.getItem('planttrackerAccess');
-    const refreshToken = localStorage.getItem('planttrackerRefresh');
     
     useEffect(() => {axiosInstance.get('locations/')
       .then(res => setLocationList(res.data))

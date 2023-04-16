@@ -2,7 +2,6 @@ import { axiosInstance } from '../helpers/axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import TrackForm from './TrackForm';
-import TrackConfirm from './TrackConfirm';
 import TrackMap from './TrackMap';
 
 
@@ -30,11 +29,6 @@ if (display === "map"){
 } else if (display === "form") {
   return (
     <TrackForm props={{location, setDisplay}}/>
-  )
-}
-else if (display === "confirm") {
-  return (
-  <TrackConfirm/>
   )
 }
 } 

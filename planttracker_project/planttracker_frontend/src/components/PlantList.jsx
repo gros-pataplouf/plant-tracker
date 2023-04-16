@@ -1,5 +1,20 @@
-export default function PlantList (props) {
-    const {plants} = props;
+import { useState, useEffect } from 'react';
+import { axiosInstance } from '../helpers/axios';
+
+
+
+export default function PlantList () {
+    const [plantList, setPlantList] = useState([]);
+    
+    useEffect(() => {axiosInstance.get('plants/')
+      .then(res => setPlantList(res.data))
+      .catch(err => {
+        console.error(err);
+      })
+    }, [])
+;
+
+    
     return (
       <div>
         <div>
@@ -7,10 +22,10 @@ export default function PlantList (props) {
             <h6>Filter by tag</h6>
         </div>
         <div>
-            {!plants || plants.length <= 0? (
+            {!plantList || plantList.length <= 0? (
                 <h4>No plant info available</h4> ) : (
-                    plants.map(plant => (
-                        <div key={plant.pk}>
+                    plantList.map(plant => (
+                        <div key={plant.id}>
                             <div>
                                 <h3>{plant.common_name_en}</h3>
                                 <p>{plant.scientific_name}</p>

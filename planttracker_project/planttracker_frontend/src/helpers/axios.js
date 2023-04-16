@@ -21,6 +21,7 @@ axiosInstance.interceptors.request.use(function(config) {
     },
     async function (error) {
       const originalRequest = error.config;
+      console.log(error.response.status, originalRequest.url)
   
       if (typeof error.response === 'undefined') {
         console.timeLog(
@@ -37,6 +38,14 @@ axiosInstance.interceptors.request.use(function(config) {
         originalRequest.url === baseURL + 'token/refresh/'
       ) {
         window.location.href = '/login/';
+        return Promise.reject(error);
+      }
+      if (
+        error.response.status === 401 &&
+        originalRequest.url === 'token/authtest/'
+      ) {
+        window.alert("You need to be logged in to submit data!")
+        window.location.href = `/login?${window.location.pathname.slice(1,)}`;
         return Promise.reject(error);
       }
   
@@ -129,13 +138,6 @@ async function(error) {
       break;
 
 
-      // window.alert("Please log in to perform this action!");
-           
-      // return window.location.href = `http://localhost:5173/login?${window.location.pathname.slice(1,)}`;
-
-
-    // case 404:
-    //   return window.location.href = "http://localhost:5173/notfound";
       
     default:
       return error;
