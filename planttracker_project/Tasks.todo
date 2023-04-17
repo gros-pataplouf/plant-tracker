@@ -1,12 +1,34 @@
 ✔ @blacklist blacklist app @done(23-04-12 11:27)
 ✔ login / logout button @done(23-04-12 11:27)
-☐ image upload to localhost
+✔ image upload to localhost @done(23-04-17 13:52)
+✔ register > password validation @done(23-04-17 13:52)
+✔ feedback for successful submission @done(23-04-17 13:52)
+✔ fix problem with axios interceptor @done(23-04-17 13:52)
+✔ refactor Track.jsx @done(23-04-17 13:52)
+✔ Login: block submission if form empty @done(23-04-17 13:52)
+✔ @high Explore: filter by plant species @done(23-04-17 18:01)
+✔ @high change color of markers according to species @done(23-04-17 18:01)
+
+
+
+☐ @low Plant Detail page
+☐ @high Location Detail page
+☐ @high User Detail page 
+    ☐ @high   Delete account
+    ☐ @high Change PWD
+    ☐ @low view submitted data 
+☐ @low Plant List : filter by tag
+☐ @low nice to have : visualize data in explore view 
+
+
+
+
+
+
+
+Nice to have
+
 ☐ image upload to S3 bucket
-☐ register > password validation
-☐ feedback for successful submission
-☐ fix problem with axios interceptor 
-☐ refactor Track.jsx
-☐ Login: block submission if form empty
 ☐ read up on from django.utils.translation import gettext_lazy as _
 ☐ read up on def post(self, request, format=None)
 

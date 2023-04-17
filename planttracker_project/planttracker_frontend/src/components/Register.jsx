@@ -58,7 +58,6 @@ export default function Register() {
         }
         formData.append('email', document.getElementById('email').value);
         formData.append('username', document.getElementById('username').value);
-
         formData.append('password', document.getElementById('password').value);
         formData.append('passwordConfirmation', document.getElementById('passwordConfirmation').value);
 
