@@ -5,7 +5,7 @@ import { plantsAndMarkers, plantsAndSymbols } from '../helpers/leafletHelpers';
 
 function Checkbox({props}) {
 
-  const {plant, locationList, setLocationList} = props;
+  const {plant, locationList, setLocationList, initialLocationList} = props;
   const [ checked, setChecked ] = useState(true);
   useEffect(() => {
     const inputBoxes = document.querySelectorAll('input');
@@ -13,13 +13,10 @@ function Checkbox({props}) {
     for (let box of inputBoxes) {
       userChoices.push(box.checked)
     };
-    axiosInstance.get('locations/')
-    .then(res => {
-      setLocationList(res.data.filter(loc => {
+      setLocationList(initialLocationList.filter(loc => {
         return userChoices[loc.plant - 1]
       }))
-    })
-    .catch(err => console.error(err))
+
 
   }, [checked]);
 
@@ -33,7 +30,7 @@ function Checkbox({props}) {
 
 function Legend({props}) {
   const [plantList, setPlantList] = useState([]);
-  const {locationList, setLocationList} = props;
+  const {locationList, setLocationList, initialLocationList} = props;
     
   useEffect(() => {axiosInstance.get('plants/')
     .then(res => setPlantList(res.data))
@@ -49,7 +46,7 @@ function Legend({props}) {
   <legend>Filter by species:</legend>
   {plantList.map(plant => (
       <div key={plant.id}>
-      <Checkbox props={{plant, locationList, setLocationList}}/>
+      <Checkbox props={{plant, locationList, setLocationList, initialLocationList}}/>
       <label for={plant.id}>
         <img src={plantsAndSymbols[plant.id]} alt="" />
         {plant.common_name_en}</label>
@@ -63,9 +60,14 @@ function Legend({props}) {
 export default function Explore() {  
 
     const [locationList, setLocationList] = useState([]);
+    const [initialLocationList, setInitialLocationList] = useState([]);
+
     
     useEffect(() => {axiosInstance.get('locations/')
-      .then(res => setLocationList(res.data))
+      .then(res => {
+        setLocationList(res.data);
+        setInitialLocationList(res.data);
+      })
       .catch(err => {
         console.error(err);
       })
@@ -93,6 +95,6 @@ export default function Explore() {
   />
 {markUp}
 </MapContainer>
-<Legend props={{locationList, setLocationList}}/>
+<Legend props={{locationList, setLocationList,initialLocationList}}/>
 </>
 )}
