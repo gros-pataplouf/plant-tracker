@@ -8,6 +8,7 @@ import Login from "./components/Login"
 import Register from "./components/Register"
 import Activate from "./components/Activate"
 import PlantList from './components/PlantList'
+import Account from './components/Account'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ErrorPage from './components/ErrorPage'
@@ -41,6 +42,11 @@ const router = createBrowserRouter([
       {
         path:'explore/',
         element: <Explore/>
+      },
+
+      {
+        path:'account/',
+        element: <Account/>
       },
     ]
   }, 

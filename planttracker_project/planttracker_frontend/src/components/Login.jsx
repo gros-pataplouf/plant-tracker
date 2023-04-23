@@ -38,6 +38,8 @@ export default function Login() {
           <p>{message}</p>
           <p>No account yet?</p>
           <Link to='/register'>Register</Link>
+          <p>Password forgotten?</p>
+          
          </div>
       
          </>

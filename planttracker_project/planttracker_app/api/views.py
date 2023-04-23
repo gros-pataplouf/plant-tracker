@@ -3,10 +3,17 @@ import json, re
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404
 
+from django.core import serializers
+
 
 from rest_framework.throttling import AnonRateThrottle
 from rest_framework.response import Response
 from rest_framework import generics, status
+from rest_framework.views import APIView
+
+from django.http import HttpResponse, JsonResponse
+
+
 
 from rest_framework.decorators import permission_classes, authentication_classes
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny, IsAuthenticated
@@ -34,16 +41,39 @@ class PlantDetail(generics.RetrieveAPIView):
     serializer_class = PlantSerializer
     permission_classes = [ IsAuthenticatedOrReadOnly ]
 
+class MyAccount(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+
+    def get_object(self):
+        token = None
+        valid_auth_data = JWT_authenticator.authenticate(self.request)
+        if valid_auth_data:
+            [user, token] = valid_auth_data
+        return get_object_or_404(User, pk=token.payload['user_id'])
+
+
 class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    lookup_field = "username"
+
+class UserList(generics.ListAPIView):
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+
+
+
 
 class LocationList(generics.ListCreateAPIView):
     queryset = Location.objects.all()
     serializer_class = LocationSerializer
     permission_classes = [ IsAuthenticatedOrReadOnly ]
     parser_classes = [ MultiPartParser, FormParser ]
+    # def get_queryset(self):
+    #     if self.request.user.is_authenticated:
+    #         return Location.objects.filter(author=self.request.user)
+    #     return Location.objects.all()
+
     def post(self, request, format=None):
         auth_data = JWT_authenticator.authenticate(request)
         if auth_data is not None:
@@ -126,7 +156,7 @@ class UserActivate(generics.RetrieveAPIView):
 
 class AuthTest(generics.GenericAPIView):
     permission_classes = [ IsAuthenticated ]
-    authentication_classes = [ JWTAuthentication]
+    authentication_classes = [ JWTAuthentication ]
     queryset = Plant.objects.all()
     def get(self, request):
         auth_data = JWT_authenticator.authenticate(request)

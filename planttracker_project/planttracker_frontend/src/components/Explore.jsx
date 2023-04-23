@@ -16,8 +16,6 @@ function Checkbox({props}) {
       setLocationList(initialLocationList.filter(loc => {
         return userChoices[loc.plant - 1]
       }))
-
-
   }, [checked]);
 
   function handleCheckbox() {
@@ -37,7 +35,7 @@ function Legend({props}) {
     .catch(err => {
       console.error(err);
     })
-  }, [])
+  }, []);
 
 
 

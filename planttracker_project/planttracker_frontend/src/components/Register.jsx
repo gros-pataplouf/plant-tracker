@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axiosInstance from '../helpers/axios';
 import { useState } from 'react';
 import { testMail, testPassword } from '../helpers/checks';
 
@@ -17,9 +17,6 @@ export default function Register() {
       setIncompleteErr('');
       setPwdErr('');
 
-      for (const key of formData.keys()) {
-        formData.delete(key);
-      }
 
       formData.append('email', document.getElementById('email').value.trim());
       formData.append('username', document.getElementById('username').value.trim());
@@ -61,11 +58,8 @@ export default function Register() {
         formData.append('password', document.getElementById('password').value);
         formData.append('passwordConfirmation', document.getElementById('passwordConfirmation').value);
 
-        // requirements: valid email address by regex, password min 8 char, 
 
-
-
-        axios.post('http://localhost:8000/api/register/', document.querySelector('#registrationForm'), {
+        axiosInstance.post('http://localhost:8000/api/register/', document.querySelector('#registrationForm'), {
             headers: {
               'Content-Type': 'application/json'
             }

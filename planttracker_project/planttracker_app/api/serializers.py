@@ -15,7 +15,10 @@ class TagSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ["username"]
+        fields = ('email', 'username', 'password')
+
+
+
 
 class PlantSerializer(serializers.ModelSerializer):
     tags = serializers.SlugRelatedField(queryset=Tag.objects.all(), many = True, slug_field='value')

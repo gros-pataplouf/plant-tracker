@@ -10,6 +10,7 @@ axiosInstance.interceptors.request.use(function(config) {
   const refreshToken = localStorage.getItem('planttrackerRefresh');
   config.headers.Authorization = accessToken? `JWT ${accessToken}`: null;
   config.headers['Content-Type'] = 'multipart/form-data';
+  console.log(config.data)
  
   return config;
   });

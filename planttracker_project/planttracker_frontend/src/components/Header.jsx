@@ -1,5 +1,9 @@
 import { Link } from "react-router-dom";
 import axiosInstance from '../helpers/axios';
+import login from '../assets/icons/login.svg'
+import logout from '../assets/icons/logout.svg'
+import account from '../assets/icons/account.svg'
+
 export default function Header ({props}) {
   const {isLoggedIn, setIsLoggedIn} = props;
   function logOutHandler(e) {
@@ -26,7 +30,20 @@ export default function Header ({props}) {
           </ul>
       </nav>
       <div>
-        {isLoggedIn?<button onClick={logOutHandler}>Log out</button>:<Link to={'login/'}><button>Log in</button></Link>}
+        {isLoggedIn?
+        <div>
+        <Link to={'account/'}>
+        <img src={account} alt="account" />
+        </Link>
+
+        <button onClick={logOutHandler}>
+        <img src={logout} alt="logout" />
+        </button>
+        </div>
+        :
+        <Link to={'login/'}><button>
+          <img src={login} alt="login" />
+          </button></Link>}
       </div>
 
     </div>

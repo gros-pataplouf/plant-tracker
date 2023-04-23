@@ -9,7 +9,6 @@ const customIcon1 = new L.Icon({
   iconRetinaUrl: plant1,
   popupAnchor:  [-0, -0],
   iconSize: [32,45],
-     
 });
 
 const customIcon2 = new L.Icon({
