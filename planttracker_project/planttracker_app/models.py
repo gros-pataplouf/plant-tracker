@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 def upload_to(instance, filename):
     extension=filename.split('.')[-1]
     file_id=uuid.uuid4()
-    return f'images/{file_id}.{extension}'
+    return f'{file_id}.{extension}'
 # why is this not an f string? what does format do? 
 class Tag(models.Model):
     value = models.TextField(max_length=15)
@@ -32,7 +32,6 @@ class Location(models.Model):
     location = models.PointField()
     area = models.PositiveIntegerField()
     image = models.ImageField(_("Photo"), upload_to=upload_to, blank=True)
- #upload_to='users/%Y/%m/%d/', 
     description = models.CharField(max_length=100, blank=True)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
     plant = models.ForeignKey(Plant, on_delete=models.PROTECT)

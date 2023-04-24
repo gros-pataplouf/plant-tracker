@@ -4,13 +4,12 @@ import { testMail, testPassword } from '../helpers/checks';
 
 
 export default function Account() {
-
     const [ user, setUser ] = useState();
     const [ emailErr, setEmailErr ] =  useState('');
     const [ pwdErr, setPwdErr ] =  useState('');
     const [ incompleteErr, setIncompleteErr ] =  useState('');
+    const [ submissions, setSubmissions ] = useState([]);
     const [ message, setMessage ] = useState('')
-
     const [successEmail, setSuccessEmail] = useState(false);
     const [ successPwd, setSuccessPwd ] = useState(false);
     const emailFormData = new FormData();
@@ -19,9 +18,12 @@ export default function Account() {
         axiosInstance.get('users/myaccount/')
         //backend filters out the right user
         .then(res => {
-            setUser(res.data)
-            
-            
+            const user = res.data
+            setUser(user);
+            axiosInstance.get(`locations?author=${user.id}`)
+            .then(res => { setSubmissions(res.data); console.log(submissions)})
+            .catch(err => console.error(err))
+                        
         })
         .catch(err => {
             console.log(err)
@@ -29,7 +31,6 @@ export default function Account() {
     }, [])
 
     function updateEmailFormData() {
-
         setEmailErr('');
         setIncompleteErr('');
         emailFormData.append('email', document.querySelector('#emailForm>#email').value.trim());
@@ -42,10 +43,7 @@ export default function Account() {
             setEmailErr(`${emailFormData.get('email')} is no valid email address.`)
         
             }
-
     }
-
-
 
     function handleEmailSubmit(e) {
         e.preventDefault();
@@ -71,19 +69,13 @@ export default function Account() {
               setIncompleteErr("Please fill out all required fields")
               } 
             }
-
             if (document.querySelector('#passwordForm>#password').value.trim() !==  document.querySelector('#passwordForm>#passwordConfirmation').value.trim()) {
               setPwdErr('Passwords must match')
-      
             }
-      
             if (!testPassword(passwordFormData.get('password'))) {
-      
               setPwdErr('Passwords must contain at least 8 characters, one capital letter, one small letter, one number and one special character!')
-      
             }
-
-    } 
+            } 
     // <form action="" id="passwordForm" onChange={passwordChangeHandler} onSubmit={passwordSubmitHandler}>
 
     function passwordSubmitHandler(e) {
@@ -99,7 +91,21 @@ export default function Account() {
         })
     }
 
+    function deleteHandler() {
+        axiosInstance.delete('users/myaccount/')
+        .then(res => console.log(res))
+        .catch(err => console.error(err))
+    }
 
+/// functions for opening and closing modals 
+
+    function cancelModal(e) {
+        return null
+    }
+
+    function openModal(e) {
+        return null
+    }
 
 
 
@@ -115,12 +121,13 @@ export default function Account() {
             <p>Email</p>
             {user && <p>{user.email}</p>}
 
-            <button>Update</button>
+            <button onClick={openModal}>Update</button>
             {/* Backdrop */}
             <div> 
                 {/* Modal */}
                 <div>
                     <form action="" id="emailForm" onChange={updateEmailFormData} onSubmit={handleEmailSubmit}>
+                    <div onClick={cancelModal}><img src="" alt="" /></div>
                         <label htmlFor="">New email</label>
                         <input id='email' name='email' type="text" />
                         {emailErr && 
@@ -130,6 +137,7 @@ export default function Account() {
                         <p>{incompleteErr}</p>
                         }
                         <button>Ok</button>
+                        <button onClick={cancelModal}>Cancel</button>
                     </form>
                 </div>
                 {/* End modal */}
@@ -138,17 +146,19 @@ export default function Account() {
         </div>
 {/* Password change */}
         <div>
-        <button>Change password</button>
+        <button onClick={openModal}>Change password</button>
             {/* Backdrop */}
             <div> 
                 {/* Modal */}
                 <div>
                     <form action="" id="passwordForm" onChange={passwordChangeHandler} onSubmit={passwordSubmitHandler}>
+                        <div onClick={cancelModal}><img src="" alt="" /></div>
                         <label htmlFor="">New password</label>
                         <input id='password' name='password' type="text" />
                         <label htmlFor="">Confirm new password</label>
                         <input id='passwordConfirmation' name='passwordConfirmation' type="text" />
                         <button>Ok</button>
+                        <button onClick={cancelModal}>Cancel</button>
                     </form>
                     {pwdErr && 
                         <p>{pwdErr}</p>
@@ -166,7 +176,15 @@ export default function Account() {
 
         <h1>My submissions</h1>
         <ul>
-            <li></li>
+            {!submissions? <li>You have not submitted any data yet.</li> 
+            : 
+             submissions.map(submission => {
+                let date = new Date(submission.created_at);
+                let minutes = date.getMinutes()
+                return <li key={submission.id}>
+                    🕙 {date.getFullYear()}-{date.getMonth()}-{date.getDate()} at {date.getHours()}:
+                    {minutes < 10? `0${minutes}` :  minutes} <img src={submission.image} alt="" />
+                    </li>})}
         </ul>
     {/* Account deletion */}
     <div>
@@ -176,11 +194,9 @@ export default function Account() {
                 {/* Modal */}
                 <div>
                     <form action="">
-                        <label htmlFor="">New email</label>
-                        <input type="text" />
-                        <label htmlFor="">Password</label>
-                        <input type="text" />
-                        <button>Ok</button>
+                        <p>Are you sure you want to delete your account? This cannot be undone!</p>
+                        <button onClick={deleteHandler}>Yes, I'm sure</button>
+                        <button onClick={cancelModal}>Cancel</button>
                     </form>
                 </div>
                 {/* End modal */}

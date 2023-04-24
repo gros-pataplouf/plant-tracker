@@ -62,17 +62,14 @@ class UserList(generics.ListAPIView):
     queryset = User.objects.all()
 
 
-
-
 class LocationList(generics.ListCreateAPIView):
     queryset = Location.objects.all()
     serializer_class = LocationSerializer
     permission_classes = [ IsAuthenticatedOrReadOnly ]
     parser_classes = [ MultiPartParser, FormParser ]
-    # def get_queryset(self):
-    #     if self.request.user.is_authenticated:
-    #         return Location.objects.filter(author=self.request.user)
-    #     return Location.objects.all()
+    def get_queryset(self):
+        query = self.request.GET
+        return Location.objects.filter(**query.dict())
 
     def post(self, request, format=None):
         auth_data = JWT_authenticator.authenticate(request)
@@ -165,3 +162,7 @@ class AuthTest(generics.GenericAPIView):
             return Response(status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+class Images(generics.ListAPIView):
+    def get(self, request):
+        pass
