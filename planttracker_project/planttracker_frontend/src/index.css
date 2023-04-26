@@ -3,3 +3,116 @@
 @tailwind utilities;
 
 #map { height: 400px; };
+
+@layer base {
+    @font-face {
+        font-family: 'Roboto Slab';
+        src: url('./assets/fonts/robotoslab-thin-webfont.woff2') format('woff2'),
+             url('./assets/fonts/robotoslab-thin-webfont.woff') format('woff');
+        font-weight: 100;
+        font-style: normal;
+    
+    }
+    
+    
+    
+    @font-face {
+        font-family: 'Roboto Slab';
+        src: url('./assets/fonts/robotoslab-semibold-webfont.woff2') format('woff2'),
+             url('./assets/fonts/robotoslab-semibold-webfont.woff') format('woff');
+        font-weight: 600;
+        font-style: normal;
+    
+    }
+    
+    
+    
+    
+    @font-face {
+        font-family: 'Roboto Slab';
+        src: url('./assets/fonts/robotoslab-regular-webfont.woff2') format('woff2'),
+             url('./assets/fonts/robotoslab-regular-webfont.woff') format('woff');
+        font-weight: 400;
+        font-style: normal;
+    
+    }
+    
+    
+    
+    
+    @font-face {
+        font-family: 'Roboto Slab';
+        src: url('./assets/fonts/robotoslab-medium-webfont.woff2') format('woff2'),
+             url('./assets/fonts/robotoslab-medium-webfont.woff') format('woff');
+        font-weight: 500;
+        font-style: normal;
+    
+    }
+    
+    @font-face {
+        font-family: 'Roboto Slab';
+        src: url('./assets/fonts/robotoslab-light-webfont.woff2') format('woff2'),
+             url('./assets/fonts/robotoslab-light-webfont.woff') format('woff');
+        font-weight: 300;
+        font-style: normal;
+    
+    }
+
+    @font-face {
+        font-family: 'Roboto Slab';
+        src: url('./assets/fonts/robotoslab-extralight-webfont.woff2') format('woff2'),
+             url('./assets/fonts/robotoslab-extralight-webfont.woff') format('woff');
+        font-weight: 200;
+        font-style: normal;
+    
+    }
+    
+    
+    
+    
+    @font-face {
+        font-family: 'Roboto Slab';
+        src: url('./assets/fonts/robotoslab-extrabold-webfont.woff2') format('woff2'),
+             url('./assets/fonts/robotoslab-extrabold-webfont.woff') format('woff');
+        font-weight: 800;
+        font-style: normal;
+    
+    }
+    
+    
+    
+    
+    @font-face {
+        font-family: 'Roboto Slab';
+        src: url('./assets/fonts/robotoslab-bold-webfont.woff2') format('woff2'),
+             url('./assets/fonts/robotoslab-bold-webfont.woff') format('woff');
+        font-weight: 700;
+        font-style: normal;
+    
+    }
+    
+    
+    
+    
+    @font-face {
+        font-family: 'Roboto Slab';
+        src: url('./assets/fonts/robotoslab-black-webfont.woff2') format('woff2'),
+             url('./assets/fonts/robotoslab-black-webfont.woff') format('woff');
+        font-weight: 900;
+        font-style: normal;
+    
+    }
+    
+    
+    
+    
+    @font-face {
+        font-family: 'Roboto Slab';
+        src: url('./assets/fonts/robotoslab-thin-webfont.woff2') format('woff2'),
+             url('./assets/fonts/robotoslab-thin-webfont.woff') format('woff');
+        font-weight: 100;
+        font-style: normal;
+    
+    }
+}
+

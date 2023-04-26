@@ -20,9 +20,9 @@ export default function Header ({props}) {
 
   }
   return (
-    <div>
+    <div className="bg-green2t flex-row">
       <nav>
-          <ul>
+          <ul className="font-roboto-700 text-2xl">
               <li><Link to={'/'}>Plant Info</Link></li>
               <li><Link to={'explore/'}>Explore</Link></li>
               <li><Link to={'track/'}>Participate</Link></li>
