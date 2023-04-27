@@ -4,6 +4,8 @@ module.exports = {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+
+
   theme: {
     colors: {
       green1o: 'hsla(83, 58%, 69%, 1)',
@@ -17,7 +19,16 @@ module.exports = {
       white0t: 'hsla(0, 0%, 100%, 0.4)',
       grey1o: 'hsla(0, 0%, 32%, 1)',
       grey2o: 'hsla(0, 0%, 20%, 1)',
-      yellow1o: 'hsla(42, 100%, 68%, 1)'
+      yellow1o: 'hsla(42, 100%, 68%, 1)',
+      pantone: '#fb6107', 
+      citrine: '#f3de2c',
+      cream: '#f4f0bb',
+      brown: '#43291f',
+      apple: '#7cb518',
+      avocado: '#5c8001',
+      xanthous: '#fbb02d',
+      lime: '#abff4f',
+      kaki: '#1e2b0a'
   },
 
     extend: {

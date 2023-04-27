@@ -3,7 +3,9 @@
 @tailwind utilities;
 
 #map { height: 400px; };
+/* override leaflet z-indices */
 
+/*  */
 @layer base {
     @font-face {
         font-family: 'Roboto Slab';

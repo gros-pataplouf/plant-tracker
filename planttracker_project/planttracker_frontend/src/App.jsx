@@ -6,12 +6,12 @@ import Header from './components/Header';
 function App() {
   const [ isLoggedIn, setIsLoggedIn ] = useState(Boolean(localStorage.getItem('planttrackerAccess')));
   return (
-  <>
-  <Header props={{ isLoggedIn, setIsLoggedIn }}/>
-  <div id="detail">
+  <div>
+  <Header className="relative" props={{ isLoggedIn, setIsLoggedIn }}/>
+  <div className="bg-citrine flex flex-col mt-[10vh]" id="detail">
   <Outlet context={[isLoggedIn, setIsLoggedIn]}/>
   </div>
-  </>
+  </div>
   )
 }
 
