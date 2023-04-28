@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axiosInstance from '../helpers/axios';
 import login from '../assets/icons/login.svg';
 import logout from '../assets/icons/logout.svg';
@@ -7,8 +7,10 @@ import account from '../assets/icons/account.svg';
 import hamburger from '../assets/icons/hamburger.svg';
 import close from '../assets/icons/close.svg';
 
+
 export default function Header ({props}) {
   const {isLoggedIn, setIsLoggedIn} = props;
+  const [displayNav, setDisplayNav] = useState(false);
   function logOutHandler(e) {
     axiosInstance.post('token/blacklist/', {
       'refresh': localStorage.getItem("planttrackerRefresh"),
@@ -24,30 +26,15 @@ export default function Header ({props}) {
   }
 
   function toggleNav() {
-    const nav = document.querySelector('nav');
-    const map = document.querySelector('#map');
-    nav.classList.toggle('hidden');
-    //hide map bc high z index and pos absolute goes over nav div, does not work properly
-    map.classList.toggle('hidden');
+    setDisplayNav(!displayNav)
 
   }
 
 
-  // as the header has fixed positining, the element directly following the sibling needs an additionnal padding of more than the height of the header. 
-
-  // useEffect(() => {
-  //   if (document.getElementById("header")) {
-  //     const header = document.getElementById("header");
-  //     const height = header.getBoundingClientRect().height;
-  //     const headerSibling = header.nextElementSibling;
-  //     headerSibling.setAttribute("style", `margin-top: ${2*height}px`)
-  //   }
-  // }, [])
-
 
   return (
     <div className="bg-kaki space-4 fixed top-0 p-2 w-screen z-10" id="header">
-      <nav className="">
+      <nav className={displayNav ? '': 'hidden'}>
           <ul className="bg-kaki text-cream flex flex-col justify-center items-center p-4 fixed top-0 left-0 right-0 w-screen h-screen z-10 font-roboto-700 text-2xl [&>*:not(:first-child)]:my-8">
               <li className="absolute top-4 right-4" onClick={toggleNav}><img src={close} alt="" /></li>
               <li onClick={toggleNav}><Link to={'/'}>Plant Info</Link></li>

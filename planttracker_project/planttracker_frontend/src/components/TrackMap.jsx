@@ -4,6 +4,7 @@ import { useGeolocated } from "react-geolocated";
 import { debounce } from "../helpers/utils"
 import { API_OSM_NOMINATIM } from '../constants';
 import { useState, useEffect } from 'react';
+import { leafletLowZIndex } from '../helpers/leafletHelpers';
 
 
 
@@ -16,8 +17,8 @@ function Map({props}) {
         }
     }, [coords])
     return(
-    <MapContainer id="map" center={location} zoom={5} scrollWheelZoom={true}>
-        <TileLayer
+    <MapContainer id="map" center={location} zoom={5} scrollWheelZoom={true} whenReady={leafletLowZIndex}>
+        <TileLayer 
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" 
         />
@@ -46,7 +47,7 @@ function DynamicMarker(props) {
 //CenterAutomatically is a pseudo component allowing the map to center to any new location, thus allowing the user to set a location through the SearchField
 function CenterAutomatically({location}) {
     const map = useMap();
-     useEffect(() => {
+    useEffect(() => {
       map.flyTo(location, map.getZoom())
      }, [location]);
      return null;
