@@ -11,19 +11,7 @@ import close from '../assets/icons/close.svg';
 export default function Header ({props}) {
   const {isLoggedIn, setIsLoggedIn} = props;
   const [displayNav, setDisplayNav] = useState(false);
-  function logOutHandler(e) {
-    axiosInstance.post('token/blacklist/', {
-      'refresh': localStorage.getItem("planttrackerRefresh"),
 
-    })
-    .then(res => { console.log(res);
-    localStorage.removeItem('planttrackerAccess');
-    localStorage.removeItem('planttrackerRefresh');
-    setIsLoggedIn(false);
-    return window.location.href = '/'
-  })
-
-  }
 
   function toggleNav() {
     setDisplayNav(!displayNav)
@@ -33,9 +21,9 @@ export default function Header ({props}) {
 
 
   return (
-    <div className="bg-kaki space-4 fixed top-0 p-2 w-screen z-10" id="header">
+    <div className="bg-emerald-950 space-4 fixed top-0 p-2 w-screen z-10" id="header">
       <nav className={displayNav ? '': 'hidden'}>
-          <ul className="bg-kaki text-cream flex flex-col justify-center items-center p-4 fixed top-0 left-0 right-0 w-screen h-screen z-10 font-roboto-700 text-2xl [&>*:not(:first-child)]:my-8">
+          <ul className="bg-emerald-950 text-cream flex flex-col justify-center items-center p-4 fixed top-0 left-0 right-0 w-screen h-screen z-10 font-roboto-700 text-2xl [&>*:not(:first-child)]:my-8">
               <li className="absolute top-4 right-4" onClick={toggleNav}><img src={close} alt="" /></li>
               <li onClick={toggleNav}><Link to={'/'}>Plant Info</Link></li>
               <li onClick={toggleNav}><Link to={'explore/'}>Explore</Link></li>
@@ -44,20 +32,9 @@ export default function Header ({props}) {
               
           </ul>
       </nav>
-      <div className="flex justify-between">
-        {isLoggedIn?
-        <div className="flex justify-end">
-        <button onClick={logOutHandler}>
-        <img  src={logout} alt="logout" />
-        </button>
-        </div>
-        :
-        <Link to={'login/'}><button>
-          <img src={login} alt="login" />
-          </button></Link>}
-        
-        <div className="sm:invisible" onClick={toggleNav}><img src={hamburger} alt="" /></div>
-      </div>
+      
+       <div className=" sm:invisible" onClick={toggleNav}><img className="ml-auto" src={hamburger} alt="" /></div>
+
     </div>
   )
 }

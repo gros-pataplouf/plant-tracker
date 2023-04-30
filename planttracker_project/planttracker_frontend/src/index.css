@@ -2,11 +2,61 @@
 @tailwind components;
 @tailwind utilities;
 
-#map { height: 400px; };
-/* override leaflet z-indices */
+#map { 
+    height: 75vh; };
 
 
 @layer base {
+
+    html {
+        font-size: 62.5%;
+        @apply bg-cream;
+    }
+
+    h1 {
+        font: normal 900 4.8rem/5.6rem "Roboto", sans-serif;
+        
+    }
+
+    h2 {
+        font: normal 900 3.6rem/3.4rem "Roboto Slab", sans-serif;
+    
+    }
+
+    h3 {
+        font: normal 700 2.4rem/2.8rem "Roboto Slab", sans-serif;
+
+    }
+
+    h4 {
+        font: normal 400 1.8rem/2.1rem "Roboto", sans-serif;
+    }
+
+    p {
+        font: normal 400 1.4rem/1.8rem "Roboto", sans-serif;
+    }
+
+    button {
+        font: normal 600 1.4rem/1.8rem "Roboto", sans-serif;
+    }
+
+
+
+
+
+    input {
+        border-radius: .5rem !important;
+    }
+    input:focus {
+        /* box-shadow: hsl(45, 5%, 16%) !important; */
+        outline-color: transparent !important;
+        border-color: hsl(38, 96%, 58%) !important;
+        
+     }
+
+
+
+
     @font-face {
         font-family: 'Roboto Slab';
         src: url('./assets/fonts/robotoslab-thin-webfont.woff2') format('woff2'),
@@ -118,3 +168,9 @@
     }
 }
 
+
+@layer components {
+    .btn {
+        @apply rounded-lg m-3 p-4 w-6/12 mx-auto content-center text-yellow-50 bg-emerald-800  active:bg-emerald-950  active:shadow-green-950/50 active:text-white
+    }
+}

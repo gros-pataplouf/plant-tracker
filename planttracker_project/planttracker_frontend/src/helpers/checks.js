@@ -17,5 +17,6 @@ export function testPassword(password) {
     const re4 = /[^a-zA-Z0-9]/
     return minlength && re1.exec(password) && re2.exec(password) && re3.exec(password) && re4.exec(password) 
 
-
 }
+
+

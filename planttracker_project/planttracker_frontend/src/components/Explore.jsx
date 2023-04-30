@@ -1,7 +1,7 @@
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import { useState, useEffect } from 'react';
 import axiosInstance from '../helpers/axios';
-import { plantsAndMarkers, plantsAndSymbols } from '../helpers/leafletHelpers';
+import { plantsAndMarkers, plantsAndSymbols, leafletLowZIndex } from '../helpers/leafletHelpers';
 
 function Checkbox({props}) {
 
@@ -45,7 +45,7 @@ function Legend({props}) {
   {plantList.map(plant => (
       <div key={plant.id}>
       <Checkbox props={{plant, locationList, setLocationList, initialLocationList}}/>
-      <label for={plant.id}>
+      <label htmlFor={plant.id}>
         <img src={plantsAndSymbols[plant.id]} alt="" />
         {plant.common_name_en}</label>
     </div>
@@ -86,7 +86,7 @@ export default function Explore() {
 
     return (
       <>
-    <MapContainer id="map" center={[54.06325355147857, 9.86409912109375]} zoom={8} scrollWheelZoom={false}>
+    <MapContainer className="border-mint/99 border-2 rounded-md h-[80vh] m-4" id="map" center={[54.06325355147857, 9.86409912109375]} zoom={8} scrollWheelZoom={false} whenReady={leafletLowZIndex}>
   <TileLayer
     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

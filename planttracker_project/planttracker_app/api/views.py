@@ -98,12 +98,8 @@ class UserCreate(generics.ListCreateAPIView):
     def post(self, request):
         uuid=""
         pwd = request.data['password']
-# \W any non alphanumeric character \d decimal [a-z] [A-Z]
-        cond1 = re.compile('\W')
-        cond2 = re.compile('[A-Z]')
-        cond3 = re.compile('[a-z]')
-        cond4 = re.compile('[0-9]')
-        if len(pwd) < 8 or not cond1.match(pwd) or not cond2.match(pwd) or not cond3.match(pwd) or not cond4.match(pwd):
+        # \W any non alphanumeric character \d decimal [a-z] [A-Z]
+        if len(pwd) < 8 or not re.search('[A-Z]', pwd) or not re.search('[a-z]', pwd)  or not re.search('[0-9]', pwd)  or not re.search('[\W]', pwd) :
             return Response("Your password does not meet the requirements.", status=status.HTTP_400_BAD_REQUEST)
 
         existing_users = User.objects.filter(username=request.data['username']) | User.objects.filter(email=request.data['email'])

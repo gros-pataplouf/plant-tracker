@@ -8,13 +8,15 @@
 ✔ Login: block submission if form empty @done(23-04-17 13:52)
 ✔ @high Explore: filter by plant species @done(23-04-17 18:01)
 ✔ @high change color of markers according to species @done(23-04-17 18:01)
+✔ @high User Detail page @done(23-04-29 10:59)
+    ✔ @high   Delete account @done(23-04-29 10:59)
+    ✔ @high Change PWD @done(23-04-29 10:59)
+    ✔ @low view submitted data @done(23-04-29 10:59)
 
 ☐ @low Plant Detail page
 ☐ @high Location Detail page
-☐ @high User Detail page 
-    ☐ @high   Delete account
-    ☐ @high Change PWD
-    ☐ @low view submitted data 
+☐ @high reset password from login page
+
 ✘ @low Plant List : filter by tag @cancelled(23-04-24 15:42)
 ✘ @low nice to have : visualize data in explore view @cancelled(23-04-24 15:42)
 
