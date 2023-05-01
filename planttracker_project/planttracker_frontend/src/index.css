@@ -10,7 +10,7 @@
 
     html {
         font-size: 62.5%;
-        @apply bg-cream;
+        @apply bg-yellow-100 text-slate-950;
     }
 
     h1 {
@@ -19,7 +19,7 @@
     }
 
     h2 {
-        font: normal 900 3.6rem/3.4rem "Roboto Slab", sans-serif;
+        font: normal 600 3.6rem/3.4rem "Roboto Slab", sans-serif;
     
     }
 
@@ -39,9 +39,6 @@
     button {
         font: normal 600 1.4rem/1.8rem "Roboto", sans-serif;
     }
-
-
-
 
 
     input {
@@ -171,6 +168,8 @@
 
 @layer components {
     .btn {
-        @apply rounded-lg m-3 p-4 w-6/12 mx-auto content-center text-yellow-50 bg-emerald-800  active:bg-emerald-950  active:shadow-green-950/50 active:text-white
+        @apply rounded-full m-3 p-4 w-6/12 mx-auto content-center text-yellow-50 bg-emerald-800  active:bg-emerald-950  active:shadow-green-950/50 active:text-white
     }
+
+
 }
