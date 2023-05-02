@@ -17,8 +17,7 @@ const classes = {
   imageContainer: 'relative',
   chevronLeft: 'group-first/item:hidden bg-slate-500/80 absolute rounded-[50%] top-[calc(50%-24px)] -left-6',
   chevronRight: 'group-last/item:hidden bg-slate-500/80 absolute rounded-[50%] top-[calc(50%-24px)] -right-6',
-  image: "w-full rounded-xl border-emerald-950",
-  link: "font-bold text-emerald-800 italic active:text-emerald-950 active:underline"
+  image: "w-full rounded-xl border-emerald-950"
 
 }
 
@@ -48,7 +47,7 @@ export default function PlantList () {
     
     return (
       <div className={classes.wrapper}>
-        <h2 className={classes.title}>Invasive plants</h2>
+        <h2 className={classes.title}>Plant detail</h2>
         <div className={classes.embla}>
         <div  ref={emblaRef}>
 
@@ -71,7 +70,7 @@ export default function PlantList () {
                               </button>
                               <img className={classes.image} src={plant.photo} alt=""/>
                             </div>
-                            <p>{sliceAfterNearestSpace(plant.description_en, 500)}&hellip; <Link className={classes.link} to={"/plants/" + plant.id}>Read more</Link></p>
+                            <p>{sliceAfterNearestSpace(plant.description_en, 500)}&hellip; <Link to={"/plants/" + plant.id}>Read more</Link></p>
 
                         </div>
         
