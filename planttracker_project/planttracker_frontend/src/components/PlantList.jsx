@@ -23,10 +23,10 @@ const classes = {
 }
 
 
-
 export default function PlantList () {
     const [emblaRef, emblaApi] = useEmblaCarousel();
     const [plantList, setPlantList] = useState([]);
+    const [plantImages, setPlantImages] = useState([]);
 
     const scrollPrev = useCallback(() => {
       if (emblaApi) emblaApi.scrollPrev()
@@ -38,7 +38,14 @@ export default function PlantList () {
   
 
     useEffect(() => {axiosInstance.get('plants/')
-      .then(res => setPlantList(res.data))
+      .then(res => {
+        setPlantList(res.data);
+        axiosInstance.get('plants/images')
+        .then(res => {
+          console.log(res.data)
+          setPlantImages(res.data);
+        })
+      })
       .catch(err => {
         console.error(err);
       })
@@ -53,7 +60,8 @@ export default function PlantList () {
         <div  ref={emblaRef}>
 
         <div className={classes.emblaContainer}>
-            {!plantList || plantList.length <= 0? (
+          console.log(plantImages)
+            {!plantList || plantList.length <= 0 && plantImages.length >= 0 ? (
                 <h4>No plant info available</h4> ) : (
                 
                   
@@ -69,7 +77,7 @@ export default function PlantList () {
                               <button className={classes.chevronRight} onClick={scrollNext}>
                                 <img src={chevron_right} alt="" />
                               </button>
-                              <img className={classes.image} src={plant.photo} alt=""/>
+                              <img className={classes.image} src={plantImages.filter(img => img.plant === plant.id)[0]} alt=""/>
                             </div>
                             <p>{sliceAfterNearestSpace(plant.description_en, 500)}&hellip; <Link className={classes.link} to={"/plants/" + plant.id}>Read more</Link></p>
 

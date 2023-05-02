@@ -10,11 +10,11 @@ from rest_framework_simplejwt.views import (
     TokenBlacklistView
 )
 
-from .views import PlantDetail, PlantList, LocationDetail, LocationList, UserList,\
-UserDetail, UserCreate, UserActivate, AuthTest, MyAccount, Images
+from .views import PlantDetail, PlantList, LocationDetail, LocationList, UserList, PlantImages, UserDetail, UserCreate, UserActivate, AuthTest, MyAccount
 
 urlpatterns = [
     path('plants/', PlantList.as_view(), name="api_plant_list"),
+    path('plants/images/', PlantImages.as_view(), name="api_plant_images"),
     path('plants/<int:pk>', PlantDetail.as_view(), name="api_plant_detail"),
     path('users/myaccount/', MyAccount.as_view(), name="api_user_myaccount"),
     path('users/', UserList.as_view(), name="api_user_list"),

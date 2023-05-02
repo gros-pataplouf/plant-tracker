@@ -1,4 +1,4 @@
-from ..models import Tag, Plant, Location, ActivationUUID
+from ..models import Plant, Location, ActivationUUID, PlantImage, LocationImage, ResetUUID
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
@@ -7,10 +7,12 @@ class ActivationUUIDSerializer(serializers.ModelSerializer):
         model = ActivationUUID
         fields = "__all__"
 
-class TagSerializer(serializers.ModelSerializer):
+class ResetUUIDSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Tag
+        model = ResetUUID
         fields = "__all__"
+
+
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -18,12 +20,21 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('email', 'username', 'password', 'id')
 
 
-
-
 class PlantSerializer(serializers.ModelSerializer):
-    tags = serializers.SlugRelatedField(queryset=Tag.objects.all(), many = True, slug_field='value')
     class Meta:
         model = Plant
+        fields = "__all__"
+        read_only = "__all__"
+
+class PlantImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PlantImage
+        fields = "__all__"
+        read_only = "__all__"
+
+class LocationImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LocationImage
         fields = "__all__"
         read_only = "__all__"
 

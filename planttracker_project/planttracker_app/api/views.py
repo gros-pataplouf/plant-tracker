@@ -21,8 +21,8 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from planttracker_app.api.throttles import AnonBurstRateThrottle, AnonSustainedRateThrottle
 
 from django.contrib.auth.models import User
-from ..models import Tag, Plant, Location, ActivationUUID
-from .serializers import UserSerializer, TagSerializer, PlantSerializer, LocationSerializer, RegisterUserSerializer, ActivationUUIDSerializer
+from ..models import Plant, Location, ActivationUUID, PlantImage
+from .serializers import UserSerializer, PlantSerializer, LocationSerializer, LocationImageSerializer, RegisterUserSerializer, ActivationUUIDSerializer, PlantImageSerializer
 from .permissions import IsAuthorOrReadOnly
 
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -30,10 +30,10 @@ from rest_framework_simplejwt.views import TokenBlacklistView
 
 JWT_authenticator = JWTAuthentication()
 
-class PlantList(generics.ListAPIView):
+class PlantList(generics.ListCreateAPIView):
     queryset = Plant.objects.all()
     serializer_class = PlantSerializer
-    permission_classes = [ IsAuthenticatedOrReadOnly ]
+    permission_classes = [ AllowAny ]
 
 
 class PlantDetail(generics.RetrieveAPIView):
@@ -78,9 +78,21 @@ class LocationList(generics.ListCreateAPIView):
             #make multipart query set mutable in order to add author
             setattr(request.data, '_mutable', True)
             request.data['author'] = token.payload['user_id']
-            serializer = LocationSerializer(data=request.data)
-            if serializer.is_valid():
-                serializer.save()
+
+            location_serializer = LocationSerializer(data=request.data)
+            if location_serializer.is_valid():
+                location_serializer.save()
+                #step 2 : now get the id of the new location object and save the images
+                location_id = location_serializer.data['id']
+                if request.FILES:
+                    for lst in dict(request.FILES).values():
+                        for file in lst:
+                            location_img_serializer = LocationImageSerializer(data={'location': location_id, 'image': file})
+                            if (location_img_serializer.is_valid()):
+                                location_img_serializer.save()
+                                return Response("Submission successful", status=status.HTTP_201_CREATED)
+                            else:
+                                return Response("Data submitted are invalid or incomplete.", status=status.HTTP_400_BAD_REQUEST)
                 return Response("Submission successful", status=status.HTTP_201_CREATED)
             else: 
                 print(serializer.errors)
@@ -159,6 +171,6 @@ class AuthTest(generics.GenericAPIView):
         else:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
 
-class Images(generics.ListAPIView):
-    def get(self, request):
-        pass
+class PlantImages(generics.ListAPIView):
+    queryset = PlantImage.objects.all()
+    serializer_class = PlantImageSerializer

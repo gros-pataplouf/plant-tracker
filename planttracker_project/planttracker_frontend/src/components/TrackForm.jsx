@@ -5,11 +5,11 @@ export default function TrackForm({props}) {
     const {location, setDisplay} = props;
     const [lat, lng] = location;
     const [plantList, setPlantList] = useState([]);
-    const [ image, setImage ] = useState(null);
+    const [ images, setImages ] = useState([]);
     const [ success, setSuccess ] = useState(false);
     const [ message, setMessage ] = useState('');
     function handleChange(e) {
-      setImage(e.target.files[0]);
+      setImages(e.target.files);
     };
 
     useEffect(() => {
@@ -22,7 +22,9 @@ export default function TrackForm({props}) {
       formData.append('plant', selection.options[selection.selectedIndex].id);
       formData.append('area', parseInt(document.getElementById('area').value));
       formData.append('location', `{"type": "Point", "coordinates": [${lat}, ${lng}]}`)
-      image && formData.append('image', image);
+      if (images.length) {for (let img of images) {
+        formData.append('images', img)
+      }}
       formData.append('description', document.getElementById('description').value);
 
       // check for missing fields 
@@ -51,7 +53,7 @@ export default function TrackForm({props}) {
   
   
     return (
-      <> {!success && <form method="post">    
+      <> {!success && <form method="post" enctype="multipart/form-data">    
         <label htmlFor="location">Surface</label>
         <input type="number" min='0' name="area" id="area" />
         <label htmlFor="description">Add a comment</label>
@@ -62,9 +64,12 @@ export default function TrackForm({props}) {
               return (
             <option key={plant.id} id={plant.id} name={plant.common_name_en}>{plant.common_name_en}</option>)})}
         </select>
-        <label htmlFor="image">Upload a photo</label>
-        <input accept='image/' id="image" name="image" type="file" onChange={handleChange}/>
-        {image && <img src={URL.createObjectURL(image)} alt='preview' />}
+        <label htmlFor="images">Upload a photo</label>
+        <input accept='image/' id="images" name="images" type="file" multiple onChange={handleChange}/>
+        <div>
+{/* in order to show preview, convert FileList to Ecmascript array if there are any images in state*/}
+        { images.length && Array.from(images).map(img => { return (<img src={URL.createObjectURL(img)} alt='preview' />)})}
+          </div>
         <button type="submit" value="Submit" onClick={submitHandler}>Submit</button>
       </form>}
       {message && <p>{message}</p>}
