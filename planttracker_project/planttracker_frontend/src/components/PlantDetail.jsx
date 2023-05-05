@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import axiosInstance from '../helpers/axios';
-import { sliceAfterNearestSpace } from '../helpers/utils';
 import React from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import chevron_right from '../assets/icons/chevron_right.svg';
@@ -10,7 +9,7 @@ const classes = {
   wrapper: 'h-[80vh]',
   embla: 'overflow-hidden',
   emblaContainer: 'flex ',
-  emblaSlide: 'group/item overflow-clip flex-[0_0_95%] overflow-clip min-w-0 space-y-2 p-2 bg-yellow-50 rounded-xl shadow-lg shadow-slate-500/50 border-solid border-2 border-slate-300 m-8',
+  emblaSlide: 'group/item overflow-clip flex-[0_0_95%] border-r-white overflow-clip min-w-0 space-y-2 p-2 bg-yellow-50 rounded-xl shadow-lg shadow-slate-500/50 border-solid border-2 border-slate-300 m-8',
   title: 'px-2 text-emerald-800',
   name: '',
   scientific: 'italic',
@@ -70,7 +69,7 @@ export default function PlantList () {
                               </button>
                               <img className={classes.image} src={plant.photo} alt=""/>
                             </div>
-                            <p>{sliceAfterNearestSpace(plant.description_en, 500)}&hellip; <Link to={"/plants/" + plant.id}>Read more</Link></p>
+                            <p>{plant.description_en}</p>
 
                         </div>
         

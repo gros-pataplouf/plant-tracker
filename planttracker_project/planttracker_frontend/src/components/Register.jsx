@@ -97,8 +97,6 @@ export default function Register() {
         <button className="btn" type="submit">Create account</button>
         <p className="text-red-800 italic">{incompleteErr}</p>
      </form>}
-
-
      <p>Message{message}</p>
 </div>
 

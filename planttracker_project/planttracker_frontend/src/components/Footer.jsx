@@ -5,6 +5,9 @@ import login from '../assets/icons/login.svg';
 import logout from '../assets/icons/logout.svg';
 import home from '../assets/icons/home.svg';
 
+const classes = {
+  wrapper: 'absolute z-20 top-[90vh] h-[10vh] bg-emerald-950 text-cream flex justify-between space-4 p-2 w-screen'
+}
 
 export default function Header ({props}) {
   const {isLoggedIn, setIsLoggedIn} = props;
@@ -23,11 +26,8 @@ export default function Header ({props}) {
 
   }
 
-
-
-
   return (
-    <div className="bg-emerald-950 text-cream flex justify-between space-4 fixed bottom-0 p-2 w-screen z-10" id="header">
+    <div className={classes.wrapper} id="footer">
         <div className="sm:invisible" onClick={() => {window.location.href='/'}}><img src={home} alt="" /></div>
         {isLoggedIn?
         <div className="flex justify-end">

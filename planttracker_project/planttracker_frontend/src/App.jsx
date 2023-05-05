@@ -3,12 +3,18 @@ import { useState } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer'
 
+const classes = {
+  wrapper: 'relative 100vh',
+  main: 'absolute top-[10vh] flex flex-col h-[80vh] w-screen overflow-clip',
+
+}
+
 function App() {
   const [ isLoggedIn, setIsLoggedIn ] = useState(Boolean(localStorage.getItem('planttrackerAccess')));
   return (
-  <div>
-  <Header className="relative" props={{ isLoggedIn, setIsLoggedIn }}/>
-  <div className="flex flex-col mt-[10vh]" id="detail">
+  <div className={classes.wrapper}>
+  <Header props={{ isLoggedIn, setIsLoggedIn }}/>
+  <div className={classes.main} id="detail">
   <Outlet context={[isLoggedIn, setIsLoggedIn]}/>
   </div>
   <Footer props={{ isLoggedIn, setIsLoggedIn }}/>

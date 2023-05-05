@@ -10,7 +10,7 @@
 
     html {
         font-size: 62.5%;
-        @apply bg-yellow-100 text-slate-950;
+        @apply bg-yellow-100 text-slate-950 m-0;
     }
 
     h1 {
