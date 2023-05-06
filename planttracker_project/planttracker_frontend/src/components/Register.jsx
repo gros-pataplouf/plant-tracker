@@ -2,10 +2,13 @@ import axiosInstance from '../helpers/axios';
 import { useState } from 'react';
 import { testMail, testPassword } from '../helpers/checks';
 import info from '../assets/icons/info.svg';
+import visibility from '../assets/icons/visibility.svg';
+import visibility_off from '../assets/icons/visibility_off.svg';
+
 
 const classes = {
-  wrapper: 'flex flex-col justify-between m-auto p-8',
-  title: '',
+  wrapper: 'flex flex-col justify-between m-auto p-8 rounded-xl shadow-lg shadow-slate-500/50 border-solid border-2 border-slate-300 m-4 bg-white',
+  title: 'py-8',
   form: 'flex flex-col ', 
   input: '',
   label: 'mt-4 mb-2',
@@ -14,9 +17,11 @@ const classes = {
   tooltipIcon: "inline w-7 align-top",
   tooltipSpan: "relative",
   tooltipDiv: "absolute w-[80vw] bg-black top-4 p-4 border-spacing-2 border-2 rounded-3xl text-yellow-50 hidden m-4 leading-none",
-  btn: 'btn mt-8',
+  btn: 'btn my-8',
   success: 'font-bold my-[50%]',
-  failure: 'font-bold'
+  failure: 'font-bold',
+  passwordWrapper: 'flex relative [&>button]:absolute [&>button]:top-2 [&>button]:right-2 [&>input]:grow',
+  visibilitySvg: 'h-6'
 }
 
 
@@ -27,6 +32,8 @@ export default function Register() {
     const [ pwdConfErr, setPwdConfErr ] =  useState('');
     const [ message, setMessage ] = useState('')
     const [success, setSuccess] = useState(false);
+    const [ showPwd, setShowPwd ] = useState(false);
+    const [ showPwdConf, setShowPwdConf ] = useState(false);
     const formData = new FormData();
     
     function validateForm() {
@@ -56,7 +63,7 @@ export default function Register() {
       }
 
       if (password && !testPassword(password)) {
-        setPwdErr('Invalid password')
+        setPwdErr('Invalid password. ')
      }
 
     }
@@ -98,9 +105,28 @@ export default function Register() {
         </span>
         }
         </label>
-        <input name='password' id='password' type='password' autoComplete='password' placeholder='required' className={pwdErr? "border-red-800": undefined}/>
+        <div className={classes.passwordWrapper}>
+            <input id="password" name="password" type="password" autoComplete='password' placeholder='required' className={pwdErr? "border-red-800": undefined}/>
+            <button onClick={(e) => { 
+              e.preventDefault(); 
+              document.querySelector('#password').setAttribute('type', showPwd? 'password':'text');
+              setShowPwd(!showPwd)}}>
+            <img className={classes.visibilitySvg} src={showPwd? visibility : visibility_off} alt="" />
+            </button>
+            </div>
+
         <label className={classes.label} htmlFor='passwordConfirmation'>Confirm password <span className={classes.errorSpan}>{pwdConfErr}</span></label>
-        <input name='passwordConfirmation' id='passwordConfirmation' type='password' placeholder='required'/>
+        <div className={classes.passwordWrapper}>
+            <input name='passwordConfirmation' id='passwordConfirmation' type='password' placeholder='required'/>
+            <button onClick={(e) => { 
+              e.preventDefault(); 
+              document.querySelector('#password').setAttribute('type', showPwdConf? 'password':'text');
+              setShowPwdConf(!showPwdConf)}}>
+            <img className={classes.visibilitySvg} src={showPwd? visibility : visibility_off} alt="" />
+            </button>
+            </div>
+
+
         <button className={classes.btn} type="submit">Create account</button>
         <p className={classes.errorSpan}>{incompleteErr}</p>
      </form>}
