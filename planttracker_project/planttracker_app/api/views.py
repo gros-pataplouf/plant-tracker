@@ -21,7 +21,7 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from planttracker_app.api.throttles import AnonBurstRateThrottle, AnonSustainedRateThrottle
 
 from django.contrib.auth.models import User
-from ..models import Plant, Location, ActivationUUID, PlantImage
+from ..models import Plant, Location, ActivationUUID, ResetUUID, PlantImage
 from .serializers import UserSerializer, PlantSerializer, LocationSerializer, LocationImageSerializer, RegisterUserSerializer, ActivationUUIDSerializer, PlantImageSerializer
 from .permissions import IsAuthorOrReadOnly
 
@@ -113,7 +113,6 @@ class UserCreate(generics.ListCreateAPIView):
         # \W any non alphanumeric character \d decimal [a-z] [A-Z]
         if len(pwd) < 8 or not re.search('[A-Z]', pwd) or not re.search('[a-z]', pwd)  or not re.search('[0-9]', pwd)  or not re.search('[\W]', pwd) :
             return Response("Your password does not meet the requirements.", status=status.HTTP_400_BAD_REQUEST)
-
         existing_users = User.objects.filter(username=request.data['username']) | User.objects.filter(email=request.data['email'])
         if bool(existing_users.values()):
             error = "Something went wrong, please try again. If the issue persists, you may want to choose another username."
@@ -143,6 +142,36 @@ class UserCreate(generics.ListCreateAPIView):
             return Response("Your account has been created. An email with an activation code has been sent.", status=status.HTTP_201_CREATED)
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
+class SendResetLink(generics.CreateAPIView):
+    throttle_classes = [AnonBurstRateThrottle, AnonSustainedRateThrottle]
+    permission_classes = [ AllowAny ]
+    def post(self, request):
+        uuid=""
+        email = request.data['email']
+        existing_users = User.objects.filter(username=request.data['email'])
+        if not bool(existing_users.values()):
+            #if email not in database, send email to self
+            email = 'planttrackerapp@gmx.de'
+
+            uuid_serializer = ResetUUIDSerializer(data={"email": email})
+            if uuid_serializer.is_valid():
+                uuid_serializer.save()
+                uuid = ResetUUID.objects.filter(email=request.data["email"]).values()[0]["id"]
+
+                try:
+                    send_mail(
+                    'Welcome to the Planttracker Project',
+                    f"Please click on the following link to activate your account:\
+                    localhost:5173/reset?{uuid}",
+                    'planttrackerapp@gmx.de',
+                    [email],
+                    fail_silently=False,
+                    )
+                except Exception as err:
+                    return Response("An error occured while sending the reset mail. This may be due to an invalid email address.", status=status.HTTP_500_INTERNAL_SERVER_ERROR)                
+            return Response("Please open your mailbox, we have sent you an password reset link.", status=status.HTTP_201_CREATED)
+
+
 class UserActivate(generics.RetrieveAPIView):
     queryset = ActivationUUID.objects.all()
     throttle_classes = [ AnonBurstRateThrottle, AnonSustainedRateThrottle ]
@@ -151,7 +180,6 @@ class UserActivate(generics.RetrieveAPIView):
         uuid_instance = get_object_or_404(ActivationUUID, id=id)
         if uuid_instance:
             if datetime.now() < uuid_instance.expiry_time.replace(tzinfo=None):
-                print("valid")
                 uuid_instance.delete()
                 user_instance = get_object_or_404(User, email=uuid_instance.email)
                 user_instance.is_active = True
@@ -174,3 +202,18 @@ class AuthTest(generics.GenericAPIView):
 class PlantImages(generics.ListAPIView):
     queryset = PlantImage.objects.all()
     serializer_class = PlantImageSerializer
+
+class ResetPassword(generics.RetrieveAPIView):
+    queryset = ResetUUID.objects.all()
+    throttle_classes = [ AnonBurstRateThrottle, AnonSustainedRateThrottle ]
+    permission_classes = [ AllowAny ]
+    def post(self, request, id):
+        uuid_instance = get_object_or_404(ResetUUID, id=id)
+        if uuid_instance:
+            if datetime.now() < uuid_instance.expiry_time.replace(tzinfo=None):
+                uuid_instance.delete()
+                user_instance = get_object_or_404(User, email=uuid_instance.email)
+                user_instance.is_active = True
+                user_instance.save()               
+                return Response("Your account has been activated.", status=status.HTTP_204_NO_CONTENT)
+        return Response("Something went wrong, request another activation token.", status=status.HTTP_404_NOT_FOUND)

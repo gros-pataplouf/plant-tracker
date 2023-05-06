@@ -126,7 +126,6 @@ export default function Register() {
             </button>
             </div>
 
-
         <button className={classes.btn} type="submit">Create account</button>
         <p className={classes.errorSpan}>{incompleteErr}</p>
      </form>}
