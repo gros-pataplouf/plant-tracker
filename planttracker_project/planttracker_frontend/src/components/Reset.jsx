@@ -1,13 +1,15 @@
 import axiosInstance from '../helpers/axios';
+import { useLocation, Link, useOutletContext } from 'react-router-dom';
 import { useState } from 'react';
-import { testMail, testPassword } from '../helpers/checks';
 import info from '../assets/icons/info.svg';
+
 import visibility from '../assets/icons/visibility.svg';
 import visibility_off from '../assets/icons/visibility_off.svg';
+import { testPassword } from '../helpers/checks';
 
 
 const classes = {
-  wrapper: 'flex flex-col justify-between m-auto p-8 rounded-xl shadow-lg shadow-slate-500/50 border-solid border-2 border-slate-300 m-4 bg-white',
+  wrapper: 'flex flex-col justify-between w-[90vw] m-auto p-8 bg-white rounded-xl shadow-lg shadow-slate-500/50 border-solid border-2 border-slate-300 m-4',
   title: 'py-8',
   form: 'flex flex-col ', 
   input: '',
@@ -16,47 +18,44 @@ const classes = {
   errorSpan:  "text-red-800 italic",
   tooltipIcon: "inline w-7 align-top",
   tooltipSpan: "relative",
-  tooltipDiv: "absolute w-[80vw] bg-black top-4 p-4 border-spacing-2 border-2 rounded-3xl text-yellow-50 hidden m-4 leading-none",
+  tooltipDiv: "absolute w-[80vw] bg-black top-4 p-4 border-spacing-2 border-2 rounded-3xl text-yellow-50 hidden m-4 leading-none z-10",
   btn: 'btn my-8',
   success: 'font-bold my-[50%]',
-  failure: 'font-bold',
+  failure: 'font-bold text-red-800', 
   passwordWrapper: 'flex relative [&>button]:absolute [&>button]:top-2 [&>button]:right-2 [&>input]:grow',
-  visibilitySvg: 'h-6'
+  visibilitySvg: 'h-6', 
+  info: 'mt-4', 
+  link: 'block pt-2 mr-10 text-emerald-900 font-bold active:decoration-solid'
+
 }
 
 
-export default function Register() {
-    const [ emailErr, setEmailErr ] =  useState('');
+export default function Reset() {
+    let uuid = window.location.search.slice(1,)
+    const [isLoggedIn, setIsLoggedIn] = useOutletContext();
+    const [ message, setMessage ] = useState('');
     const [ pwdErr, setPwdErr ] =  useState('');
     const [ incompleteErr, setIncompleteErr ] =  useState('');
     const [ pwdConfErr, setPwdConfErr ] =  useState('');
-    const [ message, setMessage ] = useState('')
-    const [success, setSuccess] = useState(false);
+ 
+    const location = useLocation();
     const [ showPwd, setShowPwd ] = useState(false);
     const [ showPwdConf, setShowPwdConf ] = useState(false);
-    const formData = new FormData();
-    
+    const [ success, setSuccess ] = useState(false);
     function validateForm() {
-      setEmailErr('');
       setIncompleteErr('');
       setPwdErr('');
       setPwdConfErr('');
 
-      let email = document.getElementById('email').value.trim();
-      let username = document.getElementById('username').value.trim();
       let password =  document.getElementById('password').value.trim();
       let passwordConfirmation = document.getElementById('passwordConfirmation').value.trim();
 
       /// check for empty fields
 
-      if (!email || !username || !password || !passwordConfirmation) {
+      if (!password || !passwordConfirmation) {
         setIncompleteErr("Please fill out all required fields.")
         } 
      
-      if ( email && !testMail(email)) {
-        setEmailErr('Invalid email.')
-
-      } 
 
       if (password && password !==  passwordConfirmation) {
         setPwdConfErr('Passwords must match.')
@@ -67,33 +66,30 @@ export default function Register() {
      }
 
     }
+
     function submitHandler(e) {
         e.preventDefault();
-        if (emailErr || pwdErr || incompleteErr ) {
-          return window.alert('Invalid form, please check the data provided!')
-        }
-        formData.append('email', document.getElementById('email').value);
-        formData.append('username', document.getElementById('username').value);
-        formData.append('password', document.getElementById('password').value);
-        formData.append('passwordConfirmation', document.getElementById('passwordConfirmation').value);
+        
+        if (!document.querySelector('input#password').value) {
+          setMessage("Cannot submit empty form. ⛔");
+          return null;
+        };
 
-        axiosInstance.post('http://localhost:8000/api/register/', document.querySelector('#registrationForm'), {
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          })
-          .then(res => {setMessage(res.data);
-          setSuccess(true)})
-          .catch(error => setMessage(error.response.data))}
+         
+        axiosInstance.post(`reset/${uuid}`, document.querySelector('#resetForm'))
+          .then(res => {
+            setMessage("Your password has been reset ✅")
+            })
+          .catch(
+            error =>{
+            console.error(error.response);
+            setMessage("Invalid reset link ⛔")})
+    }
     return (
-      <div className={classes.wrapper}>
-      <h3 className={classes.title}>Sign up and contribute 💚</h3>
-      {!success && 
+        <div className={classes.wrapper}>
+        <h3 className={classes.title}>Password reset ✍️</h3>
+        {!success && 
       <form className={classes.form} id='registrationForm' onSubmit={submitHandler} onChange={validateForm}>
-        <label className={classes.label} htmlFor='email'>Email<span className={classes.errorSpan}> {emailErr}</span></label>
-        <input name='email' type='email' id='email' autoComplete='email' className={emailErr? classes.errorInput: 'undefined'} placeholder='required'/>
-        <label className={classes.label} htmlFor='username'>Username</label>
-        <input name='username' type='text' id='username' autoComplete='username' placeholder='required'/>
         <label className={classes.label} htmlFor='password'>Password {pwdErr && <span className={classes.errorSpan}>{pwdErr}  
         <span className={classes.tooltipSpan} onClick={()=>{
               const tooltip = document.querySelector("#tooltip");
@@ -120,20 +116,24 @@ export default function Register() {
             <input name='passwordConfirmation' id='passwordConfirmation' type='password' placeholder='required'/>
             <button onClick={(e) => { 
               e.preventDefault(); 
-              document.querySelector('#password').setAttribute('type', showPwdConf? 'password':'text');
+              document.querySelector('#passwordConfirmation').setAttribute('type', showPwdConf? 'password':'text');
               setShowPwdConf(!showPwdConf)}}>
-            <img className={classes.visibilitySvg} src={showPwd? visibility : visibility_off} alt="" />
+            <img className={classes.visibilitySvg} src={showPwdConf? visibility : visibility_off} alt="" />
             </button>
             </div>
 
         <button className={classes.btn} type="submit">Create account</button>
         <p className={classes.errorSpan}>{incompleteErr}</p>
      </form>}
-     {success? <p className={success ? classes.success: classes.errorSpan}>✅ {message}</p> : message && <p className={classes.failure}>⚠️ {message}</p>}
-     
-</div>
+         <div>
+          <p className={classes.failure}>{message}</p>
+
+          <p className={classes.info}>  Want to login? </p>
+          <Link className={classes.link} to='/reset'> 👉 Login page</Link>
+          <p className={classes.info}>No account yet?</p>
+          <Link  className={classes.link} to='/register'> 👉 Register</Link>
+         </div>
+        </div>
 
     )
 }
-
-

@@ -10,6 +10,7 @@ import Activate from "./components/Activate"
 import PlantList from './components/PlantList'
 import PlantDetail from './components/PlantDetail';
 import Account from './components/Account';
+import Reset from './components/Reset';
 import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ErrorPage from './components/ErrorPage';
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
       {
         path:'explore/',
         element: <Explore/>
+      },
+      {
+        path:'reset/',
+        element: <Reset/>
       },
 
       {
