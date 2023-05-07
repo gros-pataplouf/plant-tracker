@@ -1,32 +1,26 @@
 from datetime import datetime
 import json, re
+
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404
-
 from django.core import serializers
-
+from django.http import HttpResponse, JsonResponse
+from django.contrib.auth.models import User
 
 from rest_framework.throttling import AnonRateThrottle
 from rest_framework.response import Response
 from rest_framework import generics, status
 from rest_framework.views import APIView
-
-from django.http import HttpResponse, JsonResponse
-
-
-
 from rest_framework.decorators import permission_classes, authentication_classes
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny, IsAuthenticated
 from rest_framework.parsers import MultiPartParser, FormParser
-from planttracker_app.api.throttles import AnonBurstRateThrottle, AnonSustainedRateThrottle
-
-from django.contrib.auth.models import User
-from ..models import Plant, Location, ActivationUUID, ResetUUID, PlantImage
-from .serializers import UserSerializer, PlantSerializer, LocationSerializer, LocationImageSerializer, RegisterUserSerializer, ActivationUUIDSerializer, PlantImageSerializer
-from .permissions import IsAuthorOrReadOnly
-
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.views import TokenBlacklistView
+
+from ..models import Plant, Location, ActivationUUID, ResetUUID, PlantImage
+from .serializers import UserSerializer, PlantSerializer, LocationSerializer, LocationImageSerializer, RegisterUserSerializer, ActivationUUIDSerializer, PlantImageSerializer, ResetUUIDSerializer
+from .permissions import IsAuthorOrReadOnly
+from .throttles import AnonBurstRateThrottle, AnonSustainedRateThrottle
 
 JWT_authenticator = JWTAuthentication()
 
@@ -34,7 +28,6 @@ class PlantList(generics.ListCreateAPIView):
     queryset = Plant.objects.all()
     serializer_class = PlantSerializer
     permission_classes = [ AllowAny ]
-
 
 class PlantDetail(generics.RetrieveAPIView):
     queryset = Plant.objects.all()
@@ -44,14 +37,12 @@ class PlantDetail(generics.RetrieveAPIView):
 class MyAccount(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = UserSerializer
     queryset = User.objects.all()
-
     def get_object(self):
         token = None
         valid_auth_data = JWT_authenticator.authenticate(self.request)
         if valid_auth_data:
             [user, token] = valid_auth_data
         return get_object_or_404(User, pk=token.payload['user_id'])
-
 
 class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
@@ -60,7 +51,6 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
 class UserList(generics.ListAPIView):
     serializer_class = UserSerializer
     queryset = User.objects.all()
-
 
 class LocationList(generics.ListCreateAPIView):
     queryset = Location.objects.all()
@@ -122,7 +112,7 @@ class UserCreate(generics.ListCreateAPIView):
             uuid_serializer = ActivationUUIDSerializer(data={"email": request.data["email"]})
             if uuid_serializer.is_valid():
                 uuid_serializer.save()
-                uuid = ActivationUUID.objects.filter(email=request.data["email"]).values()[0]["id"]
+                uuid = uuid_serializer.data['id']
             newuser = reg_serializer.save()
             user_instance = User.objects.get(email=request.data["email"])
             user_instance.is_active = False
@@ -146,31 +136,28 @@ class SendResetLink(generics.CreateAPIView):
     throttle_classes = [AnonBurstRateThrottle, AnonSustainedRateThrottle]
     permission_classes = [ AllowAny ]
     def post(self, request):
-        uuid=""
         email = request.data['email']
-        existing_users = User.objects.filter(username=request.data['email'])
+        existing_users = User.objects.filter(email=request.data['email'])
+        print(existing_users)
         if not bool(existing_users.values()):
-            #if email not in database, send email to self
-            email = 'planttrackerapp@gmx.de'
-
-            uuid_serializer = ResetUUIDSerializer(data={"email": email})
-            if uuid_serializer.is_valid():
-                uuid_serializer.save()
-                uuid = ResetUUID.objects.filter(email=request.data["email"]).values()[0]["id"]
-
-                try:
-                    send_mail(
-                    'Welcome to the Planttracker Project',
-                    f"Please click on the following link to activate your account:\
-                    localhost:5173/reset?{uuid}",
-                    'planttrackerapp@gmx.de',
-                    [email],
-                    fail_silently=False,
-                    )
-                except Exception as err:
-                    return Response("An error occured while sending the reset mail. This may be due to an invalid email address.", status=status.HTTP_500_INTERNAL_SERVER_ERROR)                
-            return Response("Please open your mailbox, we have sent you an password reset link.", status=status.HTTP_201_CREATED)
-
+            #if email not in database, send email to self to prevent attacks
+            email = 'kraeuterblog@gmx.net'
+        uuid_serializer = ResetUUIDSerializer(data={"email": email})
+        if uuid_serializer.is_valid():
+            uuid_serializer.save()
+            uuid = uuid_serializer.data['id']
+            try:
+                send_mail(
+                'You have requested a reset link',
+                f"Please click on the following link to activate your account:\
+                localhost:5173/reset?{uuid}",
+                'planttrackerapp@gmx.de',
+                [email],
+                fail_silently=False,
+                )
+            except Exception as err:
+                return Response("An error occured while sending the reset mail. This may be due to an invalid email address.", status=status.HTTP_500_INTERNAL_SERVER_ERROR)                
+        return Response("Please open your mailbox, we have sent you an password reset link.", status=status.HTTP_201_CREATED)
 
 class UserActivate(generics.RetrieveAPIView):
     queryset = ActivationUUID.objects.all()
@@ -213,7 +200,7 @@ class ResetPassword(generics.RetrieveAPIView):
             if datetime.now() < uuid_instance.expiry_time.replace(tzinfo=None):
                 uuid_instance.delete()
                 user_instance = get_object_or_404(User, email=uuid_instance.email)
-                user_instance.is_active = True
-                user_instance.save()               
-                return Response("Your account has been activated.", status=status.HTTP_204_NO_CONTENT)
-        return Response("Something went wrong, request another activation token.", status=status.HTTP_404_NOT_FOUND)
+                user_instance.set_password(request.data['password'])
+                user_instance.save()
+                return Response("Your password has been reset.", status=status.HTTP_204_NO_CONTENT)
+        return Response("Something went wrong, please try again later.", status=status.HTTP_404_NOT_FOUND)

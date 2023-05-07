@@ -12,10 +12,11 @@
     ✔ @high   Delete account @done(23-04-29 10:59)
     ✔ @high Change PWD @done(23-04-29 10:59)
     ✔ @low view submitted data @done(23-04-29 10:59)
-
+☐ @high reset password from login page
 ☐ @low Plant Detail page
 ☐ @high Location Detail page
-☐ @high reset password from login page
+☐ @bug plant tiles not shortened on 1st load in plant list
+
 
 ✘ @low Plant List : filter by tag @cancelled(23-04-24 15:42)
 ✘ @low nice to have : visualize data in explore view @cancelled(23-04-24 15:42)
