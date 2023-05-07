@@ -39,11 +39,11 @@ class LocationImageSerializer(serializers.ModelSerializer):
         read_only = "__all__"
 
 class LocationSerializer(serializers.ModelSerializer):
-    author = serializers.SlugRelatedField(queryset=User.objects.all(), many=False, slug_field='pk')
+    # author = serializers.SlugRelatedField(queryset=User.objects.all(), many=False, slug_field='pk')
     plant = serializers.SlugRelatedField(queryset=Plant.objects.all(), many=False, slug_field='pk')
     class Meta: 
         model = Location
-        fields = "__all__"
+        fields = ("id", "plant", "location", "area", "description", "created_at")
         read_only = ["created_at"]
 
 class RegisterUserSerializer(serializers.ModelSerializer):

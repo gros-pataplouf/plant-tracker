@@ -17,7 +17,7 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.views import TokenBlacklistView
 
-from ..models import Plant, Location, ActivationUUID, ResetUUID, PlantImage
+from ..models import Plant, Location, ActivationUUID, ResetUUID, PlantImage, LocationImage
 from .serializers import UserSerializer, PlantSerializer, LocationSerializer, LocationImageSerializer, RegisterUserSerializer, ActivationUUIDSerializer, PlantImageSerializer, ResetUUIDSerializer
 from .permissions import IsAuthorOrReadOnly
 from .throttles import AnonBurstRateThrottle, AnonSustainedRateThrottle
@@ -204,3 +204,13 @@ class ResetPassword(generics.RetrieveAPIView):
                 user_instance.save()
                 return Response("Your password has been reset.", status=status.HTTP_204_NO_CONTENT)
         return Response("Something went wrong, please try again later.", status=status.HTTP_404_NOT_FOUND)
+
+
+
+class LocationImages(generics.ListCreateAPIView):
+    serializer_class = LocationImageSerializer
+    def get_queryset(self):
+        query = self.request.GET
+        print(query)
+        return LocationImage.objects.filter(**query.dict())
+

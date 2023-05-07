@@ -9,6 +9,7 @@ import Register from "./components/Register"
 import Activate from "./components/Activate"
 import PlantList from './components/PlantList'
 import PlantDetail from './components/PlantDetail';
+import LocationDetail from './components/LocationDetail';
 import Account from './components/Account';
 import Reset from './components/Reset';
 import './index.css';
@@ -50,10 +51,13 @@ const router = createBrowserRouter([
         element: <Explore/>
       },
       {
+        path: 'locations/:id/',
+        element: <LocationDetail/>
+      },
+      {
         path:'reset/',
         element: <Reset/>
       },
-
       {
         path:'account/',
         element: <Account/>
