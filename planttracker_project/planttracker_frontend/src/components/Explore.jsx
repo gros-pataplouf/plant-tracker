@@ -4,7 +4,6 @@ import axiosInstance from '../helpers/axios';
 import { plantsAndMarkers, plantsAndSymbols, leafletLowZIndex } from '../helpers/leafletHelpers';
 
 function Checkbox({props}) {
-
   const {plant, locationList, setLocationList, initialLocationList} = props;
   const [ checked, setChecked ] = useState(true);
   useEffect(() => {
@@ -19,7 +18,7 @@ function Checkbox({props}) {
   }, [checked]);
 
   function handleCheckbox() {
-    setChecked(!checked)
+    setChecked(!checked);
     return null
   }
   return (<input type="checkbox" id={plant.id} name={plant.Id} onChange={handleCheckbox} checked={checked}/>) 
@@ -56,7 +55,6 @@ function Legend({props}) {
 
 
 export default function Explore() {  
-
     const [locationList, setLocationList] = useState([]);
     const [initialLocationList, setInitialLocationList] = useState([]);
 
@@ -69,14 +67,13 @@ export default function Explore() {
       .catch(err => {
         console.error(err);
       })
-    }, [])
-;
-    const markUp = locationList.map(location => {
+    }, []);
+    const markers = locationList.map(location => {
 
       return (
 
             <Marker key={location.id} position={location.location.coordinates.reverse()} icon={plantsAndMarkers[location.plant]}>
-                <Popup > {location.area}m2 {location.plant}</Popup>
+                <Popup > {location.area}m² {location.plant}</Popup>
             </Marker>
         )
     })
@@ -86,12 +83,12 @@ export default function Explore() {
 
     return (
       <>
-    <MapContainer className="border-mint/99 border-2 rounded-md h-[80vh] m-4" id="map" center={[54.06325355147857, 9.86409912109375]} zoom={8} scrollWheelZoom={false} whenReady={leafletLowZIndex}>
+  <MapContainer className="border-mint/99 border-2 rounded-md h-[80vh] m-4" id="map" center={[54.06325355147857, 9.86409912109375]} zoom={8} scrollWheelZoom={false} whenReady={leafletLowZIndex}>
   <TileLayer
     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
   />
-{markUp}
+{markers}
 </MapContainer>
 <Legend props={{locationList, setLocationList,initialLocationList}}/>
 </>
