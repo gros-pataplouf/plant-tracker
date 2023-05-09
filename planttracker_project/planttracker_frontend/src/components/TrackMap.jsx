@@ -10,7 +10,7 @@ const classes = {
   btn: 'btn my-4',
 }
 
-// the actual map   
+// the leaflet map   
 function Map({props}) {
     const  {location, setLocation, coords, results, setResults} = props;
     useEffect(() => {
@@ -20,25 +20,22 @@ function Map({props}) {
     }, [coords])
     return(
     <MapContainer className={classes.mapContainer} id="map" center={location} zoom={5} scrollWheelZoom={true} whenReady={leafletLowZIndex}>
-    <TileLayer 
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" 
-    />
-    <DynamicMarker props={{location, setLocation}}/>
-    <CenterAutomatically location={location}/>
-    <GoBackButton props={{coords, setResults, setLocation}}/>
-    <Search props={{setLocation, location, coords, results, setResults}}/>
+      <TileLayer 
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" 
+      />
+      <DynamicMarker props={{location, setLocation}}/>
+      <CenterAutomatically location={location}/>
+      <GoBackButton props={{coords, setResults, setLocation}}/>
+      <Search props={{setLocation, location, coords, results, setResults}}/>
 
     </MapContainer>
     )
 }
 
-// Map components
-
-
   
   
-  function GoToFormButton({props}) {
+  function ContinueButton({props}) {
     const {location, setDisplay} = props;
     function clickHandler() {
       setDisplay("form");
@@ -69,7 +66,7 @@ export default function TrackMap({props}) {
         <>
       
         <Map props={{location, setLocation, coords, results, setResults}}/>
-        <GoToFormButton props={{location, setDisplay}}/>
+        <ContinueButton props={{location, setDisplay}}/>
       </>
       ) 
       : (

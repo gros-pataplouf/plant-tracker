@@ -21,8 +21,6 @@ export default function Track() {
   }, [])
 
 
-
-
 if (display === "map"){
   return (<TrackMap props={{location, setLocation, setDisplay}}/>)
 ;

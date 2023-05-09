@@ -74,18 +74,18 @@ class LocationList(generics.ListCreateAPIView):
                 location_serializer.save()
                 #step 2 : now get the id of the new location object and save the images
                 location_id = location_serializer.data['id']
+                print(location_id)
                 if request.FILES:
                     for lst in dict(request.FILES).values():
                         for file in lst:
                             location_img_serializer = LocationImageSerializer(data={'location': location_id, 'image': file})
                             if (location_img_serializer.is_valid()):
                                 location_img_serializer.save()
-                                return Response("Submission successful", status=status.HTTP_201_CREATED)
                             else:
                                 return Response("Data submitted are invalid or incomplete.", status=status.HTTP_400_BAD_REQUEST)
-                return Response("Submission successful", status=status.HTTP_201_CREATED)
+                return Response(location_id, status=status.HTTP_201_CREATED)
             else: 
-                print(serializer.errors)
+                print(location_serializer.errors)
                 return Response("Data submitted are invalid or incomplete.", status=status.HTTP_400_BAD_REQUEST)
         return Response("Unauthorized", status=status.HTTP_401_UNAUTHORIZED)
 
@@ -211,6 +211,5 @@ class LocationImages(generics.ListCreateAPIView):
     serializer_class = LocationImageSerializer
     def get_queryset(self):
         query = self.request.GET
-        print(query)
         return LocationImage.objects.filter(**query.dict())
 

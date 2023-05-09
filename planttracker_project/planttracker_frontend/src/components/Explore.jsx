@@ -24,7 +24,6 @@ function Checkbox({props}) {
   return (<input type="checkbox" id={plant.id} name={plant.Id} onChange={handleCheckbox} checked={checked}/>) 
 }
 
-
 function Legend({props}) {
   const [plantList, setPlantList] = useState([]);
   const {locationList, setLocationList, initialLocationList} = props;
@@ -79,17 +78,15 @@ export default function Explore() {
     })
 
 
-
-
     return (
       <>
-  <MapContainer className="border-mint/99 border-2 rounded-md h-[80vh] m-4" id="map" center={[54.06325355147857, 9.86409912109375]} zoom={8} scrollWheelZoom={false} whenReady={leafletLowZIndex}>
-  <TileLayer
-    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-  />
-{markers}
-</MapContainer>
-<Legend props={{locationList, setLocationList,initialLocationList}}/>
-</>
+    <MapContainer className="border-mint/99 border-2 rounded-md h-[80vh] m-4" id="map" center={[54.06325355147857, 9.86409912109375]} zoom={8} scrollWheelZoom={false} whenReady={leafletLowZIndex}>
+      <TileLayer
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+    {markers}
+    </MapContainer>
+    <Legend props={{locationList, setLocationList,initialLocationList}}/>
+    </>
 )}

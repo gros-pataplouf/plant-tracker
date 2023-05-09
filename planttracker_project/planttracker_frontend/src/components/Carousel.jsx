@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import chevron_right from '../assets/icons/chevron_right.svg';
 import chevron_left from '../assets/icons/chevron_left.svg';
@@ -22,7 +22,6 @@ export default function Carousel({children}) {
   }, [emblaApi])
 
 
-
   return (
     <div className={classes.embla}>
     <button className={classes.chevronLeft} onClick={scrollPrev}>
@@ -31,14 +30,8 @@ export default function Carousel({children}) {
     <button className={classes.chevronRight} onClick={scrollNext}>
       <img src={chevron_right} alt="back" />
     </button>
-    <button className={classes.chevronLeft} onClick={scrollPrev}>
-      <img src={chevron_left} alt="" />
-    </button>
-    <button className={classes.chevronRight} onClick={scrollNext}>
-      <img src={chevron_right} alt="" />
-    </button>
     <div  ref={emblaRef}>
-    <div className={classes.emblaContainer}>
+    <div id="emblaContainer" className={classes.emblaContainer}>
       {children}
     </div>
     </div>
