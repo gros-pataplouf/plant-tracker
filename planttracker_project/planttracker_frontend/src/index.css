@@ -4,6 +4,16 @@
 
 #map { 
     height: 75vh; };
+    .leaflet-div-icon {
+       background-color: blue!important;
+       border: none!important;
+    }
+
+    .leaflet-div-icon {
+       background-color: blue;
+       border: none !important;
+    }
+
     
 
 @layer base {

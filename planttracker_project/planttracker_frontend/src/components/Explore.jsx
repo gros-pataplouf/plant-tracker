@@ -2,6 +2,8 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import { useState, useEffect } from 'react';
 import axiosInstance from '../helpers/axios';
 import { plantsAndMarkers, plantsAndSymbols, leafletLowZIndex } from '../helpers/leafletHelpers';
+import { markers } from './MapComponents';
+
 
 function Checkbox({props}) {
   const {plant, locationList, setLocationList, initialLocationList} = props;
@@ -55,27 +57,31 @@ function Legend({props}) {
 
 export default function Explore() {  
     const [locationList, setLocationList] = useState([]);
+    const [plantList, setPlantList] = useState([]);
     const [initialLocationList, setInitialLocationList] = useState([]);
 
-    
-    useEffect(() => {axiosInstance.get('locations/')
+  
+    useEffect(() => {
+      Promise.all([axiosInstance.get('locations/'), axiosInstance.get('plants/')])
       .then(res => {
-        setLocationList(res.data);
-        setInitialLocationList(res.data);
+        setLocationList(res[0].data);
+        setInitialLocationList(res[0].data);
+        setPlantList(res[1].data);
+
       })
       .catch(err => {
         console.error(err);
       })
     }, []);
-    const markers = locationList.map(location => {
+    // const markers = locationList.map(location => {
 
-      return (
+    //   return (
 
-            <Marker key={location.id} position={location.location.coordinates.reverse()} icon={plantsAndMarkers[location.plant]}>
-                <Popup > {location.area}m² {location.plant}</Popup>
-            </Marker>
-        )
-    })
+    //         <Marker key={location.id} position={location.location.coordinates.reverse()} icon={plantsAndMarkers[location.plant]}>
+    //             <Popup > {location.area}m² {location.plant}</Popup>
+    //         </Marker>
+    //     )
+    // })
 
 
     return (
@@ -85,7 +91,7 @@ export default function Explore() {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-    {markers}
+    {markers(plantList, locationList)}
     </MapContainer>
     <Legend props={{locationList, setLocationList,initialLocationList}}/>
     </>
