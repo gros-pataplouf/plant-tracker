@@ -29,4 +29,18 @@ if (display === "map"){
     <TrackForm props={{location, setDisplay}}/>
   )
 }
+else if (display === "success") {
+  return (
+    <div>
+      <p>
+      Thanks for submitting your data ✅
+      </p>
+      <p>View submission: 
+        <Link to></Link>
+      </p>
+
+
+      </div>
+  )
+}
 } 

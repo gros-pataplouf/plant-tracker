@@ -67,7 +67,7 @@ export default function TrackForm({props}) {
       const selection = document.getElementById('plant');
       formData.append('plant', selection.options[selection.selectedIndex].id);
       formData.append('area', parseInt(document.getElementById('area').value));
-      formData.append('location', `{"type": "Point", "coordinates": [${lat}, ${lng}]}`)
+      formData.append('location', `{"type": "Point", "coordinates": [${lng}, ${lat}]}`)
       if (images.length) {for (let img of images) {
         formData.append('images', img)
       }}

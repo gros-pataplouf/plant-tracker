@@ -1,39 +1,31 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Link } from 'react-router-dom';
 import axiosInstance from '../helpers/axios';
 import React from 'react';
-import useEmblaCarousel from 'embla-carousel-react';
-import chevron_right from '../assets/icons/chevron_right.svg';
-import chevron_left from '../assets/icons/chevron_left.svg';
-
+import Carousel from './Carousel';
+import { MapContainer, Marker, TileLayer } from 'react-leaflet';
+import { leafletLowZIndex } from '../helpers/leafletHelpers';
 
 const classes = {
   wrapper: 'h-[80vh]',
   embla: 'overflow-hidden',
   emblaContainer: 'flex ',
-  emblaSlide: 'group/item overflow-clip flex-[0_0_95%] border-r-white overflow-clip min-w-0 space-y-2 p-2 bg-yellow-50 rounded-xl shadow-lg shadow-slate-500/50 border-solid border-2 border-slate-300 m-8',
-  title: 'px-2 text-emerald-800',
+  emblaSlide: 'group/item overflow-clip flex-[0_0_95%] border-r-white overflow-clip min-w-0 space-y-2 p-2 bg-yellow-50 rounded-xl shadow-lg shadow-slate-500/50 border-solid border-2 border-slate-300 m-8 h-[40vh]',
+  title: 'p-4 text-emerald-800',
   name: '',
   scientific: 'italic',
   imageContainer: 'relative',
-  chevronLeft: 'group-first/item:hidden bg-slate-500/80 absolute rounded-[50%] top-[calc(50%-24px)] -left-6',
-  chevronRight: 'group-last/item:hidden bg-slate-500/80 absolute rounded-[50%] top-[calc(50%-24px)] -right-6',
-  image: "w-full rounded-xl border-emerald-950"
+  image: "w-full rounded-xl border-emerald-950",
+  mapContainer: "border-mint/99 border-2 rounded-md m-4 h-[95%]",
+  locationImage: "h-full object-contain", 
+  table: "bg-white p-4 mx-auto text-8"
+
 
 }
 
 
 export default function LocationDetail () {
-    const [emblaRef, emblaApi] = useEmblaCarousel();
     const [location, setLocation] = useState(null);
 
-    const scrollPrev = useCallback(() => {
-      if (emblaApi) emblaApi.scrollPrev()
-    }, [emblaApi])
-    const scrollNext = useCallback(() => {
-      if (emblaApi) emblaApi.scrollNext()
-    }, [emblaApi])
-    
 
     useEffect(() => {
       const id = window.location.pathname.replace('locations', '').replaceAll('/', '');
@@ -45,20 +37,9 @@ export default function LocationDetail () {
         const locationPhotos = axiosInstance.get(`locations/images?location=${id}`)
         Promise.all([matchingPlant, locationPhotos])
         .then(values => {
-          setLocation({...res.data, plant:values[0].data});
-          console.log(location)
-        })
-
-        
-
-
-        .then(res => {
-          console.log(res.data);
-
-        }
-
-        )
-      
+          setLocation({...res.data, plant:values[0].data, photos:values[1].data});
+      })
+     
       
       })
 
@@ -74,11 +55,34 @@ export default function LocationDetail () {
         <h2 className={classes.title}>Location detail</h2>
         {location &&
         <>
-        <table>
+{        location.photos &&
+        <Carousel>
+          {[          
+    <div className={classes.emblaSlide}>
+    <MapContainer className={classes.mapContainer} id="map smallmap" center={location.location.coordinates} zoom={12} scrollWheelZoom={false} whenReady={leafletLowZIndex}>
+    <TileLayer
+      attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+    />
+    <Marker position={location.location.coordinates}/>
+  </MapContainer>
+  </div>, 
+
+            ...location.photos.map(_ => {
+            return (
+              <div className={classes.emblaSlide}>
+                <img className={classes.locationImage} src={_.image} alt="" />
+              </div>
+            )
+          }),
+          ]}
+        </Carousel>
+}  
+        <table className={classes.table}>
           <tbody>
           <tr>
             <td>Name</td>
-            <td>{location.plant.common_name_en} ({location.plant.scientific_name})</td>
+            <td>{location.plant.common_name_en}</td>
           </tr>
           <tr>
             <td>Coordinates</td>
@@ -110,6 +114,3 @@ export default function LocationDetail () {
       </div>
     );
   }
-
-// id, plant, location.coordinates, area, description, created_at
-

@@ -1,6 +1,5 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useMap, useMapEvents } from "react-leaflet";
-import { MapContainer, TileLayer } from "react-leaflet";
 import mylocation from '../assets/icons/mylocation.svg';
 import { Marker, Popup } from "react-leaflet";
 import { debounce } from "../helpers/utils"
@@ -15,6 +14,9 @@ const classes = {
     searchModule: 'z-10 absolute top-[10px] right-2 leaflet-bar leaflet-control w-[80%] max-h-[66%] overflow-scroll',
     searchInput: 'bg-white p-[5px] h-[30px] w-full',
     searchResult: 'border-2 border-slate-50 bg-white p-[3px] w-[100%]',
+    legend: 'absolute z-20 bg-slate-100 right-0 p-2 rounded-2xl', 
+    legendItem: 'flex p-2',
+    input: 'h-6 w-6 my-auto'
 }
 
 
@@ -32,7 +34,6 @@ export function GoBackButton({props}) {
     if (coords) {
         return (<button className={classes.goBackButton} onClick={goBack}><img src={mylocation} alt="" /></button>)}
     return null;
-
 }
 
 //thanks to the dynamic marker, the user can drag the map under the marker, the location in state is updated accordingly
@@ -96,31 +97,76 @@ export function Search({props}) {
 }
 
 
+function svgFile(color) {
+    return `<svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 96 960 960" width="48"><path d="M480.089 566Q509 566 529.5 545.411q20.5-20.588 20.5-49.5Q550 467 529.411 446.5q-20.588-20.5-49.5-20.5Q451 426 430.5 446.589q-20.5 20.588-20.5 49.5Q410 525 430.589 545.5q20.588 20.5 49.5 20.5ZM480 976Q319 839 239.5 721.5T160 504q0-150 96.5-239T480 176q127 0 223.5 89T800 504q0 100-79.5 217.5T480 976Z" stroke=${color} fill="hsl(${color}, 50%, 50%)"></svg>`
+}
+
 export function markers (plants, locations) {
-    function svgFile(color) {
-        return `<svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 96 960 960" width="48"><path d="M480.089 566Q509 566 529.5 545.411q20.5-20.588 20.5-49.5Q550 467 529.411 446.5q-20.588-20.5-49.5-20.5Q451 426 430.5 446.589q-20.5 20.588-20.5 49.5Q410 525 430.589 545.5q20.588 20.5 49.5 20.5ZM480 976Q319 839 239.5 721.5T160 504q0-150 96.5-239T480 176q127 0 223.5 89T800 504q0 100-79.5 217.5T480 976Z" stroke=${color} fill="hsl(${color}, 50%, 50%)"></svg>`
-    }
-
-    
-
     return locations.map(location => {
-
-        const customIcon1 = new L.divIcon({
+        const customIcon = new L.divIcon({
             html: svgFile(360/plants.length*(location.plant-1-plants.length)),
             popupAnchor:  [-0, -0],
-            iconSize: [32,45],
+            iconSize: [26,36],
             className: ''
           });
-    
-
-        //create a custom icon
-
+        const currentPlant = plants.filter(plant => {
+            return plant.id === location.plant;
+        })
         return (
-
-            <Marker key={location.id} position={location.location.coordinates.reverse()} icon={customIcon1}>
-            <Popup > {location.area}m² <Link to={`/locations/${location.id}`}>view</Link></Popup>
+            <Marker key={location.id} position={location.location.coordinates.reverse()} icon={customIcon}>
+            <Popup > {currentPlant[0].common_name_en} <br/>
+            {location.area} m² <Link to={`/locations/${location.id}`}>View</Link></Popup>
             </Marker>
-
           )
       })
 }
+
+
+export function Legend({props}) {
+    const [plantList, setPlantList] = useState([]);
+    const {locationList, setLocationList, initialLocationList} = props;
+      
+    useEffect(() => {axiosInstance.get('plants/')
+      .then(res => setPlantList(res.data))
+      .catch(err => {
+        console.error(err);
+      })
+    }, []);
+   
+  
+    return (
+    <form id='selectionForm' className={classes.legend}>
+    <p>Filter by species</p>
+    {plantList.map(plant => (
+        <div className={classes.legendItem} key={plant.id}>
+        <Checkbox props={{plant, locationList, setLocationList, initialLocationList, plantList}}/>
+        <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 96 960 960" width="20"><path d="M480.089 566Q509 566 529.5 545.411q20.5-20.588 20.5-49.5Q550 467 529.411 446.5q-20.588-20.5-49.5-20.5Q451 426 430.5 446.589q-20.5 20.588-20.5 49.5Q410 525 430.589 545.5q20.588 20.5 49.5 20.5ZM480 976Q319 839 239.5 721.5T160 504q0-150 96.5-239T480 176q127 0 223.5 89T800 504q0 100-79.5 217.5T480 976Z" stroke="red" fill={`hsl(${360/plantList.length*(plant.id-1-plantList.length)}, 50%, 50%)`}/></svg>
+        <label htmlFor={plant.id}>
+          {plant.common_name_en}</label>
+      </div>
+    ))}
+  </form>)
+}
+
+
+function Checkbox({props}) {
+    const {plant, locationList, setLocationList, initialLocationList, plantList} = props;
+    const [ checked, setChecked ] = useState(true);
+    useEffect(() => {
+      const inputBoxes = document.querySelectorAll('input');
+      let userChoices = []
+      for (let box of inputBoxes) {
+        userChoices.push(box.checked)
+      };
+        setLocationList(initialLocationList.filter(loc => {
+          return userChoices[loc.plant - plantList.length -1]
+        }))
+    }, [checked]);
+  
+    function handleCheckbox() {
+      setChecked(!checked);
+      return null
+    }
+    return (<input className={classes.input} type="checkbox" id={plant.id} name={plant.Id} onChange={handleCheckbox} checked={checked}/>) 
+  }
+  

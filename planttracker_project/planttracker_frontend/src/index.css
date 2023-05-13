@@ -4,6 +4,11 @@
 
 #map { 
     height: 75vh; };
+
+#smallmap {
+    height: 200px!important;
+}
+
     .leaflet-div-icon {
        background-color: blue!important;
        border: none!important;
