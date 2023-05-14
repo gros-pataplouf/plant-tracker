@@ -24,7 +24,6 @@ const classes = {
   visibilitySvg: 'h-6'
 }
 
-
 export default function Register() {
     const [ emailErr, setEmailErr ] =  useState('');
     const [ pwdErr, setPwdErr ] =  useState('');

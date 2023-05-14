@@ -12,7 +12,6 @@ const classes = {
 
 export default function Carousel({children}) {
   const [emblaRef, emblaApi] = useEmblaCarousel({loop: true});
-
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev()
   }, [emblaApi])
@@ -24,12 +23,13 @@ export default function Carousel({children}) {
 
   return (
     <div className={classes.embla}>
-    <button className={classes.chevronLeft} onClick={scrollPrev}>
+    {/* the previous and next buttons are only shown if more than 1 children */}
+    {children.length > 1 && <button className={classes.chevronLeft} onClick={scrollPrev}>
       <img src={chevron_left} alt="forward" />
-    </button>
-    <button className={classes.chevronRight} onClick={scrollNext}>
+    </button>}
+    {children.length >1 && <button className={classes.chevronRight} onClick={scrollNext}>
       <img src={chevron_right} alt="back" />
-    </button>
+    </button>}
     <div  ref={emblaRef}>
     <div id="emblaContainer" className={classes.emblaContainer}>
       {children}

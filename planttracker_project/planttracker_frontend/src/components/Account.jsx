@@ -3,6 +3,25 @@ import { useState, useEffect } from "react";
 import { testMail, testPassword } from '../helpers/checks';
 
 
+const classes = {
+    account: "p-4 space-2",
+    modal: "flex flex-col w-[95vw] justify-between m-auto p-8 rounded-xl shadow-lg shadow-slate-500/50 border-solid border-2 border-slate-300 bg-white",
+    title: "bg-emerald-900 text-yellow-50 p-4", 
+    paragraph: "mt-4 mb-2", 
+    button: "btn rounded-none",
+    dangerbutton: "btn bg-red-800 text-white",
+    cancelbutton: "btn bg-yellow-50 text-emerald-950 border-solid border-2 border-emerald-800", 
+    backdrop: "hidden flex flex-col justify-center bg-black/90 fixed h-[100vh] w-[100vw] top-0 right-0 z-32",
+    form: "flex flex-col", 
+    cancel: "",
+    label: "", 
+    input: "",
+    dangertext: "text-red-800 font-bold",
+    message: "border-red-800 active:outline-red-800",
+    buttonwrapper: "flex space-4",
+    dangercancelbutton: "btn bg-yellow-50 text-emerald-950 border-solid border-2 border-red-800"
+}
+
 export default function Account() {
     const [ user, setUser ] = useState();
     const [ emailErr, setEmailErr ] =  useState('');
@@ -23,7 +42,6 @@ export default function Account() {
             axiosInstance.get(`locations?author=${user.id}`)
             .then(res => { setSubmissions(res.data); console.log(submissions)})
             .catch(err => console.error(err))
-                        
         })
         .catch(err => {
             console.log(err)
@@ -100,44 +118,47 @@ export default function Account() {
 /// functions for opening and closing modals 
 
     function cancelModal(e) {
-        return null
+        e.preventDefault();
+        e.target.parentNode.parentNode.parentNode.parentNode.classList.toggle("hidden")
     }
 
     function openModal(e) {
-        return null
+        e.preventDefault();
+        e.target.nextSibling.classList.toggle("hidden");
     }
 
 
 
     return (
-        <>
-        <h1>My account settings</h1>
+        <div className={classes.account}>
+        <h3 className={classes.title}>My account settings</h3>
         <div>
-            <p>Username</p>
+            <p className={classes.paragraph}>Username</p>
             {user && <p>{user.username}</p>}
             
         </div>
         <div>
-            <p>Email</p>
-            {user && <p>{user.email}</p>}
-
-            <button onClick={openModal}>Update</button>
+            <p className={classes.paragraph}>Email</p>
+            {user && <p className={classes.paragraph}>{user.email}</p>}
+            <button className={classes.button} onClick={openModal}>Update</button>
             {/* Backdrop */}
-            <div> 
+            <div className={classes.backdrop}> 
                 {/* Modal */}
-                <div>
-                    <form action="" id="emailForm" onChange={updateEmailFormData} onSubmit={handleEmailSubmit}>
-                    <div onClick={cancelModal}><img src="" alt="" /></div>
-                        <label htmlFor="">New email</label>
-                        <input id='email' name='email' type="text" />
+                <div className={classes.modal}>
+                    <form className={classes.form} action="" id="emailForm" onChange={updateEmailFormData} onSubmit={handleEmailSubmit}>
+                    <div className={classes.cancel} onClick={cancelModal}><img src="" alt="" /></div>
+                        <label className={classes.label} htmlFor="">New email</label>
+                        <input className={classes.input} id='email' name='email' type="text" />
                         {emailErr && 
-                        <p>{emailErr}</p>
+                        <p className={classes.message}>{emailErr}</p>
                         }
                         {incompleteErr && 
-                        <p>{incompleteErr}</p>
+                        <p className={classes.message}>{incompleteErr}</p>
                         }
-                        <button>Ok</button>
-                        <button onClick={cancelModal}>Cancel</button>
+                        <div className={classes.buttonwrapper}>
+                        <button className={classes.button}>Ok</button>
+                        <button className={classes.button} onClick={cancelModal}>Cancel</button>
+                        </div>
                     </form>
                 </div>
                 {/* End modal */}
@@ -146,19 +167,21 @@ export default function Account() {
         </div>
 {/* Password change */}
         <div>
-        <button onClick={openModal}>Change password</button>
+        <button className={classes.button} onClick={openModal}>Change password</button>
             {/* Backdrop */}
-            <div> 
+            <div className={classes.backdrop}> 
                 {/* Modal */}
-                <div>
-                    <form action="" id="passwordForm" onChange={passwordChangeHandler} onSubmit={passwordSubmitHandler}>
-                        <div onClick={cancelModal}><img src="" alt="" /></div>
-                        <label htmlFor="">New password</label>
-                        <input id='password' name='password' type="text" />
-                        <label htmlFor="">Confirm new password</label>
-                        <input id='passwordConfirmation' name='passwordConfirmation' type="text" />
-                        <button>Ok</button>
-                        <button onClick={cancelModal}>Cancel</button>
+                <div className={classes.modal}>
+                    <form className={classes.form} action="" id="passwordForm" onChange={passwordChangeHandler} onSubmit={passwordSubmitHandler}>
+                        <div className={classes.cancel} onClick={cancelModal}><img src="" alt="" /></div>
+                        <label className={classes.label} htmlFor="">New password</label>
+                        <input className={classes.input} id='password' name='password' type="text" />
+                        <label className={classes.label} htmlFor="">Confirm new password</label>
+                        <input className={classes.input} id='passwordConfirmation' name='passwordConfirmation' type="text" />
+                        <div className={classes.buttonwrapper}>
+                        <button className={classes.button}>Ok</button>
+                        <button className={classes.button} onClick={cancelModal}>Cancel</button>
+                        </div>
                     </form>
                     {pwdErr && 
                         <p>{pwdErr}</p>
@@ -170,33 +193,19 @@ export default function Account() {
                 {/* End modal */}
             </div>
             {/* End backdrop */}
-        </div>
 
-
-
-        <h1>My submissions</h1>
-        <ul>
-            {!submissions? <li>You have not submitted any data yet.</li> 
-            : 
-             submissions.map(submission => {
-                let date = new Date(submission.created_at);
-                let minutes = date.getMinutes()
-                return <li key={submission.id}>
-                    🕙 {date.getFullYear()}-{date.getMonth()}-{date.getDate()} at {date.getHours()}:
-                    {minutes < 10? `0${minutes}` :  minutes} <img src={submission.image} alt="" />
-                    </li>})}
-        </ul>
-    {/* Account deletion */}
-    <div>
-        <button>Delete account</button>
+            <div>
+        <button className={classes.button} onClick={openModal}>Delete account</button>
                 {/* Backdrop */}
-                <div> 
+                <div className={classes.backdrop}> 
                 {/* Modal */}
-                <div>
+                <div className={classes.modal}>
                     <form action="">
-                        <p>Are you sure you want to delete your account? This cannot be undone!</p>
-                        <button onClick={deleteHandler}>Yes, I'm sure</button>
-                        <button onClick={cancelModal}>Cancel</button>
+                        <p className={classes.dangertext}>Are you sure you want to delete your account? This cannot be undone!</p>
+                        <div className={classes.buttonwrapper}>
+                        <button className={classes.dangerbutton} onClick={deleteHandler}>Yes, I'm sure</button>
+                        <button className={classes.dangercancelbutton} onClick={cancelModal}>Cancel</button>
+                        </div>
                     </form>
                 </div>
                 {/* End modal */}
@@ -204,6 +213,21 @@ export default function Account() {
             {/* End Backdrop */}
     </div>
 
-        </>
+        </div>
+
+
+
+        <h3 className={classes.title}>My submissions</h3>
+        <ul>
+            {!submissions? <li>You have not submitted any data yet.</li> 
+            : 
+             submissions.map(submission => {
+                return <li key={submission.id}>
+                    🕙 {new Date(submission.created_at).toLocaleString('en-GB')}
+                    </li>})}
+        </ul>
+    {/* Account deletion */}
+
+        </div>
     )
 }

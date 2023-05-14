@@ -3,7 +3,7 @@ import axiosInstance from '../helpers/axios';
 import React from 'react';
 import Carousel from './Carousel';
 import { MapContainer, Marker, TileLayer } from 'react-leaflet';
-import { leafletLowZIndex } from '../helpers/leafletHelpers';
+import { leafletLowZIndex, convertGPS } from '../helpers/leafletHelpers';
 
 const classes = {
   wrapper: 'h-[80vh]',
@@ -17,16 +17,13 @@ const classes = {
   image: "w-full rounded-xl border-emerald-950",
   mapContainer: "border-mint/99 border-2 rounded-md m-4 h-[95%]",
   locationImage: "h-full object-contain", 
-  table: "bg-white p-4 mx-auto text-8"
-
-
+  table: "bg-emerald-900 w-[95vw] p-8 mx-auto text-8 font-bold rounded-md [&>tbody>tr>td]:p-2 text-white [&>tbody>tr]:p-2 text-white" , 
+  tableCell: 'p-6 text-white'
 }
 
 
 export default function LocationDetail () {
     const [location, setLocation] = useState(null);
-
-
     useEffect(() => {
       const id = window.location.pathname.replace('locations', '').replaceAll('/', '');
       axiosInstance.get(`locations/${id}`)
@@ -79,6 +76,7 @@ export default function LocationDetail () {
         </Carousel>
 }  
         <table className={classes.table}>
+          <caption>Details of the finding</caption>
           <tbody>
           <tr>
             <td>Name</td>
@@ -86,7 +84,7 @@ export default function LocationDetail () {
           </tr>
           <tr>
             <td>Coordinates</td>
-            <td>{location.location.coordinates}</td>
+            <td>{convertGPS(location.location.coordinates)}</td>
           </tr>
           <tr>
             <td>Surface</td>
@@ -98,7 +96,7 @@ export default function LocationDetail () {
           </tr>
           <tr>
             <td>Date</td>
-            <td>{location.created_at}</td>
+            <td>{new Date(location.created_at).toLocaleString('en-GB')}</td>
           </tr>
           <tr>
             <td></td>

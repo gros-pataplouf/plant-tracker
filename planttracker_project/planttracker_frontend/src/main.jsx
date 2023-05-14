@@ -12,6 +12,7 @@ import PlantDetail from './components/PlantDetail';
 import LocationDetail from './components/LocationDetail';
 import Account from './components/Account';
 import Reset from './components/Reset';
+import Hero from './components/Hero';
 import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ErrorPage from './components/ErrorPage';
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
       {
         path:'plants/',
         element: <PlantList/>, 
+      },
+      {
+        path:'/',
+        element: <Hero/>, 
       },
       {
         path: 'plants/:id/',

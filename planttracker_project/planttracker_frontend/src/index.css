@@ -9,19 +9,37 @@
     height: 200px!important;
 }
 
-    .leaflet-div-icon {
-       background-color: blue!important;
-       border: none!important;
+.loadingHero {
+    animation: loadingHero 3s linear;
+}
+
+.loadingLeaf {
+    animation: loadingLeaf 3s linear;
+}
+
+@keyframes loadingHero {
+    0% {color: hsl(14, 87%, 43%);}
+    50% {color: hsl(60, 96%, 69%);}
+    100% {color: hsl(55, 92%, 95%) }
     }
 
-    .leaflet-div-icon {
-       background-color: blue;
-       border: none !important;
+@keyframes loadingLeaf {
+    from {
+        transform: rotate(0deg);
+        transform-origin: bottom right;
+      }
+      to {
+        transform: rotate(-70deg);
+        transform-origin: bottom right;
+
+      }
+
     }
 
-    
+
 
 @layer base {
+
 
     html {
         font-size: 62.5%;
