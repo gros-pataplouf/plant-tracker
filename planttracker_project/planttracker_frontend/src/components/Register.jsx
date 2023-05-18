@@ -16,7 +16,7 @@ const classes = {
   errorSpan:  "text-red-800 italic",
   tooltipIcon: "inline w-7 align-top",
   tooltipSpan: "relative",
-  tooltipDiv: "absolute w-[80vw] bg-black top-4 p-4 border-spacing-2 border-2 rounded-3xl text-yellow-50 hidden m-4 leading-none",
+  tooltipDiv: "absolute w-[80vw] bg-black top-4 p-4 border-spacing-2 border-2 rounded-3xl text-yellow-50 hidden m-4 leading-none z-20",
   btn: 'btn my-8',
   success: 'font-bold my-[50%]',
   failure: 'font-bold',
@@ -121,7 +121,7 @@ export default function Register() {
               e.preventDefault(); 
               document.querySelector('#password').setAttribute('type', showPwdConf? 'password':'text');
               setShowPwdConf(!showPwdConf)}}>
-            <img className={classes.visibilitySvg} src={showPwd? visibility : visibility_off} alt="" />
+            <img className={classes.visibilitySvg} src={showPwdConf? visibility : visibility_off} alt="" />
             </button>
             </div>
 

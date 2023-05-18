@@ -1,34 +1,46 @@
-import { useState, useEffect } from "react";
-import leaf from '../assets/icons/leaf.svg';
+import { useState, useEffect, useRef } from "react";
+
+import Lottie from "lottie-react";
+import plant from "../assets/animations/plant.json";
+
+
 
 const classes = {
     text: 'p-8', 
     wrapper: 'absolute h-[80vh]',
-    loadingAnimation: 'fixed top-0 h-[100vh] w-[100vw] z-30 bg-emerald-950 flex flex-col justify-center space-8 align-center', 
-    loadingTitle: 'text-yellow-100 text-center loadingHero',
-    image: 'm-auto h-20'
-
+    loadingAnimation: 'fixed top-0 h-[100vh] w-[100vw] z-30 bg-emerald-950 flex flex-col justify-center', 
+    loadingTitle: 'text-yellow-100 text-center loadingHero mb-10',
+    image: 'mx-auto h-20 mt-20'
 }
+
+function Animation() {
+
+  const lottieRef = useRef();
+  useEffect(() => {
+    if (lottieRef.current) {
+      lottieRef.current.setSpeed(0.3);
+    }
+  }, [])
+  //original size 500. height set 300vw to elimate unused space; viewbox zooms in, pushed down and pushed to right
+  return <Lottie animationData={plant} lottieRef={lottieRef} loop={false} rendererSettings={{viewBoxSize: "150 220 170 80"}} style={{height: "30vw"}} />
+  }
 
 export default function Hero() {
     const [loading, setLoading] = useState(false);
-
+    
     useEffect(() => {
       setLoading(true);
+
       setTimeout(() => {
         setLoading(false);
-      }, 20000);
+      }, 5000);
     }, []);
   
     return (
         loading ? <div className={classes.loadingAnimation}>
             <h2 className={classes.loadingTitle}>Planttracker App</h2>
             <h3 className={classes.loadingTitle}>A citizen science project</h3>
-            <div className={classes.loadingTitle}>
-                <img src={leaf} className={classes.image} alt="" />
-                
-
-            </div>
+            <Animation/>
         </div> 
         :
     
