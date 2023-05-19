@@ -3,7 +3,6 @@ from rest_framework import permissions
 from django.conf import settings
 from django.views.static import serve
 
-
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,

@@ -1,7 +1,7 @@
 import axiosInstance from "../helpers/axios";
 import { useState, useEffect } from "react";
 import { testMail, testPassword } from '../helpers/checks';
-
+import { Modal, closeModal, openModal } from "./Modal";
 
 const classes = {
     account: "p-4 space-2",
@@ -70,10 +70,12 @@ export default function Account() {
         }
         emailFormData.append('email', document.querySelector('#emailForm>#email').value.trim());
         console.log(emailFormData)
-        axiosInstance.patch('users/myaccount/', emailFormData)
+        axiosInstance.patch('myaccount/', emailFormData)
         .then(res => {
             console.log(res)
         })
+        .catch(err => console.error(err))
+        .finally(setTimeout(() => {closeModal(e)}, 2000))
     }
 
     function passwordChangeHandler() {
@@ -102,8 +104,7 @@ export default function Account() {
           return window.alert('Invalid form, please check the data provided!')
         }
         passwordFormData.append('password', document.querySelector('#passwordForm>#password').value.trim());
-        console.log(emailFormData)
-        axiosInstance.patch('users/myaccount/', passwordFormData)
+        axiosInstance.patch(`users/reset/${user.id}`, passwordFormData)
         .then(res => {
             console.log(res)
         })
@@ -115,19 +116,6 @@ export default function Account() {
         .catch(err => console.error(err))
     }
 
-/// functions for opening and closing modals 
-
-    function cancelModal(e) {
-        e.preventDefault();
-        e.target.parentNode.parentNode.parentNode.parentNode.classList.toggle("hidden")
-    }
-
-    function openModal(e) {
-        e.preventDefault();
-        e.target.nextSibling.classList.toggle("hidden");
-    }
-
-
 
     return (
         <div className={classes.account}>
@@ -137,85 +125,67 @@ export default function Account() {
             {user && <p>{user.username}</p>}
             
         </div>
+        {/* Email */}
         <div>
             <p className={classes.paragraph}>Email</p>
             {user && <p className={classes.paragraph}>{user.email}</p>}
             <button className={classes.button} onClick={openModal}>Update</button>
-            {/* Backdrop */}
-            <div className={classes.backdrop}> 
-                {/* Modal */}
-                <div className={classes.modal}>
-                    <form className={classes.form} action="" id="emailForm" onChange={updateEmailFormData} onSubmit={handleEmailSubmit}>
-                    <div className={classes.cancel} onClick={cancelModal}><img src="" alt="" /></div>
-                        <label className={classes.label} htmlFor="">New email</label>
-                        <input className={classes.input} id='email' name='email' type="text" />
-                        {emailErr && 
-                        <p className={classes.message}>{emailErr}</p>
-                        }
-                        {incompleteErr && 
-                        <p className={classes.message}>{incompleteErr}</p>
-                        }
-                        <div className={classes.buttonwrapper}>
-                        <button className={classes.button}>Ok</button>
-                        <button className={classes.button} onClick={cancelModal}>Cancel</button>
-                        </div>
-                    </form>
-                </div>
-                {/* End modal */}
-            </div>
-            {/* End Backdrop */}
+            {/* Change email */}
+            <Modal>
+                <form className={classes.form} action="" id="emailForm" onChange={updateEmailFormData} onSubmit={handleEmailSubmit}>
+                <div className={classes.cancel} onClick={closeModal}><img src="" alt="" /></div>
+                    <label className={classes.label} htmlFor="">New email</label>
+                    <input className={classes.input} id='email' name='email' type="text" />
+                    {emailErr && 
+                    <p className={classes.message}>{emailErr}</p>
+                    }
+                    {incompleteErr && 
+                    <p className={classes.message}>{incompleteErr}</p>
+                    }
+                    <div className={classes.buttonwrapper}>
+                    <button className={classes.button}>Ok</button>
+                    <button className={classes.button} onClick={closeModal}>Cancel</button>
+                    </div>
+                </form>
+            </Modal>
         </div>
-{/* Password change */}
+        {/* Password change */}
         <div>
-        <button className={classes.button} onClick={openModal}>Change password</button>
-            {/* Backdrop */}
-            <div className={classes.backdrop}> 
-                {/* Modal */}
-                <div className={classes.modal}>
-                    <form className={classes.form} action="" id="passwordForm" onChange={passwordChangeHandler} onSubmit={passwordSubmitHandler}>
-                        <div className={classes.cancel} onClick={cancelModal}><img src="" alt="" /></div>
-                        <label className={classes.label} htmlFor="">New password</label>
-                        <input className={classes.input} id='password' name='password' type="text" />
-                        <label className={classes.label} htmlFor="">Confirm new password</label>
-                        <input className={classes.input} id='passwordConfirmation' name='passwordConfirmation' type="text" />
-                        <div className={classes.buttonwrapper}>
-                        <button className={classes.button}>Ok</button>
-                        <button className={classes.button} onClick={cancelModal}>Cancel</button>
-                        </div>
-                    </form>
-                    {pwdErr && 
-                        <p>{pwdErr}</p>
-                        }
-                        {incompleteErr && 
-                        <p>{incompleteErr}</p>
-                        }
-                </div>
-                {/* End modal */}
-            </div>
-            {/* End backdrop */}
-
-            <div>
+            <button className={classes.button} onClick={openModal}>Change password</button>
+            <Modal>
+                <form className={classes.form} action="" id="passwordForm" onChange={passwordChangeHandler} onSubmit={passwordSubmitHandler}>
+                    <div className={classes.cancel} onClick={closeModal}><img src="" alt="" /></div>
+                    <label className={classes.label} htmlFor="">New password</label>
+                    <input className={classes.input} id='password' name='password' type="text" />
+                    <label className={classes.label} htmlFor="">Confirm new password</label>
+                    <input className={classes.input} id='passwordConfirmation' name='passwordConfirmation' type="text" />
+                    <div className={classes.buttonwrapper}>
+                    <button className={classes.button}>Ok</button>
+                    <button className={classes.button} onClick={closeModal}>Cancel</button>
+                    </div>
+                </form>
+                {pwdErr && 
+                    <p>{pwdErr}</p>
+                    }
+                    {incompleteErr && 
+                    <p>{incompleteErr}</p>
+                    }
+            </Modal>
+        <div>
+        
+        {/* Delete account */}
         <button className={classes.button} onClick={openModal}>Delete account</button>
-                {/* Backdrop */}
-                <div className={classes.backdrop}> 
-                {/* Modal */}
-                <div className={classes.modal}>
-                    <form action="">
+        <Modal>
+            <form action="">
                         <p className={classes.dangertext}>Are you sure you want to delete your account? This cannot be undone!</p>
                         <div className={classes.buttonwrapper}>
                         <button className={classes.dangerbutton} onClick={deleteHandler}>Yes, I'm sure</button>
-                        <button className={classes.dangercancelbutton} onClick={cancelModal}>Cancel</button>
+                        <button className={classes.dangercancelbutton} onClick={closeModal}>Cancel</button>
                         </div>
-                    </form>
-                </div>
-                {/* End modal */}
-            </div>
-            {/* End Backdrop */}
-    </div>
-
+            </form>
+        </Modal>
         </div>
-
-
+        </div>
 
         <h3 className={classes.title}>My submissions</h3>
         <ul>
@@ -226,8 +196,6 @@ export default function Account() {
                     🕙 {new Date(submission.created_at).toLocaleString('en-GB')}
                     </li>})}
         </ul>
-    {/* Account deletion */}
-
         </div>
     )
 }

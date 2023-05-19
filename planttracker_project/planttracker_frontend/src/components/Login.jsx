@@ -3,7 +3,7 @@ import { useLocation, Link, useOutletContext } from 'react-router-dom';
 import { useState } from 'react';
 import visibility from '../assets/icons/visibility.svg';
 import visibility_off from '../assets/icons/visibility_off.svg';
-
+import { Modal } from './Modal';
 
 const classes = {
   wrapper: 'flex flex-col justify-between w-[70vw] m-auto p-8 bg-white rounded-xl shadow-lg shadow-slate-500/50 border-solid border-2 border-slate-300 m-4',
@@ -77,6 +77,9 @@ export default function Login() {
 
           <p className={classes.info}>  Password forgotten? </p>
           <Link className={classes.link} to='/reset'> 👉 Reset password</Link>
+          <Modal>
+
+          </Modal>
           <p className={classes.info}>No account yet?</p>
           <Link  className={classes.link} to='/register'> 👉 Register</Link>
          </div>
