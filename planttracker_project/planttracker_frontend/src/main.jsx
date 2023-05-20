@@ -2,7 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
 import Explore from "./components/Explore"
-import Header from "./components/Header"
 import Track from "./components/Track"
 import Login from "./components/Login"
 import Register from "./components/Register"

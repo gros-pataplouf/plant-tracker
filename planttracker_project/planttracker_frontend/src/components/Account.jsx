@@ -65,12 +65,12 @@ export default function Account() {
 
     function handleEmailSubmit(e) {
         e.preventDefault();
-        if (emailErr || pwdErr || incompleteErr ) {
+        if (emailErr || incompleteErr ) {
           return window.alert('Invalid form, please check the data provided!')
         }
         emailFormData.append('email', document.querySelector('#emailForm>#email').value.trim());
         console.log(emailFormData)
-        axiosInstance.patch('myaccount/', emailFormData)
+        axiosInstance.patch('users/myaccount/', {email: document.querySelector('#emailForm>#email').value.trim()})
         .then(res => {
             console.log(res)
         })
@@ -81,21 +81,19 @@ export default function Account() {
     function passwordChangeHandler() {
         setIncompleteErr('');
         setPwdErr('');
-        passwordFormData.append('password', document.querySelector('#passwordForm>#password').value.trim());
-        passwordFormData.append('password', document.querySelector('#passwordForm>#passwordConfirmation').value.trim());
-
-        for (const entry of passwordFormData.entries()) {
-            if (!entry[1]) {
-              setIncompleteErr("Please fill out all required fields")
-              } 
-            }
-            if (document.querySelector('#passwordForm>#password').value.trim() !==  document.querySelector('#passwordForm>#passwordConfirmation').value.trim()) {
-              setPwdErr('Passwords must match')
-            }
-            if (!testPassword(passwordFormData.get('password'))) {
-              setPwdErr('Passwords must contain at least 8 characters, one capital letter, one small letter, one number and one special character!')
-            }
+        const password = document.querySelector('#passwordForm>#password').value.trim()
+        const passwordConf = document.querySelector('#passwordForm>#passwordConfirmation').value.trim();
+        console.log(password, passwordConf)
+        if (!password || !passwordConf) {
+            setIncompleteErr("Please fill out all required fields")
             } 
+        if (!testPassword(password)) {
+            setPwdErr('Passwords must contain at least 8 characters, one capital letter, one small letter, one number and one special character!')
+        }
+        if (password !== passwordConf) {
+            setPwdErr('Passwords must match.')
+        }
+    } 
     // <form action="" id="passwordForm" onChange={passwordChangeHandler} onSubmit={passwordSubmitHandler}>
 
     function passwordSubmitHandler(e) {
@@ -104,7 +102,7 @@ export default function Account() {
           return window.alert('Invalid form, please check the data provided!')
         }
         passwordFormData.append('password', document.querySelector('#passwordForm>#password').value.trim());
-        axiosInstance.patch(`users/reset/${user.id}`, passwordFormData)
+        axiosInstance.patch(`users/myaccount/`, passwordFormData)
         .then(res => {
             console.log(res)
         })

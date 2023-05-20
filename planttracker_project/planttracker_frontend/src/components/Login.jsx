@@ -3,7 +3,8 @@ import { useLocation, Link, useOutletContext } from 'react-router-dom';
 import { useState } from 'react';
 import visibility from '../assets/icons/visibility.svg';
 import visibility_off from '../assets/icons/visibility_off.svg';
-import { Modal } from './Modal';
+import { Modal, openModal, closeModal } from './Modal';
+import { testMail } from '../helpers/checks';
 
 const classes = {
   wrapper: 'flex flex-col justify-between w-[70vw] m-auto p-8 bg-white rounded-xl shadow-lg shadow-slate-500/50 border-solid border-2 border-slate-300 m-4',
@@ -29,8 +30,7 @@ export default function Login() {
     const location = useLocation();
     const [ showPwd, setShowPwd ] = useState(false);
     function submitHandler(e) {
-        e.preventDefault();
-        
+        e.preventDefault();      
         if (!document.querySelector('input#username').value || !document.querySelector('input#password').value) {
           setMessage("Cannot submit empty form. ⛔");
           return null;
@@ -53,6 +53,31 @@ export default function Login() {
             console.error(error.response);
             setMessage("Login unsuccessful ⛔")})
     }
+    function getResetLink(e) {
+      e.preventDefault();
+      console.log(document.querySelector('input#email').value)  
+      if (!document.querySelector('input#email').value) {
+        console.log("empty")
+        window.alert("Cannot submit empty form. ⛔");
+        return null;
+      };
+
+        
+      axiosInstance.post('reset/', document.querySelector('#getResetLink'))
+        .then(res => { console.log(res)
+
+          if (location.search) {
+            return window.location.href =(`/${location.search.slice(1,)}`);
+        } else {
+          return window.location.href = '/';
+        }})
+        .catch(
+          error =>{
+          console.error(error.response);
+          setMessage("Login unsuccessful ⛔")})
+
+    }
+
     return (
         <div className={classes.wrapper}>
         <h3 className={classes.title}>Log in</h3>
@@ -76,10 +101,19 @@ export default function Login() {
           <p className={classes.failure}>{message}</p>
 
           <p className={classes.info}>  Password forgotten? </p>
-          <Link className={classes.link} to='/reset'> 👉 Reset password</Link>
-          <Modal>
+          <button className={classes.link} onClick={openModal}> 👉 Reset password</button>
 
+          <Modal>
+          <div>
+          <h3 className={classes.title}>Request a password reset link</h3>
+          <form className={classes.form} id="getResetLink" onSubmit={getResetLink}>
+              <label htmlFor="email">Email</label>
+              <input className={classes.input} id="email" name="email" type="text" />
+              <button className={classes.btn} type="submit">Get Reset Link</button>
+          </form>
+          </div>
           </Modal>
+
           <p className={classes.info}>No account yet?</p>
           <Link  className={classes.link} to='/register'> 👉 Register</Link>
          </div>

@@ -2,7 +2,6 @@ import axiosInstance from '../helpers/axios';
 import { useLocation, Link, useOutletContext } from 'react-router-dom';
 import { useState } from 'react';
 import info from '../assets/icons/info.svg';
-
 import visibility from '../assets/icons/visibility.svg';
 import visibility_off from '../assets/icons/visibility_off.svg';
 import { testPassword } from '../helpers/checks';
@@ -69,16 +68,16 @@ export default function Reset() {
 
     function submitHandler(e) {
         e.preventDefault();
-        
         if (!document.querySelector('input#password').value) {
           setMessage("Cannot submit empty form. ⛔");
           return null;
         };
-
-         
         axiosInstance.post(`reset/${uuid}`, document.querySelector('#resetForm'))
           .then(res => {
-            setMessage("Your password has been reset ✅")
+            setMessage("Your password has been reset ✅");
+            setTimeout(() => {
+              window.location.href = '/login'
+            }, 5000)
             })
           .catch(
             error =>{
@@ -89,7 +88,7 @@ export default function Reset() {
         <div className={classes.wrapper}>
         <h3 className={classes.title}>Password reset ✍️</h3>
         {!success && 
-      <form className={classes.form} id='registrationForm' onSubmit={submitHandler} onChange={validateForm}>
+      <form className={classes.form} id='resetForm' onSubmit={submitHandler} onChange={validateForm}>
         <label className={classes.label} htmlFor='password'>Password {pwdErr && <span className={classes.errorSpan}>{pwdErr}  
         <span className={classes.tooltipSpan} onClick={()=>{
               const tooltip = document.querySelector("#tooltip");
@@ -122,16 +121,17 @@ export default function Reset() {
             </button>
             </div>
 
-        <button className={classes.btn} type="submit">Create account</button>
+        <button className={classes.btn} type="submit">Reset password</button>
         <p className={classes.errorSpan}>{incompleteErr}</p>
      </form>}
          <div>
           <p className={classes.failure}>{message}</p>
 
           <p className={classes.info}>  Want to login? </p>
-          <Link className={classes.link} to='/reset'> 👉 Login page</Link>
+          <Link className={classes.link} to='/login'> 👉 Login page</Link>
           <p className={classes.info}>No account yet?</p>
           <Link  className={classes.link} to='/register'> 👉 Register</Link>
+ 
          </div>
         </div>
 

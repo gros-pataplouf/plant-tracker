@@ -13,30 +13,12 @@
     animation: loadingHero 3s linear;
 }
 
-.loadingLeaf {
-    animation: loadingLeaf 3s linear;
-}
 
 @keyframes loadingHero {
-    0% {color: hsl(14, 87%, 43%);}
+    0% {color: hsl(0, 90%, 27%);}
     50% {color: hsl(60, 96%, 69%);}
     100% {color: hsl(55, 92%, 95%) }
     }
-
-@keyframes loadingLeaf {
-    from {
-        transform: rotate(0deg);
-        transform-origin: bottom right;
-      }
-      to {
-        transform: rotate(-70deg);
-        transform-origin: bottom right;
-
-      }
-
-    }
-
-
 
 @layer base {
 
