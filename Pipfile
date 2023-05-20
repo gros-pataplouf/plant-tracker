@@ -12,6 +12,9 @@ psycopg2-binary = "*"
 pillow = "*"
 requests = "*"
 drf-yasg = "*"
+python-dotenv = "*"
+djangorestframework-gis = "*"
+djangorestframework-simplejwt = "*"
 
 [dev-packages]
 
