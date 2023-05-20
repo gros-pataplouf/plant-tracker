@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('planttracker_app', '0010_activationuuid_expiry_time'),
+        ('api', '0010_activationuuid_expiry_time'),
     ]
 
     operations = [

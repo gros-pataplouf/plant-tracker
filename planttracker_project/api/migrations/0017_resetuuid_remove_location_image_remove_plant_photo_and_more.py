@@ -3,14 +3,14 @@
 import datetime
 from django.db import migrations, models
 import django.db.models.deletion
-import planttracker_app.models
+import api.models
 import uuid
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('planttracker_app', '0016_alter_activationuuid_expiry_time_alter_location_area'),
+        ('api', '0016_alter_activationuuid_expiry_time_alter_location_area'),
     ]
 
     operations = [
@@ -43,22 +43,22 @@ class Migration(migrations.Migration):
             name='PlantImage',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('image', models.ImageField(blank=True, upload_to=planttracker_app.models.upload_to, verbose_name='Photo')),
+                ('image', models.ImageField(blank=True, upload_to=api.models.upload_to, verbose_name='Photo')),
                 ('alt_en', models.TextField(blank=True)),
                 ('alt_fr', models.TextField(blank=True)),
                 ('alt_de', models.TextField(blank=True)),
                 ('description_en', models.TextField(blank=True)),
                 ('description_fr', models.TextField(blank=True)),
                 ('description_de', models.TextField(blank=True)),
-                ('plant', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='planttracker_app.plant')),
+                ('plant', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='api.plant')),
             ],
         ),
         migrations.CreateModel(
             name='LocationImage',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('image', models.ImageField(blank=True, upload_to=planttracker_app.models.upload_to, verbose_name='Photo')),
-                ('location', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='planttracker_app.location')),
+                ('image', models.ImageField(blank=True, upload_to=api.models.upload_to, verbose_name='Photo')),
+                ('location', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='api.location')),
             ],
         ),
     ]

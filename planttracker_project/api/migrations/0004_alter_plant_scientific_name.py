@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('planttracker_app', '0003_alter_location_image'),
+        ('api', '0003_alter_location_image'),
     ]
 
     operations = [

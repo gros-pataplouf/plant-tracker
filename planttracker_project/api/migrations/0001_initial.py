@@ -35,7 +35,7 @@ class Migration(migrations.Migration):
                 ('description_fr', models.TextField()),
                 ('description_en', models.TextField()),
                 ('photo', models.ImageField(upload_to='')),
-                ('tags', models.ManyToManyField(related_name='plants', to='planttracker_app.tag')),
+                ('tags', models.ManyToManyField(related_name='plants', to='api.tag')),
             ],
         ),
         migrations.CreateModel(
@@ -48,7 +48,7 @@ class Migration(migrations.Migration):
                 ('description', models.CharField(max_length=100)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('author', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL)),
-                ('plant', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='planttracker_app.plant')),
+                ('plant', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='api.plant')),
             ],
         ),
     ]

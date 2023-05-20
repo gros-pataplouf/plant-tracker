@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from planttracker_app.models import Tag, Location, Plant, ActivationUUID, PlantImage, LocationImage
+from api.models import Tag, Location, Plant, ActivationUUID, PlantImage, LocationImage
 # Register your models here.
 
 admin.site.register(Tag)

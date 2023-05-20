@@ -36,7 +36,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_gis',
     'corsheaders',
-    'planttracker_app',
+    'api',
     'drf_yasg',
     'rest_framework_simplejwt.token_blacklist',
 
@@ -154,8 +154,8 @@ REST_FRAMEWORK = {
     ),
 
     'DEFAULT_THROTTLE_CLASSES': [
-    'planttracker_app.throttles.AnonBurstRateThrottle',
-    'planttracker_app.throttles.AnonSustainedRateThrottle'
+    'api.throttles.AnonBurstRateThrottle',
+    'api.throttles.AnonSustainedRateThrottle'
     ],
     'DEFAULT_THROTTLE_RATES': {
         'burst': '2000/min',

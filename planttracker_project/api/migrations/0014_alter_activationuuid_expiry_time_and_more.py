@@ -2,13 +2,13 @@
 
 import datetime
 from django.db import migrations, models
-import planttracker_app.models
+import api.models
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('planttracker_app', '0013_alter_activationuuid_expiry_time_alter_plant_photo'),
+        ('api', '0013_alter_activationuuid_expiry_time_alter_plant_photo'),
     ]
 
     operations = [
@@ -20,6 +20,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='location',
             name='image',
-            field=models.ImageField(blank=True, upload_to=planttracker_app.models.upload_to, verbose_name='Photo'),
+            field=models.ImageField(blank=True, upload_to=api.models.upload_to, verbose_name='Photo'),
         ),
     ]

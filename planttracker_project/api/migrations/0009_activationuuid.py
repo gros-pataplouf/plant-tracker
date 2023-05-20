@@ -7,7 +7,7 @@ import uuid
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('planttracker_app', '0008_remove_plant_locations'),
+        ('api', '0008_remove_plant_locations'),
     ]
 
     operations = [
