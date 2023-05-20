@@ -55,7 +55,7 @@ MIDDLEWARE = [
 
 ]
 
-ROOT_URLCONF = 'planttracker_project.urls'
+ROOT_URLCONF = 'core.urls'
 
 TEMPLATES = [
     {
@@ -73,7 +73,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'planttracker_project.wsgi.application'
+WSGI_APPLICATION = 'core.wsgi.application'
 
 
 # Database
