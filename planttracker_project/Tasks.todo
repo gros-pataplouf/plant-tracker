@@ -13,15 +13,17 @@
     ✔ @high Change PWD @done(23-04-29 10:59)
     ✔ @low view submitted data @done(23-04-29 10:59)
 ✔ @high reset password from login page @done(23-05-07 14:39)
+✔ @high Location Detail page @done(23-05-19 18:57)
+✔ @bug plant tiles not shortened on 1st load in plant list @done(23-05-19 18:57)
 
-☐ @high Location Detail page
 
 ☐ @high style Account Detail page
 
-
+@bugfix naive daytime waring when posting to reset/ and activation uuid/
+home/mercury/.local/share/virtualenvs/planttracker_project-QdvFz97r/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1564: RuntimeWarning: DateTimeField ResetUUID.expiry_time received a naive datetime (2023-05-20 15:27:19.081512) while time zone support is active.
+warnings.warn(
 
 ☐ @low Plant Detail page
-☐ @bug plant tiles not shortened on 1st load in plant list
 ☐ @bug marker colors must be independent from primary key 
 
 

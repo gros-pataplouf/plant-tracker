@@ -28,14 +28,12 @@ urlpatterns = [
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('token/authtest/', AuthTest.as_view(), name='token_authtest'),
     path('token/blacklist/', TokenBlacklistView.as_view(), name='token_blacklist'),
-
    ]
 
 urlpatterns += [
    path("auth/", include("rest_framework.urls")),
    ]
 
-print(settings.DEBUG, settings.MEDIA_ROOT)
 if settings.DEBUG:
         urlpatterns += [
         re_path(r'^media/(?P<path>.*)$', serve, {

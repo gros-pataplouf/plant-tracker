@@ -43,6 +43,21 @@ class MyAccount(generics.RetrieveUpdateDestroyAPIView):
         if valid_auth_data:
             [user, token] = valid_auth_data
         return get_object_or_404(User, pk=token.payload['user_id'])
+    def partial_update(self, request, *args, **kwargs):
+        kwargs['partial'] = True
+        if request.data.get('password'):
+            user = self.get_object()
+            user.set_password(request.data.get('password'))
+            user.save()
+            return Response(data="Password successfully reset", status=status.HTTP_204_NO_CONTENT)
+        elif request.data.get('email'):
+            users = User.objects.filter(email=request.data.get('email'))
+            # Check whether email already in use for other user
+            filtered = list(filter(lambda user: user != self.get_object(), list(users)))
+            if len(filtered) > 0:
+                return Response("This email cannot be associated with your account", status=status.HTTP_403_FORBIDDEN)
+        return self.update(request, *args, **kwargs)
+    
 
 class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
@@ -138,7 +153,6 @@ class SendResetLink(generics.CreateAPIView):
     def post(self, request):
         email = request.data['email']
         existing_users = User.objects.filter(email=request.data['email'])
-        print(existing_users)
         if not bool(existing_users.values()):
             #if email not in database, send email to self to prevent attacks
             email = 'kraeuterblog@gmx.net'
@@ -196,6 +210,7 @@ class ResetPassword(generics.RetrieveAPIView):
     permission_classes = [ AllowAny ]
     def post(self, request, id):
         uuid_instance = get_object_or_404(ResetUUID, id=id)
+        print(uuid_instance, request.data['password'])
         if uuid_instance:
             if datetime.now() < uuid_instance.expiry_time.replace(tzinfo=None):
                 uuid_instance.delete()
