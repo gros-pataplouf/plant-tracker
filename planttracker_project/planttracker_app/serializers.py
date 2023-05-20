@@ -1,4 +1,4 @@
-from ..models import Plant, Location, ActivationUUID, PlantImage, LocationImage, ResetUUID
+from .models import Plant, Location, ActivationUUID, PlantImage, LocationImage, ResetUUID
 from django.contrib.auth.models import User
 from rest_framework import serializers
 

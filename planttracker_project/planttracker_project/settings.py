@@ -154,8 +154,8 @@ REST_FRAMEWORK = {
     ),
 
     'DEFAULT_THROTTLE_CLASSES': [
-    'planttracker_app.api.throttles.AnonBurstRateThrottle',
-    'planttracker_app.api.throttles.AnonSustainedRateThrottle'
+    'planttracker_app.throttles.AnonBurstRateThrottle',
+    'planttracker_app.throttles.AnonSustainedRateThrottle'
     ],
     'DEFAULT_THROTTLE_RATES': {
         'burst': '2000/min',
