@@ -1,7 +1,7 @@
 import uuid
 from django.contrib.gis.db import models
 from django.conf import settings
-import datetime
+from datetime import datetime, timezone, timedelta
 from django.utils.translation import gettext_lazy as _
 
 def upload_to(instance, filename):
@@ -40,12 +40,19 @@ class Location(models.Model):
 class ActivationUUID(models.Model):
     id=models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email=models.EmailField(blank=False)
-    expiry_time=models.DateTimeField(default=datetime.datetime.now() + datetime.timedelta(days=1))
+    expiry_time=models.DateTimeField(blank=True)
+    def save(self, *args, **kwargs):
+        self.expiry_time = (datetime.now(timezone.utc) + timedelta(hours=3)).isoformat()
+        super().save(*args, **kwargs)  # Call the "real" save() 
 
 class ResetUUID(models.Model):
     id=models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email=models.EmailField(blank=False)
-    expiry_time=models.DateTimeField(default=datetime.datetime.now() + datetime.timedelta(days=1))
+    expiry_time=models.DateTimeField(blank=True)
+    def save(self, *args, **kwargs):
+        self.expiry_time = (datetime.now(timezone.utc) + timedelta(hours=3)).isoformat()
+        super().save(*args, **kwargs)  # Call the "real" save() 
+
 
 
 #will be used for multiple image upload from admin area
