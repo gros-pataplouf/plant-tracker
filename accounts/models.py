@@ -6,4 +6,5 @@ class User(AbstractUser):
     class Meta:
         db_table = 'auth_user'
 
-    pass
+    email = models.EmailField(_("email address"), blank=False, null=False, unique=True)
+
