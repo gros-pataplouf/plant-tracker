@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'rest_framework_gis',
     'corsheaders',
     'api',
+    'accounts',
     'drf_yasg',
     'rest_framework_simplejwt.token_blacklist',
 
@@ -75,7 +76,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
-
+AUTH_USER_MODEL = 'accounts.User'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
@@ -154,8 +155,8 @@ REST_FRAMEWORK = {
     ),
 
     'DEFAULT_THROTTLE_CLASSES': [
-    'api.throttles.AnonBurstRateThrottle',
-    'api.throttles.AnonSustainedRateThrottle'
+    'core.throttles.AnonBurstRateThrottle',
+    'core.throttles.AnonSustainedRateThrottle'
     ],
     'DEFAULT_THROTTLE_RATES': {
         'burst': '2000/min',

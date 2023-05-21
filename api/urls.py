@@ -9,24 +9,17 @@ from rest_framework_simplejwt.views import (
     TokenBlacklistView
 )
 
-from .views import PlantDetail, PlantList, LocationDetail, LocationList, UserList, PlantImages, UserDetail, UserCreate, UserActivate, AuthTest, MyAccount, SendResetLink, ResetPassword, LocationImages
+from .views import PlantDetail, PlantList, LocationDetail, LocationList, PlantImages, LocationImages
 
 urlpatterns = [
     path('plants/', PlantList.as_view(), name="api_plant_list"),
     path('plants/images/', PlantImages.as_view(), name="api_plant_images"),
     path('plants/<int:pk>', PlantDetail.as_view(), name="api_plant_detail"),
-    path('users/myaccount/', MyAccount.as_view(), name="api_user_myaccount"),
-    path('users/', UserList.as_view(), name="api_user_list"),
     path('locations/', LocationList.as_view(), name="api_location_list"),
     path('locations/images/', LocationImages.as_view(), name="api_location_images"),
     path('locations/<int:pk>', LocationDetail.as_view(), name="api_location_detail"),
-    path('register/', UserCreate.as_view(), name="api_user_create"),
-    path('reset/', SendResetLink.as_view(), name="api_reset"),
-    path('reset/<str:id>', ResetPassword.as_view(), name="api_reset_id"),
-    path('activate/<str:id>', UserActivate.as_view(), name="api_user_activate"),
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('token/authtest/', AuthTest.as_view(), name='token_authtest'),
     path('token/blacklist/', TokenBlacklistView.as_view(), name='token_blacklist'),
    ]
 

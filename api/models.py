@@ -3,16 +3,14 @@ from django.contrib.gis.db import models
 from django.conf import settings
 from datetime import datetime, timezone, timedelta
 from django.utils.translation import gettext_lazy as _
+from django.contrib.auth import get_user_model
+User = get_user_model()
+
 
 def upload_to(instance, filename):
     extension=filename.split('.')[-1]
     file_id=uuid.uuid4()
     return f'{file_id}.{extension}'
-
-class Tag(models.Model):
-    value = models.TextField(max_length=15)
-    def __str__(self):
-        return self.value
 
 class Plant(models.Model):
     scientific_name = models.TextField(unique=True)
@@ -33,27 +31,9 @@ class Location(models.Model):
     area = models.PositiveIntegerField()
     # image = models.ImageField(_("Photo"), upload_to=upload_to, blank=True)
     description = models.CharField(max_length=100, blank=True)
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    author = models.ForeignKey(User, on_delete=models.PROTECT)
     plant = models.ForeignKey(Plant, on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
-
-class ActivationUUID(models.Model):
-    id=models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    email=models.EmailField(blank=False)
-    expiry_time=models.DateTimeField(blank=True)
-    def save(self, *args, **kwargs):
-        self.expiry_time = (datetime.now(timezone.utc) + timedelta(hours=3)).isoformat()
-        super().save(*args, **kwargs)  # Call the "real" save() 
-
-class ResetUUID(models.Model):
-    id=models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    email=models.EmailField(blank=False)
-    expiry_time=models.DateTimeField(blank=True)
-    def save(self, *args, **kwargs):
-        self.expiry_time = (datetime.now(timezone.utc) + timedelta(hours=3)).isoformat()
-        super().save(*args, **kwargs)  # Call the "real" save() 
-
-
 
 #will be used for multiple image upload from admin area
 class PlantImage(models.Model):
