@@ -34,12 +34,13 @@ export default function Account() {
     const emailFormData = new FormData();
     const passwordFormData = new FormData();
     useEffect(() => {
-        axiosInstance.get('users/myaccount/')
+        axiosInstance.get('accounts/me/')
         //backend filters out the right user
         .then(res => {
             const user = res.data
+            console.log(res.data)
             setUser(user);
-            axiosInstance.get(`locations?author=${user.id}`)
+            axiosInstance.get(`api/locations?author=${user.id}`)
             .then(res => { setSubmissions(res.data); console.log(submissions)})
             .catch(err => console.error(err))
         })
@@ -70,7 +71,7 @@ export default function Account() {
         }
         emailFormData.append('email', document.querySelector('#emailForm>#email').value.trim());
         console.log(emailFormData)
-        axiosInstance.patch('users/myaccount/', {email: document.querySelector('#emailForm>#email').value.trim()})
+        axiosInstance.patch('accounts/me/', {email: document.querySelector('#emailForm>#email').value.trim()})
         .then(res => {
             console.log(res)
         })
@@ -102,14 +103,14 @@ export default function Account() {
           return window.alert('Invalid form, please check the data provided!')
         }
         passwordFormData.append('password', document.querySelector('#passwordForm>#password').value.trim());
-        axiosInstance.patch(`users/myaccount/`, passwordFormData)
+        axiosInstance.patch(`accounts/me/`, passwordFormData)
         .then(res => {
             console.log(res)
         })
     }
 
     function deleteHandler() {
-        axiosInstance.delete('users/myaccount/')
+        axiosInstance.delete('accounts/me/')
         .then(res => console.log(res))
         .catch(err => console.error(err))
     }

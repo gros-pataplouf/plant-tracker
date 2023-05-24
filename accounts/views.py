@@ -1,4 +1,7 @@
+import uuid
 from django.shortcuts import render
+from django.core.exceptions import ValidationError
+
 
 # Create your views here.
 from datetime import datetime
@@ -23,8 +26,10 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.views import TokenBlacklistView
 
 from .models import ActivationUUID, ResetUUID
-from .serializers import RegisterUserSerializer, ActivationUUIDSerializer, ResetUUIDSerializer, UserSerializer
+from .serializers import UserSerializer, ActivationUUIDSerializer, ResetUUIDSerializer, UserSerializer
 from core.throttles import AnonBurstRateThrottle, AnonSustainedRateThrottle
+from core.settings import AUTH_PASSWORD_VALIDATORS
+from django.contrib.auth.password_validation import validate_password
 
 User = get_user_model()
 
@@ -32,6 +37,10 @@ JWT_authenticator = JWTAuthentication()
 
 
 class MyAccount(generics.RetrieveUpdateDestroyAPIView):
+    """
+    Account management view for non staff users. 
+    Allows to retrieve account data and to soft-delete the account.
+    """
     serializer_class = UserSerializer
     queryset = User.objects.all()
     def get_object(self):
@@ -42,65 +51,62 @@ class MyAccount(generics.RetrieveUpdateDestroyAPIView):
         return get_object_or_404(User, pk=token.payload['user_id'])
     def partial_update(self, request, *args, **kwargs):
         kwargs['partial'] = True
-        if request.data.get('password'):
-            user = self.get_object()
-            user.set_password(request.data.get('password'))
-            user.save()
-            return Response(data="Password successfully reset", status=status.HTTP_204_NO_CONTENT)
-        elif request.data.get('email'):
-            users = User.objects.filter(email=request.data.get('email'))
-            # Check whether email already in use for other user
-            filtered = list(filter(lambda user: user != self.get_object(), list(users)))
-            if len(filtered) > 0:
-                return Response("This email cannot be associated with your account", status=status.HTTP_403_FORBIDDEN)
-        return self.update(request, *args, **kwargs)
+        user = self.get_object()
+        user_serializer = UserSerializer(user, data=request.data, partial=True)
+        if user_serializer.is_valid(raise_exception=True):
+            if request.data.get('password'):
+                user.set_password(request.data.get('password'))
+                user.save()
+                return Response(status=status.HTTP_200_OK)
+            return self.update(request, *args, **kwargs)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+    def delete(self, request, *args, **kwargs):
+        """
+        soft delete feature:
+        scramble username and email, set user inactive
+        """
+        user = self.get_object()
+        user.username = uuid.uuid4()
+        user.email = f'{uuid.uuid4()}@deleted.com'
+        user.is_active = False
+        user.save()
+        return Response(status=status.HTTP_204_NO_CONTENT)
     
 
-class UserDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-class UserList(generics.ListAPIView):
-    serializer_class = UserSerializer
-    queryset = User.objects.all()
-
-class UserCreate(generics.ListCreateAPIView):
-    throttle_classes = [AnonBurstRateThrottle, AnonSustainedRateThrottle]
+class UserList(generics.ListCreateAPIView):
+    # throttle_classes = [AnonBurstRateThrottle, AnonSustainedRateThrottle]
     permission_classes = [ AllowAny ]
     def post(self, request):
-        uuid=""
-        pwd = request.data['password']
-        # \W any non alphanumeric character \d decimal [a-z] [A-Z]
-        if len(pwd) < 8 or not re.search('[A-Z]', pwd) or not re.search('[a-z]', pwd)  or not re.search('[0-9]', pwd)  or not re.search('[\W]', pwd) :
-            return Response("Your password does not meet the requirements.", status=status.HTTP_400_BAD_REQUEST)
-        existing_users = User.objects.filter(username=request.data['username']) | User.objects.filter(email=request.data['email'])
-        if bool(existing_users.values()):
-            error = "Something went wrong, please try again. If the issue persists, you may want to choose another username."
-            return Response(error, status=status.HTTP_403_FORBIDDEN)
-        reg_serializer = RegisterUserSerializer(data=request.data)
-        if reg_serializer.is_valid():
+        """when creating a new user from the frontend:
+        - an activation uuid is created
+        - the user is by default set to inactive (until he clicks the link in the activation link
+        - the activation link is sent by email
+        """
+        user_serializer = UserSerializer(data=request.data)
+        uuid = None
+        if user_serializer.is_valid():
             uuid_serializer = ActivationUUIDSerializer(data={"email": request.data["email"]})
             if uuid_serializer.is_valid():
                 uuid_serializer.save()
                 uuid = uuid_serializer.data['id']
-            newuser = reg_serializer.save()
-            user_instance = User.objects.get(email=request.data["email"])
+            user_instance = user_serializer.save()
             user_instance.is_active = False
             user_instance.save()
-            if newuser:
-                try:
-                    send_mail(
-                    'Welcome to the Planttracker Project',
-                    f"Please click on the following link to activate your account:\
-                    localhost:5173/activate?{uuid}",
-                    'planttrackerapp@gmx.de',
-                    [request.data['email']],
-                    fail_silently=False,
-                    )
-                except Exception as err:
-                    return Response("An error occured while sending the activation mail. This may be due to an invalid email address.", status=status.HTTP_500_INTERNAL_SERVER_ERROR)                
-            return Response("Your account has been created. An email with an activation code has been sent.", status=status.HTTP_201_CREATED)
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+            try:
+                send_mail(
+                'Welcome to the Planttracker Project',
+                f"Please click on the following link to activate your account:\
+                localhost:5173/activate?{uuid}",
+                'planttrackerapp@gmx.de',
+                [request.data['email']],
+                fail_silently=False,
+                )
+            except Exception as err:
+                return Response({"email": "An error occured while sending the activation mail. This may be due to an invalid email address."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)                
+            return Response({"success": "Your account has been created. An email with an activation code has been sent."}, status=status.HTTP_201_CREATED)
+        else:
+            return Response(user_serializer.errors, status=status.HTTP_403_FORBIDDEN)
+        return Response({error: "An unknown error has occured"}, status=status.HTTP_400_BAD_REQUEST)
 
 class SendResetLink(generics.CreateAPIView):
     throttle_classes = [AnonBurstRateThrottle, AnonSustainedRateThrottle]
@@ -140,19 +146,8 @@ class UserActivate(generics.RetrieveAPIView):
                 user_instance = get_object_or_404(User, email=uuid_instance.email)
                 user_instance.is_active = True
                 user_instance.save()               
-                return Response("Your account has been activated.", status=status.HTTP_204_NO_CONTENT)
-        return Response("Something went wrong, request another activation token.", status=status.HTTP_404_NOT_FOUND)
-
-class AuthTest(generics.GenericAPIView):
-    permission_classes = [ IsAuthenticated ]
-    authentication_classes = [ JWTAuthentication ]
-    def get(self, request):
-        auth_data = JWT_authenticator.authenticate(request)
-        if auth_data is not None:
-            [user, token] = auth_data
-            return Response(status=status.HTTP_200_OK)
-        else:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
+                return Response({"success": "Your account has been activated."}, status=status.HTTP_204_NO_CONTENT)
+        return Response({"error": "Something went wrong, request another activation token."}, status=status.HTTP_404_NOT_FOUND)
 
 class ResetPassword(generics.RetrieveAPIView):
     queryset = ResetUUID.objects.all()
@@ -167,8 +162,18 @@ class ResetPassword(generics.RetrieveAPIView):
                 user_instance = get_object_or_404(User, email=uuid_instance.email)
                 user_instance.set_password(request.data['password'])
                 user_instance.save()
-                return Response("Your password has been reset.", status=status.HTTP_204_NO_CONTENT)
-        return Response("Something went wrong, please try again later.", status=status.HTTP_404_NOT_FOUND)
+                return Response({"success":"Your password has been reset."}, status=status.HTTP_204_NO_CONTENT)
+        return Response({"error": "Something went wrong, please try again later."}, status=status.HTTP_404_NOT_FOUND)
 
 
 
+class AuthTest(generics.GenericAPIView):
+    permission_classes = [ IsAuthenticated ]
+    authentication_classes = [ JWTAuthentication ]
+    def get(self, request):
+        auth_data = JWT_authenticator.authenticate(request)
+        if auth_data is not None:
+            [user, token] = auth_data
+            return Response(status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)

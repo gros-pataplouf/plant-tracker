@@ -68,22 +68,25 @@ export default function Register() {
     }
     function submitHandler(e) {
         e.preventDefault();
-        if (emailErr || pwdErr || incompleteErr ) {
-          return window.alert('Invalid form, please check the data provided!')
-        }
+        // if (emailErr || pwdErr || incompleteErr ) {
+        //   return window.alert('Invalid form, please check the data provided!')
+        // }
         formData.append('email', document.getElementById('email').value);
         formData.append('username', document.getElementById('username').value);
         formData.append('password', document.getElementById('password').value);
         formData.append('passwordConfirmation', document.getElementById('passwordConfirmation').value);
 
-        axiosInstance.post('http://localhost:8000/api/register/', document.querySelector('#registrationForm'), {
+        axiosInstance.post('http://localhost:8000/accounts/users/', document.querySelector('#registrationForm'), {
             headers: {
               'Content-Type': 'application/json'
             }
           })
           .then(res => {setMessage(res.data);
           setSuccess(true)})
-          .catch(error => setMessage(error.response.data))}
+          .catch(error => {
+            console.error(error);
+            // setMessage(error.response.data)
+          })}
     return (
       <div className={classes.wrapper}>
       <h3 className={classes.title}>Sign up and contribute 💚</h3>

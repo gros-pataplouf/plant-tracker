@@ -37,7 +37,7 @@ export default function Login() {
         };
 
           
-        axiosInstance.post('token/', document.querySelector('#loginForm'))
+        axiosInstance.post('api/token/', document.querySelector('#loginForm'))
           .then(res => {
             localStorage.setItem('planttrackerAccess', res.data.access);
             localStorage.setItem('planttrackerRefresh', res.data.refresh);
@@ -63,7 +63,7 @@ export default function Login() {
       };
 
         
-      axiosInstance.post('reset/', document.querySelector('#getResetLink'))
+      axiosInstance.post('accounts/reset/', document.querySelector('#getResetLink'))
         .then(res => { console.log(res)
 
           if (location.search) {
