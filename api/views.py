@@ -84,8 +84,6 @@ class PlantImages(generics.ListAPIView):
     queryset = PlantImage.objects.all()
     serializer_class = PlantImageSerializer
 
-
-
 class LocationImages(generics.ListCreateAPIView):
     serializer_class = LocationImageSerializer
     def get_queryset(self):

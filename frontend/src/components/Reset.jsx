@@ -72,7 +72,7 @@ export default function Reset() {
           setMessage("Cannot submit empty form. ⛔");
           return null;
         };
-        axiosInstance.post(`reset/${uuid}`, document.querySelector('#resetForm'))
+        axiosInstance.put(`accounts/reset/${uuid}`, document.querySelector('#resetForm'))
           .then(res => {
             setMessage("Your password has been reset ✅");
             setTimeout(() => {

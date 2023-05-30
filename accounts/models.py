@@ -4,8 +4,6 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
 
-# Create your models here.
-
 class User(AbstractUser):
     class Meta:
         db_table = 'accounts_user'
@@ -13,7 +11,7 @@ class User(AbstractUser):
 
 class ActivationUUID(models.Model):
     id=models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    email=models.EmailField(blank=False)
+    user=models.ForeignKey(User, on_delete=models.CASCADE)
     expiry_time=models.DateTimeField(blank=True)
     def save(self, *args, **kwargs):
         self.expiry_time = (datetime.now(timezone.utc) + timedelta(hours=3)).isoformat()
@@ -21,9 +19,8 @@ class ActivationUUID(models.Model):
 
 class ResetUUID(models.Model):
     id=models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    email=models.EmailField(blank=False)
+    user=models.ForeignKey(User, on_delete=models.CASCADE)
     expiry_time=models.DateTimeField(blank=True)
     def save(self, *args, **kwargs):
         self.expiry_time = (datetime.now(timezone.utc) + timedelta(hours=3)).isoformat()
-        super().save(*args, **kwargs) 
-
+        super().save(*args, **kwargs)
