@@ -1,27 +1,18 @@
-from datetime import datetime
 import json, re
+from datetime import datetime
+
 from django.contrib.auth import get_user_model
-
-
-from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404
-from django.core import serializers
-from django.http import HttpResponse, JsonResponse
-from django.contrib.auth.models import User
 
-from rest_framework.throttling import AnonRateThrottle
 from rest_framework.response import Response
 from rest_framework import generics, status
-from rest_framework.views import APIView
 from rest_framework.decorators import permission_classes, authentication_classes
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny, IsAuthenticated
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework_simplejwt.views import TokenBlacklistView
 
 from .models import Plant, Location, PlantImage, LocationImage
-from .serializers import PlantSerializer, LocationSerializer, LocationImageSerializer,  PlantImageSerializer
-from .permissions import IsAuthorOrReadOnly
+from .serializers import PlantSerializer, LocationSerializer, LocationImageSerializer, PlantImageSerializer
 from core.throttles import AnonBurstRateThrottle, AnonSustainedRateThrottle
 
 User = get_user_model()

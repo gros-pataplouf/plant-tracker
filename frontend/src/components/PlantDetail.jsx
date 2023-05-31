@@ -35,7 +35,7 @@ export default function PlantList () {
     }, [emblaApi])
   
 
-    useEffect(() => {axiosInstance.get('plants/')
+    useEffect(() => {axiosInstance.get('api/plants/')
       .then(res => setPlantList(res.data))
       .catch(err => {
         console.error(err);

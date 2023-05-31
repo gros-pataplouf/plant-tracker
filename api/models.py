@@ -38,7 +38,8 @@ class Location(models.Model):
 #will be used for multiple image upload from admin area
 class PlantImage(models.Model):
     image = models.ImageField(_("Photo"), upload_to=upload_to, blank=True)
-    plant = models.ForeignKey(Plant, on_delete=models.CASCADE)
+    plant = models.ForeignKey(Plant, on_delete=models.CASCADE, blank=True, null=True)
+    type = models.CharField(choices=[('main','main'), ('secondary', 'secondary'), ('default', 'default')], max_length=20) 
     alt_en = models.TextField(blank=True)
     alt_fr = models.TextField(blank=True)
     alt_de = models.TextField(blank=True)

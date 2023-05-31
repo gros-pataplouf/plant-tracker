@@ -10,12 +10,12 @@ export default function Track() {
   const [location, setLocation] = useState([50, 10]);
   const [display, setDisplay] = useState('map');
   useEffect(() => {
-    axiosInstance.get('token/authtest/')
+    axiosInstance.get('accounts/me/')
     .then(res => {console.log(res)})
     .catch(err => {
         console.error(err);
         window.alert("You need to be logged in to submit data.")
-        window.location.pathname=`/login?${currentURL.pathname.slice(1,)}`
+        window.location.href=`/login?${window.location.pathname.slice(1,)}`
     })
   
   }, [])

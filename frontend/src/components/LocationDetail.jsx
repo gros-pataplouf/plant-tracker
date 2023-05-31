@@ -26,12 +26,12 @@ export default function LocationDetail () {
     const [location, setLocation] = useState(null);
     useEffect(() => {
       const id = window.location.pathname.replace('locations', '').replaceAll('/', '');
-      axiosInstance.get(`locations/${id}`)
+      axiosInstance.get(`api/locations/${id}`)
       .then(res => {
         setLocation(res.data);
         console.log(res.data);
-        const matchingPlant = axiosInstance.get(`plants/${res.data.plant}`);
-        const locationPhotos = axiosInstance.get(`locations/images?location=${id}`)
+        const matchingPlant = axiosInstance.get(`api/plants/${res.data.plant}`);
+        const locationPhotos = axiosInstance.get(`api/locations/images?location=${id}`)
         Promise.all([matchingPlant, locationPhotos])
         .then(values => {
           setLocation({...res.data, plant:values[0].data, photos:values[1].data});
@@ -55,19 +55,21 @@ export default function LocationDetail () {
 {        location.photos &&
         <Carousel>
           {[          
-    <div className={classes.emblaSlide}>
-    <MapContainer className={classes.mapContainer} id="map smallmap" center={location.location.coordinates} zoom={12} scrollWheelZoom={false} whenReady={leafletLowZIndex}>
-    <TileLayer
-      attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-    />
-    <Marker position={location.location.coordinates}/>
-  </MapContainer>
-  </div>, 
+            <div className={classes.emblaSlide} key="map">
+            {/* PostGis PointField has coordinates [lat, long], while leaflet needs [lng, lat]. Therefore, deepcopy must be made and coordinates reversed
+            in: MapContainer (center), Marker */}
+            <MapContainer className={classes.mapContainer} id="map smallmap" center={structuredClone(location.location.coordinates).reverse()} zoom={12} scrollWheelZoom={false} whenReady={leafletLowZIndex}>
+            <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            <Marker position={structuredClone(location.location.coordinates).reverse()}/>
+          </MapContainer>
+          </div>, 
 
             ...location.photos.map(_ => {
             return (
-              <div className={classes.emblaSlide}>
+              <div className={classes.emblaSlide} key={Math.floor(Math.random()*1000)}>
                 <img className={classes.locationImage} src={_.image} alt="" />
               </div>
             )
@@ -84,7 +86,7 @@ export default function LocationDetail () {
           </tr>
           <tr>
             <td>Coordinates</td>
-            <td>{convertGPS(location.location.coordinates)}</td>
+            <td>{convertGPS(structuredClone(location.location.coordinates).reverse())}</td>
           </tr>
           <tr>
             <td>Surface</td>

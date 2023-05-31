@@ -55,7 +55,8 @@ axiosInstance.interceptors.request.use(function(config) {
         error.response.status === 401 &&
         error.response.statusText === 'Unauthorized'
       ) {
-        const refreshToken = localStorage.getItem('refresh_token');
+        const refreshToken = localStorage.getItem('planttrackerRefresh');
+        console.log(refreshToken)
   
         if (refreshToken) {
           const tokenParts = JSON.parse(atob(refreshToken.split('.')[1]));
@@ -66,10 +67,10 @@ axiosInstance.interceptors.request.use(function(config) {
   
           if (tokenParts.exp > now) {
             return axiosInstance
-              .post('/token/refresh/', { refresh: refreshToken })
+              .post('accounts/token/refresh/', { refresh: refreshToken })
               .then((response) => {
-                localStorage.setItem('access_token', response.data.access);
-                localStorage.setItem('refresh_token', response.data.refresh);
+                localStorage.setItem('planttrackerAccess', response.data.access);
+                localStorage.setItem('planttrackerRefresh', response.data.refresh);
   
                 axiosInstance.defaults.headers['Authorization'] =
                   'JWT ' + response.data.access;

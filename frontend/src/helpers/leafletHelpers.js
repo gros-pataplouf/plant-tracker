@@ -16,8 +16,6 @@ export function convertGPS(coords) {
 
 //overwrite leaflet.css, too high z-indices
 
-
-
 export function leafletLowZIndex() {
   let newZIndices = {
     '.leaflet-pane' : 4,

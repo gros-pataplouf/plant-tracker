@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { testMail, testPassword } from '../helpers/checks';
 import { Modal, closeModal, openModal } from "./Modal";
 
+
 const classes = {
     account: "p-4 space-2",
     modal: "flex flex-col w-[95vw] justify-between m-auto p-8 rounded-xl shadow-lg shadow-slate-500/50 border-solid border-2 border-slate-300 bg-white",

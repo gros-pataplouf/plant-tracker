@@ -13,18 +13,17 @@ export default function Header ({props}) {
   const {isLoggedIn, setIsLoggedIn} = props;
   const [displayNav, setDisplayNav] = useState(false);
   function logOutHandler(e) {
-    axiosInstance.post('token/blacklist/', {
+    axiosInstance.post('accounts/token/blacklist/', {
       'refresh': localStorage.getItem("planttrackerRefresh"),
-
     })
-    .then(res => { console.log(res);
+    .then(res => {
+    console.log(res);
     localStorage.removeItem('planttrackerAccess');
     localStorage.removeItem('planttrackerRefresh');
     setIsLoggedIn(false);
     return window.location.href = '/'
   })
-
-  }
+}
 
   return (
     <div className={classes.wrapper} id="footer">

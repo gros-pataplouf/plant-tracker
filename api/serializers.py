@@ -20,7 +20,6 @@ class LocationImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = LocationImage
         fields = "__all__"
-        read_only = "__all__"
 
 class LocationSerializer(serializers.ModelSerializer):
     author = serializers.SlugRelatedField(queryset=User.objects.all(), many=False, slug_field='pk')

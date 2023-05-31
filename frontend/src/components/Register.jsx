@@ -76,7 +76,7 @@ export default function Register() {
         formData.append('password', document.getElementById('password').value);
         formData.append('passwordConfirmation', document.getElementById('passwordConfirmation').value);
 
-        axiosInstance.post('http://localhost:8000/accounts/users/', document.querySelector('#registrationForm'), {
+        axiosInstance.post('accounts/users/', document.querySelector('#registrationForm'), {
             headers: {
               'Content-Type': 'application/json'
             }

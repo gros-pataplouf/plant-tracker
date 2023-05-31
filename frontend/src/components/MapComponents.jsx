@@ -20,6 +20,7 @@ const classes = {
 }
 
 
+//a control element of the map. Clicking on it resets center and dynamic marker to detected location. Hidden if geolocation disabled.
 export function GoBackButton({props}) {
     const {coords, setResults, setLocation} = props;
     const map = useMap();
@@ -37,7 +38,6 @@ export function GoBackButton({props}) {
 }
 
 //thanks to the dynamic marker, the user can drag the map under the marker, the location in state is updated accordingly
-
 export function DynamicMarker({props}) {
     const {location, setLocation} = props;
     let center;
@@ -61,7 +61,7 @@ export function CenterAutomatically({location}) {
    }
 
 
-// users can search for address and map flys to selected location    
+// users can search for address and map fliess to selected location    
 export function Search({props}) {
     const {setLocation, location, coords, results, setResults} = props;
     const inputField = document.querySelector("input");
@@ -96,7 +96,7 @@ export function Search({props}) {
     )
 }
 
-
+//generates an svg of desired color 
 function svgFile(color) {
     return `<svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 96 960 960" width="48"><path d="M480.089 566Q509 566 529.5 545.411q20.5-20.588 20.5-49.5Q550 467 529.411 446.5q-20.588-20.5-49.5-20.5Q451 426 430.5 446.589q-20.5 20.588-20.5 49.5Q410 525 430.589 545.5q20.588 20.5 49.5 20.5ZM480 976Q319 839 239.5 721.5T160 504q0-150 96.5-239T480 176q127 0 223.5 89T800 504q0 100-79.5 217.5T480 976Z" stroke=${color} fill="hsl(${color}, 50%, 50%)"></svg>`
 }
@@ -112,8 +112,12 @@ export function markers (plants, locations) {
         const currentPlant = plants.filter(plant => {
             return plant.id === location.plant;
         })
+        {/* PostGis PointField has coordinates [lat, long], while leaflet needs [lng, lat].
+        Therefore, deepcopy (structuresClone(arr) must be made and coordinates reversed
+            in: Marker */}
+
         return (
-            <Marker key={location.id} position={location.location.coordinates.reverse()} icon={customIcon}>
+            <Marker key={location.id} position={structuredClone(location.location.coordinates).reverse()} icon={customIcon}>
             <Popup > {currentPlant[0].common_name_en} <br/>
             {location.area} m² <Link to={`/locations/${location.id}`}>View</Link></Popup>
             </Marker>
@@ -126,7 +130,7 @@ export function Legend({props}) {
     const [plantList, setPlantList] = useState([]);
     const {locationList, setLocationList, initialLocationList} = props;
       
-    useEffect(() => {axiosInstance.get('plants/')
+    useEffect(() => {axiosInstance.get('api/plants/')
       .then(res => setPlantList(res.data))
       .catch(err => {
         console.error(err);
@@ -158,13 +162,16 @@ function Checkbox({props}) {
       for (let box of inputBoxes) {
         userChoices.push(box.checked)
       };
-        setLocationList(initialLocationList.filter(loc => {
-          return userChoices[loc.plant - plantList.length -1]
-        }))
+      
+      setLocationList(initialLocationList.filter(loc => {
+        console.log(loc.plant, plantList.length)
+        return userChoices[loc.plant%plantList.length -1]
+      }))
     }, [checked]);
   
     function handleCheckbox() {
       setChecked(!checked);
+      console.log(locationList, initialLocationList)
       return null
     }
     return (<input className={classes.input} type="checkbox" id={plant.id} name={plant.Id} onChange={handleCheckbox} checked={checked}/>) 

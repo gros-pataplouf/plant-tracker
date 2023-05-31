@@ -15,12 +15,11 @@ export default function Explore() {
 
   
     useEffect(() => {
-      Promise.all([axiosInstance.get('locations/'), axiosInstance.get('plants/')])
+      Promise.all([axiosInstance.get('api/locations/'), axiosInstance.get('api/plants/')])
       .then(res => {
         setLocationList(res[0].data);
         setInitialLocationList(res[0].data);
         setPlantList(res[1].data);
-
       })
       .catch(err => {
         console.error(err);

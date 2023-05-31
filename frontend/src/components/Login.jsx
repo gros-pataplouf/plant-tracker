@@ -37,7 +37,7 @@ export default function Login() {
         };
 
           
-        axiosInstance.post('api/token/', document.querySelector('#loginForm'))
+        axiosInstance.post('accounts/token/', document.querySelector('#loginForm'))
           .then(res => {
             localStorage.setItem('planttrackerAccess', res.data.access);
             localStorage.setItem('planttrackerRefresh', res.data.refresh);

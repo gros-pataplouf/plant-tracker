@@ -41,7 +41,7 @@ export default function TrackForm({props}) {
       setImages(Array.from(images).filter(_ => _.name !== fileToDeleteName))
     }
     useEffect(() => {
-      axiosInstance.get('plants/').then(res => setPlantList(res.data));
+      axiosInstance.get('api/plants/').then(res => setPlantList(res.data));
       // const container = document.querySelector("#emblaContainer");
       // console.log(container)
       // if (container.childNodes.length < 2) {
@@ -67,7 +67,7 @@ export default function TrackForm({props}) {
       const selection = document.getElementById('plant');
       formData.append('plant', selection.options[selection.selectedIndex].id);
       formData.append('area', parseInt(document.getElementById('area').value));
-      formData.append('location', `{"type": "Point", "coordinates": [${lng}, ${lat}]}`)
+      formData.append('location', `{"type": "Point", "coordinates": [${lat}, ${lng}]}`)
       if (images.length) {for (let img of images) {
         formData.append('images', img)
       }}
@@ -83,7 +83,7 @@ export default function TrackForm({props}) {
         }
       }
       
-      axiosInstance.post('locations/', formData )
+      axiosInstance.post('api/locations/', formData )
       .then(function (response) {
         setSuccess(true);
         setMessage(response.data);
