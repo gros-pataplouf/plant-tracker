@@ -26,14 +26,13 @@ class Plant(models.Model):
 
 class Location(models.Model):
     location = models.PointField()
-    display_name = models.CharField(max_length=100, null=True, blank=True)
+    display_name = models.CharField(max_length=500, null=True, blank=True)
     area = models.PositiveIntegerField()
     description = models.CharField(max_length=100, blank=True)
     author = models.ForeignKey(User, on_delete=models.PROTECT)
     plant = models.ForeignKey(Plant, on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
 
-#will be used for multiple image upload from admin area
 class PlantImage(models.Model):
     image = models.ImageField(_("Photo"), upload_to=upload_to, blank=True)
     plant = models.ForeignKey(Plant, on_delete=models.CASCADE, blank=True, null=True)

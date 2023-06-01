@@ -52,7 +52,7 @@ class LocationList(generics.ListCreateAPIView):
             lat = str(coordinates[1])
             url = f"https://nominatim.openstreetmap.org/reverse?format=json&lat={lat}&lon={lon}"
             geocoded = requests.get(url)
-            display_name = geocoded.json().get('display_name', 'unknown address')[:100]
+            display_name = geocoded.json().get('display_name', 'unknown address')
             request.data['display_name'] = display_name
 
             location_serializer = LocationSerializer(data=request.data)
