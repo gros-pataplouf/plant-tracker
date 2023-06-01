@@ -20,7 +20,8 @@ const classes = {
     dangertext: "text-red-800 font-bold",
     message: "border-red-800 active:outline-red-800",
     buttonwrapper: "flex space-4",
-    dangercancelbutton: "btn bg-yellow-50 text-emerald-950 border-solid border-2 border-red-800"
+    dangercancelbutton: "btn bg-yellow-50 text-emerald-950 border-solid border-2 border-red-800",
+    submissions: "scroll"
 }
 
 export default function Account() {
@@ -187,15 +188,18 @@ export default function Account() {
         </div>
         </div>
 
+        <div className={classes.submissions}>
+
         <h3 className={classes.title}>My submissions</h3>
         <ul>
             {!submissions? <li>You have not submitted any data yet.</li> 
             : 
              submissions.map(submission => {
                 return <li key={submission.id}>
-                    🕙 {new Date(submission.created_at).toLocaleString('en-GB')}
+                    📌 {new Date(submission.created_at).toLocaleString('en-GB')} near {submission.display_name || "unknown address"}
                     </li>})}
         </ul>
+        </div>
         </div>
     )
 }

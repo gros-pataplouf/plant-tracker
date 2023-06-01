@@ -1,4 +1,4 @@
-import json, re
+import json, re, requests
 from datetime import datetime
 
 from django.contrib.auth import get_user_model
@@ -38,13 +38,22 @@ class LocationList(generics.ListCreateAPIView):
         query = self.request.GET
         return Location.objects.filter(**query.dict())
 
-    def post(self, request, format=None):
+    def create(self, request, format=None):
         auth_data = JWT_authenticator.authenticate(request)
         if auth_data is not None:
             [user, token] = auth_data
             #make multipart query set mutable in order to add author
             setattr(request.data, '_mutable', True)
             request.data['author'] = token.payload['user_id']
+            # get coordinates out of query dict
+            coordinates = json.loads(dict(request.data)['location'][0])['coordinates']
+            print(round(coordinates[0]))
+            lon = str(coordinates[0])
+            lat = str(coordinates[1])
+            url = f"https://nominatim.openstreetmap.org/reverse?format=json&lat={lat}&lon={lon}"
+            geocoded = requests.get(url)
+            display_name = geocoded.json().get('display_name', 'unknown address')[:100]
+            request.data['display_name'] = display_name
 
             location_serializer = LocationSerializer(data=request.data)
             if location_serializer.is_valid():
@@ -56,7 +65,7 @@ class LocationList(generics.ListCreateAPIView):
                     for lst in dict(request.FILES).values():
                         for file in lst:
                             location_img_serializer = LocationImageSerializer(data={'location': location_id, 'image': file})
-                            if (location_img_serializer.is_valid()):
+                            if location_img_serializer.is_valid():
                                 location_img_serializer.save()
                             else:
                                 return Response("Data submitted are invalid or incomplete.", status=status.HTTP_400_BAD_REQUEST)

@@ -21,15 +21,13 @@ class Plant(models.Model):
     description_de = models.TextField()
     description_fr = models.TextField()
     description_en = models.TextField()
-    # photo = models.ImageField(_("Photo"), upload_to=upload_to, blank=True)
-    # tags = models.ManyToManyField(Tag, related_name="plants")
     def __str__(self):
         return self.scientific_name
 
 class Location(models.Model):
     location = models.PointField()
+    display_name = models.CharField(max_length=100, null=True, blank=True)
     area = models.PositiveIntegerField()
-    # image = models.ImageField(_("Photo"), upload_to=upload_to, blank=True)
     description = models.CharField(max_length=100, blank=True)
     author = models.ForeignKey(User, on_delete=models.PROTECT)
     plant = models.ForeignKey(Plant, on_delete=models.PROTECT)
