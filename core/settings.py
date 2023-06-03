@@ -141,6 +141,7 @@ if not DEBUG:
     # and creating unique names for each version so they can safely be cached forever.
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+print(STATIC_ROOT)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
