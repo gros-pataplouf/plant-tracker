@@ -60,7 +60,6 @@ class LocationList(generics.ListCreateAPIView):
                 location_serializer.save()
                 #step 2 : now get the id of the new location object and save the images
                 location_id = location_serializer.data['id']
-                print(location_id)
                 if request.FILES:
                     for lst in dict(request.FILES).values():
                         for file in lst:
