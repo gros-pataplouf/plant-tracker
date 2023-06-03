@@ -2,8 +2,9 @@
 # exit on error
 set -o errexit
 
-pipenv shell
 pipenv install
+
+pipenv run
 
 python manage.py collectstatic --no-input
 python manage.py migrate
