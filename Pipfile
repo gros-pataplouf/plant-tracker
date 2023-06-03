@@ -16,6 +16,7 @@ python-dotenv = "*"
 djangorestframework-gis = "*"
 djangorestframework-simplejwt = "*"
 whitenoise = {extras = ["brotli"], version = "*"}
+gunicorn = "*"
 
 [dev-packages]
 
