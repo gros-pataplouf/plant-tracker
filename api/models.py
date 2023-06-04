@@ -4,6 +4,8 @@ from django.conf import settings
 from datetime import datetime, timezone, timedelta
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
+from core.storage_backends import PublicMediaStorage
+
 User = get_user_model()
 
 
@@ -34,7 +36,7 @@ class Location(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
 class PlantImage(models.Model):
-    image = models.ImageField(_("Photo"), upload_to=upload_to, blank=True)
+    image = models.ImageField(_("Photo"), upload_to=upload_to, blank=True, storage=PublicMediaStorage())
     plant = models.ForeignKey(Plant, on_delete=models.CASCADE, blank=True, null=True)
     type = models.CharField(choices=[('main','main'), ('secondary', 'secondary'), ('default', 'default')], max_length=20) 
     alt_en = models.TextField(blank=True)
@@ -45,5 +47,5 @@ class PlantImage(models.Model):
     description_de = models.TextField(blank=True)
 
 class LocationImage(models.Model):
-    image = models.ImageField(_("Photo"), upload_to=upload_to, blank=True)
+    image = models.ImageField(_("Photo"), upload_to=upload_to, blank=True, storage=PublicMediaStorage())
     location = models.ForeignKey(Location, on_delete=models.CASCADE)

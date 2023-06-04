@@ -17,6 +17,8 @@ djangorestframework-gis = "*"
 djangorestframework-simplejwt = "*"
 whitenoise = {extras = ["brotli"], version = "*"}
 gunicorn = "*"
+django-storages = "*"
+boto3 = "*"
 
 [dev-packages]
 
