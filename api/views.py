@@ -19,21 +19,21 @@ User = get_user_model()
 
 JWT_authenticator = JWTAuthentication()
 
-class PlantList(generics.ListCreateAPIView):
+class PlantList(generics.ListAPIView):
     queryset = Plant.objects.all()
     serializer_class = PlantSerializer
-    permission_classes = [ AllowAny ]
+    
 
 class PlantDetail(generics.RetrieveAPIView):
     queryset = Plant.objects.all()
     serializer_class = PlantSerializer
-    permission_classes = [ IsAuthenticatedOrReadOnly ]
-
+    
 class LocationList(generics.ListCreateAPIView):
     queryset = Location.objects.all()
     serializer_class = LocationSerializer
     permission_classes = [ IsAuthenticatedOrReadOnly ]
     parser_classes = [ MultiPartParser, FormParser ]
+
     def get_queryset(self):
         query = self.request.GET
         return Location.objects.filter(**query.dict())
@@ -84,6 +84,7 @@ class PlantImages(generics.ListAPIView):
     serializer_class = PlantImageSerializer
 
 class LocationImages(generics.ListCreateAPIView):
+    permission_classes = [ IsAuthenticatedOrReadOnly ]
     serializer_class = LocationImageSerializer
     def get_queryset(self):
         query = self.request.GET
