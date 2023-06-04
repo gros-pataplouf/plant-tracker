@@ -18,7 +18,7 @@ import ErrorPage from './components/ErrorPage';
 // 0.588235294118,
 const router = createBrowserRouter([
   {
-    path: 'https://planttracker.onrender.com/',
+    path: '/',
     element: <App/>,
     errorElement: <ErrorPage/>, 
     children: [
