@@ -13,9 +13,9 @@ import Account from './components/Account';
 import Reset from './components/Reset';
 import Hero from './components/Hero';
 import './index.css';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, HashRouter } from 'react-router-dom';
 import ErrorPage from './components/ErrorPage';
-// 0.588235294118,
+
 const router = createBrowserRouter([
   {
     path: '/',

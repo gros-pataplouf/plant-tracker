@@ -3,7 +3,8 @@
 @tailwind utilities;
 
 #map { 
-    height: 75vh; };
+    height: 75vh;
+}
 
 #smallmap {
     height: 200px!important;
