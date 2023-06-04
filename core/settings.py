@@ -161,8 +161,10 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost",
     "http://192.168.178.25",
     "http://127.0.0.1",
-
+    "https://planttracker.onrender.com/"
 ]
+
+
 CORS_ALLOW_CREDENTIALS = False
 
 

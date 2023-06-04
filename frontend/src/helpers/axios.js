@@ -1,5 +1,5 @@
 import axios from 'axios';
-const baseURL = 'http://localhost:8000/'
+const baseURL = 'https://planttracker-be.onrender.com/'
 const axiosInstance = axios.create({
     baseURL: baseURL,
     timeout: 20000,
