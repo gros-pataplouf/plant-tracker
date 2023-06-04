@@ -18,7 +18,7 @@ import ErrorPage from './components/ErrorPage';
 // 0.588235294118,
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: 'https://planttracker.onrender.com/',
     element: <App/>,
     errorElement: <ErrorPage/>, 
     children: [
@@ -72,7 +72,5 @@ const router = createBrowserRouter([
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
     <RouterProvider router={router}/>
-  </React.StrictMode>
 )
