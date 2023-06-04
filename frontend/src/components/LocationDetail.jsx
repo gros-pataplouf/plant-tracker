@@ -25,11 +25,10 @@ const classes = {
 export default function LocationDetail () {
     const [location, setLocation] = useState(null);
     useEffect(() => {
-      const id = window.location.pathname.replace('locations', '').replaceAll('/', '');
+      const id = window.location.href.split('/').at(-1);
       axiosInstance.get(`api/locations/${id}`)
       .then(res => {
         setLocation(res.data);
-        console.log(res.data);
         const matchingPlant = axiosInstance.get(`api/plants/${res.data.plant}`);
         const locationPhotos = axiosInstance.get(`api/locations/images?location=${id}`)
         Promise.all([matchingPlant, locationPhotos])

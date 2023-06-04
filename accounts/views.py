@@ -126,7 +126,7 @@ class CreateResetLink(generics.CreateAPIView):
                 send_mail(
                 'You have requested a reset link',
                 f"Please click on the following link to activate your account:\
-                localhost:5173/reset?{uuid}",
+                localhost:5173/#/reset?{uuid}",
                 'planttrackerapp@gmx.de',
                 [email],
                 fail_silently=False,

@@ -15,7 +15,7 @@ export default function Track() {
     .catch(err => {
         console.error(err);
         window.alert("You need to be logged in to submit data.")
-        window.location.href=`/login?${window.location.pathname.slice(1,)}`
+        window.location.href=`#/login?${window.location.href.split('/').at(-1)}`
     })
   
   }, [])

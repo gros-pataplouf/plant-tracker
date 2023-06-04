@@ -44,7 +44,7 @@ export default function Login() {
             setIsLoggedIn(true);
             setMessage("Login successful ✅")
             if (location.search) {
-              return window.location.href =(`/${location.search.slice(1,)}`);
+              return window.location.href =(`#/${location.search.slice(1,)}`);
           } else {
             return window.location.href = '/';
           }})
