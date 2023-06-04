@@ -5,6 +5,11 @@ import Carousel from './Carousel';
 import { MapContainer, Marker, TileLayer } from 'react-leaflet';
 import { leafletLowZIndex, convertGPS } from '../helpers/leafletHelpers';
 
+import Lottie from "lottie-react";
+import loading from "../assets/animations/dots-loading.json";
+
+
+
 const classes = {
   wrapper: 'h-[80vh]',
   embla: 'overflow-hidden',
@@ -21,9 +26,15 @@ const classes = {
   tableCell: 'p-6 text-white'
 }
 
+function Animation() {
+
+  return <Lottie animationData={loading} loop={true} />
+  }
+
 
 export default function LocationDetail () {
     const [location, setLocation] = useState(null);
+    const [loading, setLoading] = useState(true);
     useEffect(() => {
       const id = window.location.href.split('/').at(-1);
       axiosInstance.get(`api/locations/${id}`)
@@ -34,6 +45,8 @@ export default function LocationDetail () {
         Promise.all([matchingPlant, locationPhotos])
         .then(values => {
           setLocation({...res.data, plant:values[0].data, photos:values[1].data});
+          setLoading(false);
+
       })
      
       
@@ -47,6 +60,9 @@ export default function LocationDetail () {
 
     
     return (
+      loading?
+      <Animation/>
+      :
       <div className={classes.wrapper}>
         <h2 className={classes.title}>Location detail</h2>
         {location &&

@@ -131,7 +131,8 @@ export function Legend({props}) {
     const {locationList, setLocationList, initialLocationList} = props;
       
     useEffect(() => {axiosInstance.get('api/plants/')
-      .then(res => setPlantList(res.data))
+      .then(res => {setPlantList(res.data); 
+      })
       .catch(err => {
         console.error(err);
       })

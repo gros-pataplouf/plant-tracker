@@ -2,7 +2,8 @@ import axiosInstance from "../helpers/axios";
 import { useState, useEffect } from "react";
 import { testMail, testPassword } from '../helpers/checks';
 import { Modal, closeModal, openModal } from "./Modal";
-
+import Lottie from 'lottie-react';
+import loading from '../assets/animations/dots-loading.json'
 
 const classes = {
     account: "p-4 space-2",
@@ -24,6 +25,12 @@ const classes = {
     submissions: "scroll"
 }
 
+function Animation() {
+
+    return <Lottie animationData={loading} loop={true} />
+    }
+  
+
 export default function Account() {
     const [ user, setUser ] = useState();
     const [ emailErr, setEmailErr ] =  useState('');
@@ -33,6 +40,7 @@ export default function Account() {
     const [ message, setMessage ] = useState('')
     const [successEmail, setSuccessEmail] = useState(false);
     const [ successPwd, setSuccessPwd ] = useState(false);
+    const [ loading, setLoading ] = useState(true);
     const emailFormData = new FormData();
     const passwordFormData = new FormData();
     useEffect(() => {
@@ -43,7 +51,7 @@ export default function Account() {
             console.log(res.data)
             setUser(user);
             axiosInstance.get(`api/locations?author=${user.id}`)
-            .then(res => { setSubmissions(res.data); console.log(submissions)})
+            .then(res => { setSubmissions(res.data); setLoading(false); console.log(submissions)})
             .catch(err => console.error(err))
         })
         .catch(err => {
@@ -119,6 +127,9 @@ export default function Account() {
 
 
     return (
+        loading?
+        <Animation/>
+        :
         <div className={classes.account}>
         <h3 className={classes.title}>My account settings</h3>
         <div>

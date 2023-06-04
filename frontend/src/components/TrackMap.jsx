@@ -3,12 +3,20 @@ import { useGeolocated } from "react-geolocated";
 import { useState, useEffect } from 'react';
 import { leafletLowZIndex } from '../helpers/leafletHelpers';
 import { GoBackButton, CenterAutomatically, DynamicMarker, Search } from './MapComponents';
+import Lottie from "lottie-react";
+import locating from "../assets/animations/location.json";
+
 
 
 const classes = {
   mapContainer: "border-mint/99 border-2 rounded-md m-4",
   btn: 'btn my-4',
 }
+
+function Animation() {
+
+  return <Lottie animationData={locating} loop={true} />
+  }
 
 // the leaflet map   
 function Map({props}) {
@@ -60,7 +68,7 @@ export default function TrackMap({props}) {
         positionOptions: {
             enableHighAccuracy: false,
         },
-        userDecisionTimeout: 5000
+        userDecisionTimeout: 10000
     });
     return (!isGeolocationAvailable || !isGeolocationEnabled || coords) ? (
         <>
@@ -70,7 +78,7 @@ export default function TrackMap({props}) {
       </>
       ) 
       : (
-        <div>Getting the location data&hellip; </div>
+        <Animation/>
       )
 
 }
