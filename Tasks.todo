@@ -19,12 +19,12 @@
 
 ☐ @high style Account Detail page
 
-@bugfix naive daytime waring when posting to reset/ and activation uuid/
-home/mercury/.local/share/virtualenvs/planttracker_project-QdvFz97r/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1564: RuntimeWarning: DateTimeField ResetUUID.expiry_time received a naive datetime (2023-05-20 15:27:19.081512) while time zone support is active.
+✔ @bugfix naive daytime waring when posting to reset/ and activation uuid/ @done(23-06-04 18:26)
+✔ image upload to S3 bucket @done(23-06-04 18:26)
+✔ @bug marker colors must be independent from primary key @done(23-06-04 18:26)
 warnings.warn(
 
 ☐ @low Plant Detail page
-☐ @bug marker colors must be independent from primary key 
 
 
 
@@ -39,7 +39,6 @@ warnings.warn(
 
 Nice to have
 
-☐ image upload to S3 bucket
 ☐ read up on from django.utils.translation import gettext_lazy as _
 ☐ read up on def post(self, request, format=None)
 
