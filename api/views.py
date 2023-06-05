@@ -74,10 +74,9 @@ class LocationList(generics.ListCreateAPIView):
                 return Response("Data submitted are invalid or incomplete.", status=status.HTTP_400_BAD_REQUEST)
         return Response("Unauthorized", status=status.HTTP_401_UNAUTHORIZED)
 
-class LocationDetail(generics.RetrieveUpdateDestroyAPIView):
+class LocationDetail(generics.RetrieveAPIView):
     queryset = Location.objects.all()
     serializer_class = LocationSerializer
-    permission_classes = [ IsAuthenticatedOrReadOnly ]
 
 class PlantImages(generics.ListAPIView):
     queryset = PlantImage.objects.all()
