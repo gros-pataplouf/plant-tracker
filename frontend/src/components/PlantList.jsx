@@ -2,8 +2,10 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axiosInstance from '../helpers/axios';
 import { resizeTiles } from '../helpers/utils';
+import { useRef } from 'react';
 import React from 'react';
 import Carousel from './Carousel';
+import Animation from './AnimationLoading';
 
 const classes = {
   wrapper: '',
@@ -24,7 +26,7 @@ const classes = {
 export default function PlantList () {
     const [plantList, setPlantList] = useState(false);
     const [plantImages, setPlantImages] = useState([]);
-
+    const [loading, setLoading] = useState(true);
 
 
     useEffect(() => {
@@ -33,7 +35,9 @@ export default function PlantList () {
       Promise.all([plantDataPromise, plantImagesPromise]).then(values => {
         setPlantList(values[0].data);
         setPlantImages(values[1].data);
-        resizeTiles();
+        setLoading(false);
+        //ugly fix: wait 0.2 sec until tiles are rendered then resize them; should be solved by useRef
+        setTimeout(()=>{resizeTiles()}, 300)
       })
       .catch(err => console.error(err))
  
@@ -44,8 +48,10 @@ export default function PlantList () {
       <div className={classes.wrapper} id='wrapper'>
         <h2 className={classes.title} id='title'>Invasive plants</h2>
         <Carousel>
-            { !plantList ? (
-                <h4>No plant info available</h4> ) : (
+            { loading ? (
+                <Animation>
+                  <h3>Loading...</h3>
+                </Animation>) : (
                   plantList.map(plant => (
                     <div key={plant.id} id='emblaSlide' className={classes.emblaSlide}>
                             <h3>{plant.common_name_en}</h3>

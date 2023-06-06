@@ -1,6 +1,7 @@
 import axiosInstance from "../helpers/axios";
 import { useState, useEffect } from "react";
 import Carousel from "./Carousel";
+import Animation from "./AnimationLoading";
 import bin from '../assets/icons/bin.svg';
 import addphoto from '../assets/icons/addphoto.svg';
 import { Link } from "react-router-dom";
@@ -30,6 +31,7 @@ export default function TrackForm({props}) {
     const [ images, setImages ] = useState([]);
     const [ success, setSuccess ] = useState(false);
     const [ message, setMessage ] = useState('');
+    const [ submitting, setSubmitting ] = useState(false);
     function handleChange(e) {
       setImages(e.target.files);
       
@@ -42,22 +44,7 @@ export default function TrackForm({props}) {
     }
     useEffect(() => {
       axiosInstance.get('api/plants/').then(res => setPlantList(res.data));
-      // const container = document.querySelector("#emblaContainer");
-      // console.log(container)
-      // if (container.childNodes.length < 2) {
-      //   container.parentNode.parentNode.childNodes.forEach(_ => {
-      //     console.log(typeof(_.nodeName))
-      //     if (_.nodeName === 'BUTTON') {
-      //       console.log('hiding button')
-      //       _.setAttribute('style', 'display: none')
-      //     }
-      //   })} else if (container.childNodes.length === 1) { container.parentNode.parentNode.childNodes.forEach(_ => {
-      //     console.log(typeof(_.nodeName))
-      //       _.setAttribute('style', 'display: block')
-          
-      //   })}
-
-    
+  
     }, []);
     
       function submitHandler(e){
@@ -82,22 +69,26 @@ export default function TrackForm({props}) {
           return setMessage('Please fill in the required fields!')
         }
       }
-      
+      setSubmitting(true);
       axiosInstance.post('api/locations/', formData )
       .then(function (response) {
         setSuccess(true);
+        setSubmitting(false);
         setMessage(response.data);
         // setDisplay("success");
       })
       .catch(function (error) {
         console.log(error);
+        setSubmitting(false);
         setMessage(error.response.data);
       });
     }
   
   
     return (
-      <> {!success && <form className={classes.wrapper} method="post" encType="multipart/form-data">
+      <> 
+      {!submitting && !success &&
+      <form className={classes.wrapper} method="post" encType="multipart/form-data">
         <h3 className={classes.title}>Complete and submit</h3>    
         <label className={classes.label} htmlFor="location">Surface</label>
         <input type="number" min='0' name="area" id="area" />
@@ -126,16 +117,22 @@ export default function TrackForm({props}) {
         </div>)})}
         
         </Carousel>}
-
-        <button type="submit" className="btn mt-4" value="Submit" onClick={submitHandler}>Submit</button>
+        
+          <button type="submit" className="btn mt-4" value="Submit" onClick={submitHandler}>Submit</button>
+        
       </form>}
+      {submitting && !success &&
+        <Animation>
+          <h3>Submitting...</h3>
+        </Animation>}   
       {message && success && 
       <div>
         <p>Thanks for submitting your observations! ✅</p>
       <Link to={`/locations/${message}`}>View submission</Link>
       </div>
+      }
 
-    }
+    
       </>
     )
   }

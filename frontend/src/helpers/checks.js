@@ -1,9 +1,3 @@
-// validating email address
-/// at least one @
-/// local part not empty
-/// domain at least one period
-
-
 export function testMail(mail) {
     const re = /\S*@\S*\.[A-Za-z]/
     return re.exec(mail)

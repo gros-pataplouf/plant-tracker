@@ -5,7 +5,7 @@ const classes = {
 
 export function closeModal(e) {
     e.preventDefault();
-    e.target.closest(".js__backdrop").classList.toggle("hidden")
+    e.target.closest("dialog").classList.toggle("hidden")
 }
 
 export function openModal(e) {

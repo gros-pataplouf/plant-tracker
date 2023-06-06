@@ -2,8 +2,8 @@ import axiosInstance from "../helpers/axios";
 import { useState, useEffect } from "react";
 import { testMail, testPassword } from '../helpers/checks';
 import { Modal, closeModal, openModal } from "./Modal";
-import Lottie from 'lottie-react';
-import loading from '../assets/animations/dots-loading.json'
+import AnimationLoading from "./AnimationLoading";
+import AnimationConfirm from "./AnimationConfirm";
 
 const classes = {
     account: "p-4 space-2",
@@ -13,7 +13,7 @@ const classes = {
     button: "btn rounded-none",
     dangerbutton: "btn bg-red-800 text-white",
     cancelbutton: "btn bg-yellow-50 text-emerald-950 border-solid border-2 border-emerald-800", 
-    backdrop: "hidden flex flex-col justify-center bg-black/90 fixed h-[100vh] w-[100vw] top-0 right-0 z-32",
+    backdrop: "hidden js__backdrop flex flex-col justify-center bg-black/90 fixed h-[100vh] w-[100vw] top-0 right-0 z-32",
     form: "flex flex-col", 
     cancel: "",
     label: "", 
@@ -22,14 +22,10 @@ const classes = {
     message: "border-red-800 active:outline-red-800",
     buttonwrapper: "flex space-4",
     dangercancelbutton: "btn bg-yellow-50 text-emerald-950 border-solid border-2 border-red-800",
-    submissions: "scroll"
+    submissions: "scroll",
+    confirmModal: "flex flex-col"
 }
 
-function Animation() {
-
-    return <Lottie animationData={loading} loop={true} />
-    }
-  
 
 export default function Account() {
     const [ user, setUser ] = useState();
@@ -37,22 +33,22 @@ export default function Account() {
     const [ pwdErr, setPwdErr ] =  useState('');
     const [ incompleteErr, setIncompleteErr ] =  useState('');
     const [ submissions, setSubmissions ] = useState([]);
-    const [ message, setMessage ] = useState('')
-    const [successEmail, setSuccessEmail] = useState(false);
-    const [ successPwd, setSuccessPwd ] = useState(false);
+    const [ message, setMessage ] = useState('');
+    const [ success, setSuccess] = useState(false);
     const [ loading, setLoading ] = useState(true);
+    const [submitting, setSubmitting] = useState(false);
     const emailFormData = new FormData();
     const passwordFormData = new FormData();
+
     useEffect(() => {
         axiosInstance.get('accounts/me/')
         //backend filters out the right user
         .then(res => {
             const user = res.data
-            console.log(res.data)
             setUser(user);
             axiosInstance.get(`api/locations?author=${user.id}`)
             .then(res => { setSubmissions(res.data); setLoading(false); console.log(submissions)})
-            .catch(err => console.error(err))
+            .catch(err => {console.error(err); setLoading(false)})
         })
         .catch(err => {
             console.log(err)
@@ -81,12 +77,25 @@ export default function Account() {
         }
         emailFormData.append('email', document.querySelector('#emailForm>#email').value.trim());
         console.log(emailFormData)
+        setSubmitting(true)
         axiosInstance.patch('accounts/me/', {email: document.querySelector('#emailForm>#email').value.trim()})
         .then(res => {
             console.log(res)
+            setSubmitting(false);
+            setSuccess(true);
         })
-        .catch(err => console.error(err))
-        .finally(setTimeout(() => {closeModal(e)}, 2000))
+        .catch(err => {
+            console.error(err.response);
+            setSubmitting(false);
+            setSuccess(false);
+            setMessage(err.response.data.email)
+            console.log(message)})
+
+        .finally(setTimeout(() => {
+            closeModal(e);
+            setSuccess(false);
+        
+        }, 2000))
     }
 
     function passwordChangeHandler() {
@@ -128,7 +137,9 @@ export default function Account() {
 
     return (
         loading?
-        <Animation/>
+        <AnimationLoading>
+        <p>Loading...</p>
+        </AnimationLoading>
         :
         <div className={classes.account}>
         <h3 className={classes.title}>My account settings</h3>
@@ -144,6 +155,7 @@ export default function Account() {
             <button className={classes.button} onClick={openModal}>Update</button>
             {/* Change email */}
             <Modal>
+                { !submitting && ! success &&
                 <form className={classes.form} action="" id="emailForm" onChange={updateEmailFormData} onSubmit={handleEmailSubmit}>
                 <div className={classes.cancel} onClick={closeModal}><img src="" alt="" /></div>
                     <label className={classes.label} htmlFor="">New email</label>
@@ -154,11 +166,25 @@ export default function Account() {
                     {incompleteErr && 
                     <p className={classes.message}>{incompleteErr}</p>
                     }
+                    {message && 
+                    <p className={classes.message}>{message}</p>
+                    }
                     <div className={classes.buttonwrapper}>
-                    <button className={classes.button}>Ok</button>
-                    <button className={classes.button} onClick={closeModal}>Cancel</button>
+                    <button className={classes.button} value="default">Ok</button>
+                    <button className={classes.button} value="cancel" formmethod="dialog" onClick={closeModal}>Cancel</button>
                     </div>
-                </form>
+                </form>}
+                { submitting && 
+                <AnimationLoading>
+                    <h4>Submitting...</h4>
+                    </AnimationLoading>}
+                { success && 
+                <div className={classes.confirmModal}>
+                    <AnimationConfirm>
+                        <h4>Succes!</h4>
+                    </AnimationConfirm>
+                    <button className={classes.button} onClick={closeModal}>Close</button>
+                </div>}
             </Modal>
         </div>
         {/* Password change */}

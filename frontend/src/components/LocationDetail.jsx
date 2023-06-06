@@ -4,10 +4,7 @@ import React from 'react';
 import Carousel from './Carousel';
 import { MapContainer, Marker, TileLayer } from 'react-leaflet';
 import { leafletLowZIndex, convertGPS } from '../helpers/leafletHelpers';
-
-import Lottie from "lottie-react";
-import loading from "../assets/animations/dots-loading.json";
-
+import AnimationLoading from './AnimationLoading';
 
 
 const classes = {
@@ -26,20 +23,17 @@ const classes = {
   tableCell: 'p-6 text-white'
 }
 
-function Animation() {
-
-  return <Lottie animationData={loading} loop={true} />
-  }
 
 
 export default function LocationDetail () {
     const [location, setLocation] = useState(null);
     const [loading, setLoading] = useState(true);
     useEffect(() => {
-      const id = window.location.href.split('/').at(-1);
+      const id = window.location.href.trim('/').split('/').at(-1);
       axiosInstance.get(`api/locations/${id}`)
       .then(res => {
         setLocation(res.data);
+        console.log(res.data)
         const matchingPlant = axiosInstance.get(`api/plants/${res.data.plant}`);
         const locationPhotos = axiosInstance.get(`api/locations/images?location=${id}`)
         Promise.all([matchingPlant, locationPhotos])
@@ -61,7 +55,9 @@ export default function LocationDetail () {
     
     return (
       loading?
-      <Animation/>
+      <AnimationLoading>
+        <h3>Loading...</h3>
+      </AnimationLoading>
       :
       <div className={classes.wrapper}>
         <h2 className={classes.title}>Location detail</h2>
@@ -93,7 +89,6 @@ export default function LocationDetail () {
         </Carousel>
 }  
         <table className={classes.table}>
-          <caption>Details of the finding</caption>
           <tbody>
           <tr>
             <td>Name</td>
@@ -103,6 +98,10 @@ export default function LocationDetail () {
             <td>Coordinates</td>
             <td>{convertGPS(structuredClone(location.location.coordinates).reverse())}</td>
           </tr>
+          <tr>
+          <td>Address</td>
+          <td>near {location.display_name}</td>
+        </tr>
           <tr>
             <td>Surface</td>
             <td>{location.area} m²</td>

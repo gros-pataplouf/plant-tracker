@@ -24,9 +24,28 @@
 ✔ @bug marker colors must be independent from primary key @done(23-06-04 18:26)
 warnings.warn(
 
-☐ @low Plant Detail page
+☐  Plant Detail page
+
+✔ @bug tiles in plantlist not adjusted to height @done(23-06-05 16:38)
+
+@high Change Plant model to allow sections: how to recognize, botanical description, ecological impact, divers
+
+@high fix problem with tile resizing through use ref 
+@high 
+@high loading animation for 
+        - plantinfo
+        - data submission
+        - login submission
+        - register submission
+        - account activation
+        - password reset mail request
+        - password change
+        - password reset as anonymous user
+        
 
 
+
+ 
 
 ✘ @low Plant List : filter by tag @cancelled(23-04-24 15:42)
 ✘ @low nice to have : visualize data in explore view @cancelled(23-04-24 15:42)

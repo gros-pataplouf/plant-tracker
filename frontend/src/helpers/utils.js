@@ -19,6 +19,8 @@ export const debounce = (func, delay = 1000) => {
 //   }
 
 export const resizeTiles = () => {
+  console.log("resizing")
+  console.log(document.querySelectorAll('.emblaSlide'))
   for (let slide of document.querySelectorAll('.emblaSlide')) {
     const slideHeight = slide.getBoundingClientRect().height;
     const titleHeight = document.querySelector('#title').getBoundingClientRect().height;

@@ -38,22 +38,14 @@ axiosInstance.interceptors.request.use(function(config) {
         error.response.status === 401 &&
         originalRequest.url === baseURL + 'token/refresh/'
       ) {
-        window.location.href = '/login/';
-        return Promise.reject(error);
-      }
-      if (
-        error.response.status === 401 &&
-        originalRequest.url === 'token/authtest/'
-      ) {
-        window.alert("You need to be logged in to submit data!")
-        window.location.href = `/login?${window.location.pathname.slice(1,)}`;
+        window.alert("got 401 instead of access token from token/refresh")
+        window.location.href = '/#/login/';
         return Promise.reject(error);
       }
   
       if (
         error.response.data.code === 'token_not_valid' &&
-        error.response.status === 401 &&
-        error.response.statusText === 'Unauthorized'
+        error.response.status === 401
       ) {
         const refreshToken = localStorage.getItem('planttrackerRefresh');
         console.log(refreshToken)
@@ -83,12 +75,12 @@ axiosInstance.interceptors.request.use(function(config) {
                 console.log(err);
               });
           } else {
-            console.log('Refresh token is expired', tokenParts.exp, now);
-            window.location.href = '/login/';
+            window.alert('Refresh token is expired', tokenParts.exp, now);
+            window.location.href = '#/login/';
           }
         } else {
           console.log('Refresh token not available.');
-          window.location.href = '/login/';
+          window.location.href = '#/login/';
         }
       }
   
