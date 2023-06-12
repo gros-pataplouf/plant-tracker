@@ -1,11 +1,12 @@
+import cancel from '../assets/icons/cancel.svg'
+
 const classes = {
-    modal: 'flex flex-col justify-center w-[85vw] min-h-[40vh] m-auto p-8 bg-white rounded-xl shadow-lg shadow-slate-500/50 border-solid border-2 border-slate-300 m-4',
-    backdrop: "js__backdrop hidden flex flex-col justify-center bg-black/90 fixed h-[100vh] w-[100vw] top-0 right-0 z-32",
+    modal: 'p-8 backdrop:bg-gray-700 backdrop:bg-opacity-90 rounded-lg',
 }
 
 export function closeModal(e) {
     e.preventDefault();
-    e.target.closest("dialog").classList.toggle("hidden")
+    e.target.closest("dialog").classList.toggle("hidden");
 }
 
 export function openModal(e) {
@@ -14,12 +15,32 @@ export function openModal(e) {
     e.target.nextSibling.classList.toggle("hidden");
 }
 
+export function handleModal(e) {
+    e.preventDefault();
+    //check which button has been clicked
+    if (e.target.getAttribute('name') === 'openModal') {
+    //the modal is always next to the opening button
+    const currentModal = e.target.nextElementSibling;
+    currentModal.showModal(); } 
+    else if (e.target.getAttribute('name') === 'closeModal') {
+        // the modal is always the closest ancestor of 
+        const currentModal = e.target.closest("dialog");
+        currentModal.close();
+   } else {
+    //reload the page if name attribute is missing
+    location.reload();
+
+   }
+
+}
+
+
 export function Modal({children}) {
     return (
-            <div className={classes.backdrop}> 
-                <div className={classes.modal}>
+            <dialog className={classes.modal}>
+                <img onClick={handleModal} name="closeModal" src={cancel} alt="" />
                     {children}
-                </div>
-            </div>
+            </dialog>
    )
 }
+

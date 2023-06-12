@@ -9,7 +9,7 @@ import Activate from "./components/Activate"
 import PlantList from './components/PlantList'
 import PlantDetail from './components/PlantDetail';
 import LocationDetail from './components/LocationDetail';
-import Account from './components/Account';
+import Account from './components/Account/Account';
 import Reset from './components/Reset';
 import Hero from './components/Hero';
 import './index.css';
