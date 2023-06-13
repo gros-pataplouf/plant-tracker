@@ -14,12 +14,13 @@ const classes = {
 }
 
 
-export default function UpdateEmail() {
+export default function UpdateEmail({props}) {
+    const {changes, setChanges } = props;
     const [ emailErr, setEmailErr ] =  useState('');
     const [ incompleteErr, setIncompleteErr ] =  useState('');
     const [ message, setMessage ] = useState('');
     const [ success, setSuccess] = useState(false);
-    const [submitting, setSubmitting] = useState(false);
+    const [ submitting, setSubmitting ] = useState(false);
     const emailFormData = new FormData();
     function handleEmailChange() {
         setEmailErr('');
@@ -41,20 +42,25 @@ export default function UpdateEmail() {
           return window.alert('Invalid form, please check the data provided!')
         }
         emailFormData.append('email', document.querySelector('#emailForm>#email').value.trim());
-        console.log(emailFormData)
         setSubmitting(true)
         axiosInstance.patch('accounts/me/', {email: document.querySelector('#emailForm>#email').value.trim()})
         .then(res => {
             console.log(res);
             setSubmitting(false);
             setSuccess(true);
+            setChanges('email');
+            setTimeout(()=> {
+                const currentModal = document.querySelector("dialog[open]");
+                if (currentModal) {
+                    currentModal.close();
+                };
+                setSuccess(false);
+            }, 3000)
         })
         .catch(err => {
-            console.error(err.response);
             setSubmitting(false);
             setSuccess(false);
             setMessage(err.response.data.email);
-            console.log(message);
         })
     }
     
@@ -81,7 +87,7 @@ export default function UpdateEmail() {
     { submitting && 
     <AnimationLoading>
         <h4>Submitting...</h4>
-        </AnimationLoading>}
+    </AnimationLoading>}
     { success && 
     <div className={classes.confirmModal}>
         <AnimationConfirm>

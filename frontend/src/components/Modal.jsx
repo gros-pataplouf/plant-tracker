@@ -17,7 +17,7 @@ export function openModal(e) {
 
 export function handleModal(e) {
     e.preventDefault();
-    //check which button has been clicked
+   //check which button has been clicked
     if (e.target.getAttribute('name') === 'openModal') {
     //the modal is always next to the opening button
     const currentModal = e.target.nextElementSibling;
