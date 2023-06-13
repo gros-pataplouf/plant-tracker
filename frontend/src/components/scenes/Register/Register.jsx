@@ -1,9 +1,9 @@
-import axiosInstance from '../helpers/axios';
 import { useState } from 'react';
-import { testMail, testPassword } from '../helpers/checks';
-import info from '../assets/icons/info.svg';
-import visibility from '../assets/icons/visibility.svg';
-import visibility_off from '../assets/icons/visibility_off.svg';
+import info from '../../../assets/icons/info.svg';
+import visibility from '../../../assets/icons/visibility.svg';
+import visibility_off from '../../../assets/icons/visibility_off.svg';
+import axiosInstance from '../../../helpers/axios';
+import { testMail, testPassword } from '../../../helpers/checks';
 
 
 const classes = {

@@ -1,9 +1,9 @@
-import axiosInstance from "../../../helpers/axios";
-import { useState, useEffect } from "react";
-import { testMail, testPassword } from '../../../helpers/checks';
-import { handleModal } from "../../Modal";
-import AnimationLoading from "../../AnimationLoading";
-import AnimationConfirm from "../../AnimationConfirm";
+import { useState } from "react";
+import axiosInstance from "../../../../helpers/axios";
+import { testMail } from "../../../../helpers/checks";
+import { handleModal } from "../../../elements/Modal";
+import AnimationLoading from "../../../elements/AnimationLoading";
+import AnimationConfirm from "../../../elements/AnimationConfirm";
 
 const classes = {
     button: "btn rounded-none",

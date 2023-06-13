@@ -1,11 +1,12 @@
-import axiosInstance from "../../helpers/axios";
-import { useState, useEffect } from "react";
-import { Modal, handleModal } from "../Modal";
-import AnimationLoading from "../AnimationLoading";
-import UpdateEmail from "./Subcomponents/UpdateEmail";
+import { useEffect, useState } from "react";
+import axiosInstance from "../../../helpers/axios";
+import { Modal, handleModal } from "../../elements/Modal";
+import AnimationLoading from "../../elements/AnimationLoading";
 import ChangePassword from "./Subcomponents/ChangePassword";
-import Submissions from "./Subcomponents/Submissions";
 import DeleteAccount from "./Subcomponents/DeleteAccount";
+import Submissions from "./Subcomponents/Submissions";
+import UpdateEmail from "./Subcomponents/UpdateEmail";
+
 const classes = {
     account: "p-4 space-2",
     modal: "flex flex-col w-[95vw] h-[45vh] justify-between m-auto p-8 rounded-xl shadow-lg shadow-slate-500/50 border-solid border-2 border-slate-300 bg-white",

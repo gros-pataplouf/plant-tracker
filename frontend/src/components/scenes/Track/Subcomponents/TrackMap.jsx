@@ -1,10 +1,10 @@
-import { MapContainer, TileLayer} from 'react-leaflet';
-import { useGeolocated } from "react-geolocated";
-import { useState, useEffect } from 'react';
-import { leafletLowZIndex } from '../helpers/leafletHelpers';
-import { GoBackButton, CenterAutomatically, DynamicMarker, Search } from './MapComponents';
 import Lottie from "lottie-react";
-import locating from "../assets/animations/location.json";
+import { useEffect, useState } from 'react';
+import { useGeolocated } from "react-geolocated";
+import { MapContainer, TileLayer } from 'react-leaflet';
+import { leafletLowZIndex } from '../../../../helpers/leafletHelpers';
+import locating from "../../../../assets/animations/location.json";
+import { CenterAutomatically, DynamicMarker, GoBackButton, Search } from '../../../elements/MapComponents';
 
 
 

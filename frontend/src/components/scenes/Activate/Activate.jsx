@@ -1,5 +1,4 @@
-import axiosInstance from '../helpers/axios';
-
+import axiosInstance from "../../../helpers/axios";
 
 export default function Activate() {
     let activationToken = window.location.href.trim("/").split("?").at(-1);

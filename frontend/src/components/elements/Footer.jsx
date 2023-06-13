@@ -1,9 +1,9 @@
-import { Link } from "react-router-dom";
 import { useState } from "react";
-import axiosInstance from '../helpers/axios';
-import login from '../assets/icons/login.svg';
-import logout from '../assets/icons/logout.svg';
-import home from '../assets/icons/home.svg';
+import { Link } from "react-router-dom";
+import axiosInstance from "../../helpers/axios";
+import home from '../../assets/icons/home.svg';
+import login from '../../assets/icons/login.svg';
+import logout from '../../assets/icons/logout.svg';
 
 const classes = {
   wrapper: 'absolute z-20 top-[90vh] h-[10vh] bg-emerald-950 text-cream flex justify-between space-4 p-2 w-screen'

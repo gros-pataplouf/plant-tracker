@@ -1,9 +1,6 @@
-import { useState, useEffect, useRef } from "react";
-
+import { useEffect, useRef, useState } from "react";
 import Lottie from "lottie-react";
-import plant from "../assets/animations/plant.json";
-
-
+import plant from "../../../assets/animations/plant.json";
 
 const classes = {
     text: 'p-8', 

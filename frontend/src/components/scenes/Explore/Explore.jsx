@@ -1,16 +1,13 @@
-import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
-import { useState, useEffect } from 'react';
-import axiosInstance from '../helpers/axios';
-import { leafletLowZIndex } from '../helpers/leafletHelpers';
-import { markers, Legend } from './MapComponents';
-
+import { useEffect, useState } from 'react';
+import { MapContainer, TileLayer } from 'react-leaflet';
+import axiosInstance from '../../../helpers/axios';
+import { leafletLowZIndex } from '../../../helpers/leafletHelpers';
+import { Legend, markers } from '../../elements/MapComponents';
 
 
 const classes = {
   mapContainer: "border-mint/99 border-2 rounded-lg h-[80vh] m-4"
 }
-
-
 
 
 export default function Explore() {  

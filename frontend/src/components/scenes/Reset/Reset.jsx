@@ -1,10 +1,10 @@
-import axiosInstance from '../helpers/axios';
-import { useLocation, Link, useOutletContext } from 'react-router-dom';
 import { useState } from 'react';
-import info from '../assets/icons/info.svg';
-import visibility from '../assets/icons/visibility.svg';
-import visibility_off from '../assets/icons/visibility_off.svg';
-import { testPassword } from '../helpers/checks';
+import { Link, useLocation, useOutletContext } from 'react-router-dom';
+import info from '../../../assets/icons/info.svg';
+import visibility from '../../../assets/icons/visibility.svg';
+import visibility_off from '../../../assets/icons/visibility_off.svg';
+import axiosInstance from '../../../helpers/axios';
+import { testPassword } from '../../../helpers/checks';
 
 
 const classes = {

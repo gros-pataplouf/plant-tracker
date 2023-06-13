@@ -1,8 +1,7 @@
-import axiosInstance from '../helpers/axios';
-import { useNavigate, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import TrackForm from './TrackForm';
-import TrackMap from './TrackMap';
+import axiosInstance from '../../../helpers/axios';
+import TrackForm from './Subcomponents/TrackForm';
+import TrackMap from './Subcomponents/TrackMap';
 
 
 export default function Track() {

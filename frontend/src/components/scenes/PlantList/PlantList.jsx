@@ -1,11 +1,9 @@
-import { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import axiosInstance from '../helpers/axios';
-import { resizeTiles } from '../helpers/utils';
-import { useRef } from 'react';
-import React from 'react';
-import Carousel from './Carousel';
-import Animation from './AnimationLoading';
+import axiosInstance from '../../../helpers/axios';
+import { resizeTiles } from '../../../helpers/utils';
+import AnimationLoading from '../../elements/AnimationLoading';
+import Carousel from '../../elements/Carousel';
 
 const classes = {
   wrapper: '',
@@ -49,9 +47,9 @@ export default function PlantList () {
         <h2 className={classes.title} id='title'>Invasive plants</h2>
         <Carousel>
             { loading ? (
-                <Animation>
+                <AnimationLoading>
                   <h3>Loading...</h3>
-                </Animation>) : (
+                </AnimationLoading>) : (
                   plantList.map(plant => (
                     <div key={plant.id} id='emblaSlide' className={classes.emblaSlide}>
                             <h3>{plant.common_name_en}</h3>

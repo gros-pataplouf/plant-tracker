@@ -1,5 +1,5 @@
 import Lottie from "lottie-react";
-import confirm from "../assets/animations/confirm.json";
+import confirm from "../../assets/animations/confirm.json";
 
 const classes = {
   loadingContainer: "flex flex-col items-center justify-center text-emerald-950 m-auto"

@@ -1,18 +1,7 @@
-import cancel from '../assets/icons/cancel.svg'
+import cancel from '../../assets/icons/cancel.svg'
 
 const classes = {
     modal: 'p-8 backdrop:bg-gray-700 backdrop:bg-opacity-90 rounded-lg',
-}
-
-export function closeModal(e) {
-    e.preventDefault();
-    e.target.closest("dialog").classList.toggle("hidden");
-}
-
-export function openModal(e) {
-    e.preventDefault();
-    // this must be changed bc only works if modal div comes straight after button opening it
-    e.target.nextSibling.classList.toggle("hidden");
 }
 
 export function handleModal(e) {

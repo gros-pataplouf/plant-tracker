@@ -1,7 +1,7 @@
-import { Link } from "react-router-dom";
 import { useState } from "react";
-import hamburger from '../assets/icons/hamburger.svg';
-import close from '../assets/icons/close.svg';
+import { Link } from "react-router-dom";
+import close from '../../assets/icons/close.svg';
+import hamburger from '../../assets/icons/hamburger.svg';
 
 
 const classes = {

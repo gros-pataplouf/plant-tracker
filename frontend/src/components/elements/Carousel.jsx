@@ -1,7 +1,7 @@
-import { useCallback, useEffect } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
-import chevron_right from '../assets/icons/chevron_right.svg';
-import chevron_left from '../assets/icons/chevron_left.svg';
+import { useCallback } from 'react';
+import chevron_left from '../../assets/icons/chevron_left.svg';
+import chevron_right from '../../assets/icons/chevron_right.svg';
 
 const classes = {
   embla: 'relative',

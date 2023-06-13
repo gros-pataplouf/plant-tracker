@@ -1,20 +1,20 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import { RouterProvider, createHashRouter } from 'react-router-dom'
 import App from './App'
-import Explore from "./components/Explore"
-import Track from "./components/Track"
-import Login from "./components/Login"
-import Register from "./components/Register"
-import Activate from "./components/Activate"
-import PlantList from './components/PlantList'
-import PlantDetail from './components/PlantDetail';
-import LocationDetail from './components/LocationDetail';
-import Account from './components/Account/Account';
-import Reset from './components/Reset';
-import Hero from './components/Hero';
-import './index.css';
-import { createBrowserRouter, RouterProvider, HashRouter, createHashRouter } from 'react-router-dom';
-import ErrorPage from './components/ErrorPage';
+import Account from './components/scenes/Account/Account'
+import Activate from "./components/scenes/Activate/Activate"
+import ErrorPage from './components/scenes/ErrorPage/ErrorPage'
+import Explore from "./components/scenes/Explore/Explore"
+import Hero from './components/scenes/Hero/Hero'
+import LocationDetail from './components/scenes/LocationDetail/LocationDetail'
+import Login from "./components/scenes/Login/Login"
+import PlantDetail from './components/scenes/PlantDetail/PlantDetail'
+import PlantList from './components/scenes/PlantList/PlantList'
+import Register from "./components/scenes/Register/Register"
+import Reset from './components/scenes/Reset/Reset'
+import Track from './components/scenes/Track/Track'
+import './index.css'
 
 const router = createHashRouter([
   {

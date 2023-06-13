@@ -1,10 +1,11 @@
-import axiosInstance from "../helpers/axios";
-import { useState, useEffect } from "react";
-import Carousel from "./Carousel";
-import Animation from "./AnimationLoading";
-import bin from '../assets/icons/bin.svg';
-import addphoto from '../assets/icons/addphoto.svg';
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import AnimationLoading from "../../../elements/AnimationLoading";
+import addphoto from '../../../../assets/icons/addphoto.svg';
+import bin from '../../../../assets/icons/bin.svg';
+import axiosInstance from "../../../../helpers/axios";
+import Carousel from "../../../elements/Carousel";
+
 
 const classes = {
   wrapper: 'flex flex-col justify-between m-auto w-[95%] h-max-[78vh] p-8 rounded-xl shadow-lg shadow-slate-500/50 border-solid border-2 border-slate-300 m-4 bg-white',
@@ -122,9 +123,9 @@ export default function TrackForm({props}) {
         
       </form>}
       {submitting && !success &&
-        <Animation>
+        <AnimationLoading>
           <h3>Submitting...</h3>
-        </Animation>}   
+        </AnimationLoading>}   
       {message && success && 
       <div>
         <p>Thanks for submitting your observations! ✅</p>

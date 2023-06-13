@@ -1,10 +1,9 @@
-import axiosInstance from '../helpers/axios';
-import { useLocation, Link, useOutletContext } from 'react-router-dom';
 import { useState } from 'react';
-import visibility from '../assets/icons/visibility.svg';
-import visibility_off from '../assets/icons/visibility_off.svg';
-import { Modal, openModal, closeModal } from './Modal';
-import { testMail } from '../helpers/checks';
+import { Link, useLocation, useOutletContext } from 'react-router-dom';
+import visibility from '../../../assets/icons/visibility.svg';
+import visibility_off from '../../../assets/icons/visibility_off.svg';
+import axiosInstance from '../../../helpers/axios';
+import { Modal, handleModal } from '../../elements/Modal';
 
 const classes = {
   wrapper: 'flex flex-col justify-between w-[70vw] m-auto p-8 bg-white rounded-xl shadow-lg shadow-slate-500/50 border-solid border-2 border-slate-300 m-4',
@@ -101,7 +100,7 @@ export default function Login() {
           <p className={classes.failure}>{message}</p>
 
           <p className={classes.info}>  Password forgotten? </p>
-          <button className={classes.link} onClick={openModal}> 👉 Reset password</button>
+          <button className={classes.link} name="openModal" onClick={handleModal}> 👉 Reset password</button>
 
           <Modal>
           <div>

@@ -1,10 +1,10 @@
-import { useState, useEffect, useCallback } from 'react';
-import axiosInstance from '../helpers/axios';
+import { useState, useEffect } from 'react';
+import axiosInstance from '../../../helpers/axios';
 import React from 'react';
-import Carousel from './Carousel';
+import Carousel from '../../elements/Carousel';
 import { MapContainer, Marker, TileLayer } from 'react-leaflet';
-import { leafletLowZIndex, convertGPS } from '../helpers/leafletHelpers';
-import AnimationLoading from './AnimationLoading';
+import { leafletLowZIndex, convertGPS } from '../../../helpers/leafletHelpers';
+import AnimationLoading from '../../elements/AnimationLoading';
 
 
 const classes = {

@@ -1,10 +1,9 @@
-import { useState, useEffect, useCallback } from 'react';
-import { Link } from 'react-router-dom';
-import axiosInstance from '../helpers/axios';
-import React from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
-import chevron_right from '../assets/icons/chevron_right.svg';
-import chevron_left from '../assets/icons/chevron_left.svg';
+import React, { useCallback, useEffect, useState } from 'react';
+import axiosInstance from '../../../helpers/axios';
+import chevron_left from '../../../assets/icons/chevron_left.svg';
+import chevron_right from '../../../assets/icons/chevron_right.svg';
+
 const classes = {
   wrapper: 'h-[80vh]',
   embla: 'overflow-hidden',

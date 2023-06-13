@@ -1,7 +1,8 @@
-import axiosInstance from "../../../helpers/axios";
 import { useState } from "react";
-import { Modal, handleModal } from "../../Modal";
-import AnimationLoading from "../../AnimationLoading";
+import axiosInstance from "../../../../helpers/axios";
+import { handleModal } from "../../../elements/Modal";
+import AnimationLoading from "../../../elements/AnimationLoading";
+
 const classes = {
     dangerbutton: "btn bg-red-800 text-white",
     cancelbutton: "btn bg-yellow-50 text-emerald-950 border-solid border-2 border-emerald-800", 
