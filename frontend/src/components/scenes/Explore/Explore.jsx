@@ -3,6 +3,7 @@ import { MapContainer, TileLayer } from "react-leaflet";
 import axiosInstance from "../../../helpers/axios";
 import { leafletLowZIndex } from "../../../helpers/leafletHelpers";
 import { Legend, markers } from "../../elements/MapComponents";
+import AnimationLoading from "../../elements/AnimationLoading";
 
 const classes = {
   mapContainer: "border-mint/99 border-2 rounded-lg h-[80vh] m-4",
@@ -31,7 +32,9 @@ export default function Explore() {
   }, []);
 
   return loading ? (
-    <Animation />
+    <AnimationLoading>
+      <p>Getting data from the server...</p>
+    </AnimationLoading>
   ) : (
     <>
       <MapContainer

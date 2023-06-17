@@ -13,28 +13,25 @@ const classes = {
   emblaSlide:
     "emblaSlide relative border-b-8 mx-8 border-white h-[20vh] flex-[0_0_100%] pb-4 bg-yellow-50 overflow-hidden rounded-xl shadow-lg shadow-slate-500/50 border-solid border-2 border-slate-300",
   form: "flex flex-col ",
-  input: "",
-  label: "mt-4 mb-2",
-  errorInput: "border-red-800 active:outline-red-800",
-  errorSpan: "text-red-800 italic",
   photoBtn:
     "text-slate-950 pr-[26px]  whitespace-nowrap block font-bold rounded-lg w-min p-2 px-4  bg-lime/50 border-2 border-emerald-800  mt-6 ml-0 [&>img]:inline-block",
-  visibilitySvg: "h-6",
   img: "object-fill",
   imageInput: "hidden",
   bin: "absolute block rounded-full bg-white top-0 right-0",
+  input: "invalid:bg-red-200",
 };
 
 export default function TrackForm({ props }) {
-  const { location, setDisplay } = props;
+  const { location } = props;
   const [lng, lat] = location;
   const [plantList, setPlantList] = useState([]);
   const [images, setImages] = useState([]);
   const [success, setSuccess] = useState(false);
   const [message, setMessage] = useState("");
   const [submitting, setSubmitting] = useState(false);
+
   function handleChange(e) {
-    setImages(e.target.files);
+    setImages([...images, ...e.target.files]);
   }
   function deleteImage(e) {
     e.preventDefault();
@@ -48,6 +45,12 @@ export default function TrackForm({ props }) {
 
   function submitHandler(e) {
     e.preventDefault();
+    const fields = document.querySelector("#submitform").childNodes;
+    for (let field of fields) {
+      if (field.checkValidity && !field.checkValidity()) {
+        return window.alert("Form invalid or incomplete.");
+      }
+    }
     //get a string for location to be able to post it as form data (json not allowed in multipart form)
     const formData = new FormData();
     const selection = document.getElementById("plant");
@@ -64,18 +67,9 @@ export default function TrackForm({ props }) {
     }
     formData.append(
       "description",
-      document.getElementById("description").value
+      document.getElementById("description").value.trim()
     );
 
-    // check for missing fields
-    const required = ["plant", "area", "location"];
-    for (let key of required) {
-      let value = formData.get(key);
-      if (!value) {
-        window.alert(`Field ${key} is mandatory.`);
-        return setMessage("Please fill in the required fields!");
-      }
-    }
     setSubmitting(true);
     axiosInstance
       .post("api/locations/", formData)
@@ -99,20 +93,32 @@ export default function TrackForm({ props }) {
           className={classes.wrapper}
           method="post"
           encType="multipart/form-data"
+          id="submitform"
         >
           <h3 className={classes.title}>Complete and submit</h3>
+
           <label className={classes.label} htmlFor="location">
-            Surface
+            Surface (m²)
           </label>
-          <input type="number" min="0" name="area" id="area" />
+          <input
+            className={classes.input}
+            type="number"
+            min="0"
+            name="area"
+            id="area"
+            required
+            placeholder="required, no decimals"
+          />
+
           <label className={classes.label} htmlFor="description">
             Add a comment
           </label>
-          <input type="text" name="description" id="description" />
+          <textarea name="description" id="description" rows="4" cols="50" />
+
           <label className={classes.label} htmlFor="description">
             Species
           </label>
-          <select name="plant" id="plant">
+          <select name="plant" id="plant" required className={classes.input}>
             <option value="">Select a species</option>
             {plantList.map((plant) => {
               return (

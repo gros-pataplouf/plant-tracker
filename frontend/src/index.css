@@ -58,13 +58,9 @@
     font: normal 600 1.4rem/1.8rem "Roboto", sans-serif;
   }
 
-  input {
+  input,
+  textarea {
     border-radius: 0.5rem !important;
-  }
-  input:focus {
-    /* box-shadow: hsl(45, 5%, 16%) !important; */
-    outline-color: transparent !important;
-    border-color: hsl(38, 96%, 58%) !important;
   }
 
   select {

@@ -6,7 +6,7 @@ import { testMail, testPassword } from "../../helpers/checks";
 
 const classes = {
   passwordWrapper:
-    "flex relative [&>button]:absolute [&>button]:top-2 [&>button]:right-2 invalid:bg-red-600",
+    "flex relative [&>button]:absolute [&>button]:top-2 [&>button]:right-2",
   input: (err) => `grow ${err && "bg-red-100"}`,
   visibilitySvg: "h-6",
   tooltipIcon: "inline w-7 align-top",

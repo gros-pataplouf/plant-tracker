@@ -6,6 +6,8 @@ import visibility_off from "../../../assets/icons/visibility_off.svg";
 import axiosInstance from "../../../helpers/axios";
 import { testPassword } from "../../../helpers/checks";
 
+import InputField from "../../elements/InputField";
+
 const classes = {
   wrapper:
     "flex flex-col justify-between w-[90vw] m-auto p-8 bg-white rounded-xl shadow-lg shadow-slate-500/50 border-solid border-2 border-slate-300 m-4",
@@ -22,54 +24,22 @@ const classes = {
   btn: "btn my-8",
   success: "font-bold my-[50%]",
   failure: "font-bold text-red-800",
-  passwordWrapper:
-    "flex relative [&>button]:absolute [&>button]:top-2 [&>button]:right-2 [&>input]:grow",
-  visibilitySvg: "h-6",
-  info: "mt-4",
   link: "block pt-2 mr-10 text-emerald-900 font-bold active:decoration-solid",
 };
 
 export default function Reset() {
   let uuid = window.location.href.trim("/").split("?").at(-1);
-  const [isLoggedIn, setIsLoggedIn] = useOutletContext();
   const [message, setMessage] = useState("");
-  const [pwdErr, setPwdErr] = useState("");
+  const [formValid, setFormValid] = useState(false);
   const [incompleteErr, setIncompleteErr] = useState("");
-  const [pwdConfErr, setPwdConfErr] = useState("");
-
-  const location = useLocation();
-  const [showPwd, setShowPwd] = useState(false);
-  const [showPwdConf, setShowPwdConf] = useState(false);
   const [success, setSuccess] = useState(false);
-  function validateForm() {
-    setIncompleteErr("");
-    setPwdErr("");
-    setPwdConfErr("");
 
-    let password = document.getElementById("password").value.trim();
-    let passwordConfirmation = document
-      .getElementById("passwordConfirmation")
-      .value.trim();
-
-    /// check for empty fields
-
-    if (!password || !passwordConfirmation) {
-      setIncompleteErr("Please fill out all required fields.");
-    }
-
-    if (password && password !== passwordConfirmation) {
-      setPwdConfErr("Passwords must match.");
-    }
-
-    if (password && !testPassword(password)) {
-      setPwdErr("Invalid password. ");
-    }
-  }
+  function validateForm() {}
 
   function submitHandler(e) {
     e.preventDefault();
-    if (!document.querySelector("input#password").value) {
-      setMessage("Cannot submit empty form. ⛔");
+    if (!formValid) {
+      setMessage("Cannot submit empty or invalid form. ⛔");
       return null;
     }
     axiosInstance
@@ -95,80 +65,29 @@ export default function Reset() {
           onSubmit={submitHandler}
           onChange={validateForm}
         >
-          <label className={classes.label} htmlFor="password">
-            Password{" "}
-            {pwdErr && (
-              <span className={classes.errorSpan}>
-                {pwdErr}
-                <span
-                  className={classes.tooltipSpan}
-                  onClick={() => {
-                    const tooltip = document.querySelector("#tooltip");
-                    tooltip.classList.toggle("hidden");
-                  }}
-                >
-                  <img className={classes.tooltipIcon} src={info} />
-                  <div className={classes.tooltipDiv} id="tooltip">
-                    Passwords must be at least 8 characters long with 1 upper
-                    case, 1 lower case letter, 1 number and 1 special character.
-                  </div>
-                </span>
-              </span>
-            )}
-          </label>
-          <div className={classes.passwordWrapper}>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              autoComplete="password"
-              placeholder="required"
-              className={pwdErr ? "border-red-800" : undefined}
-            />
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                document
-                  .querySelector("#password")
-                  .setAttribute("type", showPwd ? "password" : "text");
-                setShowPwd(!showPwd);
-              }}
-            >
-              <img
-                className={classes.visibilitySvg}
-                src={showPwd ? visibility : visibility_off}
-                alt=""
-              />
-            </button>
-          </div>
+          <InputField
+            props={{
+              label: "New password",
+              tooltip: true,
+              id: "password",
+              placeholder: "required",
+              type: "password",
+              tests: ["safePassword", "notEmpty"],
+              setFormValid,
+            }}
+          />
 
-          <label className={classes.label} htmlFor="passwordConfirmation">
-            Confirm password{" "}
-            <span className={classes.errorSpan}>{pwdConfErr}</span>
-          </label>
-          <div className={classes.passwordWrapper}>
-            <input
-              name="passwordConfirmation"
-              id="passwordConfirmation"
-              type="password"
-              placeholder="required"
-            />
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                document
-                  .querySelector("#passwordConfirmation")
-                  .setAttribute("type", showPwdConf ? "password" : "text");
-                setShowPwdConf(!showPwdConf);
-              }}
-            >
-              <img
-                className={classes.visibilitySvg}
-                src={showPwdConf ? visibility : visibility_off}
-                alt=""
-              />
-            </button>
-          </div>
+          <InputField
+            props={{
+              label: "Confirm password",
+              tooltip: true,
+              id: "passwordConfirmation",
+              placeholder: "required",
+              type: "password",
+              tests: ["passwordsMatch", "notEmpty"],
+              setFormValid,
+            }}
+          />
 
           <button className={classes.btn} type="submit">
             Reset password

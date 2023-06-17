@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../helpers/axios";
-import TrackForm from "./Subcomponents/TrackForm";
-import TrackMap from "./Subcomponents/TrackMap";
+import Submit from "./Subcomponents/Submit";
+import Map from "./Subcomponents/Map";
 
 export default function Track() {
   const [location, setLocation] = useState([50, 10]);
@@ -22,9 +22,9 @@ export default function Track() {
   }, []);
 
   if (display === "map") {
-    return <TrackMap props={{ location, setLocation, setDisplay }} />;
+    return <Map props={{ location, setLocation, setDisplay }} />;
   } else if (display === "form") {
-    return <TrackForm props={{ location, setDisplay }} />;
+    return <Submit props={{ location, setDisplay }} />;
   } else if (display === "success") {
     return (
       <div>
