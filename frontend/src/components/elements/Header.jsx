@@ -14,7 +14,7 @@ const classes = {
   title: "text-yellow-50 p-4 text-5xl",
   titleContainer: "flex pl-4",
   login:
-    "bg-emerald-950 [&>*]:text-yellow-50 [&>*]:font-bold h-[2.5rem] max-h-[8vh] min-h-[4vh]",
+    "pt-2 bg-emerald-950 [&>*]:text-yellow-50 [&>*]:font-bold h-[2.5rem] max-h-[8vh] min-h-[4vh]",
   button: "[&>*]:text-yellow-50 [&>*]:font-bold rounded-lg px-2",
   buttonHighlighted:
     "[&>*]:text-emerald-950 [&>*]:font-bold ml-6 bg-yellow-50 rounded-lg px-2",

@@ -17,12 +17,18 @@ def upload_to(instance, filename):
 class Plant(models.Model):
     scientific_name = models.TextField(unique=True)
     family = models.TextField()
-    common_name_de = models.TextField()
-    common_name_fr = models.TextField()
+    common_name_de = models.TextField(null=True)
+    common_name_fr = models.TextField(null=True)
     common_name_en = models.TextField()
-    description_de = models.TextField()
-    description_fr = models.TextField()
+    description_de = models.TextField(null=True)
+    description_fr = models.TextField(null=True)
     description_en = models.TextField()
+    identification_de = models.TextField(null=True)
+    identification_fr = models.TextField(null=True)
+    identification_en = models.TextField(null=True)
+    ecology_de = models.TextField(null=True)
+    ecology_fr = models.TextField(null=True)
+    ecology_en = models.TextField(null=True)
     def __str__(self):
         return self.scientific_name
 
@@ -38,7 +44,7 @@ class Location(models.Model):
 class PlantImage(models.Model):
     image = models.ImageField(_("Photo"), upload_to=upload_to, blank=True, storage=PublicMediaStorage())
     plant = models.ForeignKey(Plant, on_delete=models.CASCADE, blank=True, null=True)
-    type = models.CharField(choices=[('main','main'), ('secondary', 'secondary'), ('default', 'default')], max_length=20) 
+    type = models.CharField(choices=[('main','main'), ('secondary', 'secondary'), ('default', 'default'), ('identification', 'identification')], max_length=20) 
     alt_en = models.TextField(blank=True)
     alt_fr = models.TextField(blank=True)
     alt_de = models.TextField(blank=True)
@@ -46,6 +52,9 @@ class PlantImage(models.Model):
     description_fr = models.TextField(blank=True)
     description_de = models.TextField(blank=True)
 
+
 class LocationImage(models.Model):
     image = models.ImageField(_("Photo"), upload_to=upload_to, blank=True, storage=PublicMediaStorage())
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
+
+

@@ -3,7 +3,7 @@ import Lottie from "lottie-react";
 import spinner from "../../assets/animations/spinner.json";
 import { useState, useEffect } from "react";
 const classes = {
-  wrapper: "bg-emerald-950 h-[2.5rem] px-6 max-h-[8vh] min-h-[4vh]",
+  wrapper: "pt-2 bg-emerald-950 h-[2.5rem] px-6 max-h-[8vh] min-h-[4vh]",
   button:
     "text-yellow-50 font-bold rounded-lg active:underline hover:underline decoration-2",
 };

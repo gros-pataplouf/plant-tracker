@@ -1,3 +1,41 @@
+Learning: 
+    ☐ How to do error handling in functional components (class components had error boundary )
+    => react docs recommend this : https://github.com/bvaughn/react-error-boundary
+    ☐ Learn how to do social logins: https://not-ytb.blocus.ch/watch?v=wlcCvzOLL8w    | 5h
+    ☐ Learn how to set up a cron job for emptying the token blacklist table (is this even compatible with render) | 2h
+
+Features: 
+    ☐ @critical Plant detail page => determine sections (identification, ecology) => change model  | 3h
+    ☐ @critical @easy Explore.jsx also needs geolocation, address search widget, | 1h 
+    ☐ @critical @easy Track.jsx needs higher leaflet zoom | 1h
+    ☐ @easy Adjust Leaflet zoom if geolocation is enabled / disabled / times out / not available | 15min 
+    ☐ @hard Carousel with dots instead of arrows (mobile) => keep arrows only in desktop version and they only appear 
+    ☐ @low @hard social login (google is enough)
+    ☐ @critical @easy write a Readme
+
+Style: Finish styling mobile version:
+    ☐ @critical @medium find a coherent design for the tailwind part (rules for naming the const classes keys, order of tailwind classes )
+    ☐ @critical @easy "elements" first => clean up tailwind first
+    ☐ @high @MVP scenes next => always clean up tailwind first 
+
+Style: desktop version:
+    ☐  elements first
+    ☐ @MVP scenes next
+
+Security:
+    ☐ request throttling (especially to plant image view => S3 bucket requests €€€!!!)
+    
+Fixes: 
+    ☐ backend: rotate refresh tokens 
+    ☐ deal with server timeouts  by displaying meaningful message to users along with loading animation
+    ☐ axios.js => resend request if it times out
+
+Chores:
+    ☐ check for unused dependencies in backend and frontend and remove them 
+
+
+
+
 ✔ @blacklist blacklist app @done(23-04-12 11:27)
 ✔ login / logout button @done(23-04-12 11:27)
 ✔ image upload to localhost @done(23-04-17 13:52)
@@ -17,7 +55,6 @@
 ✔ @bug plant tiles not shortened on 1st load in plant list @done(23-05-19 18:57)
 
 
-☐ @high style Account Detail page
 
 ✔ @bugfix naive daytime waring when posting to reset/ and activation uuid/ @done(23-06-04 18:26)
 ✔ image upload to S3 bucket @done(23-06-04 18:26)
@@ -33,10 +70,10 @@ warnings.warn(
 @high fix problem with tile resizing through use ref 
 @high 
 @high loading animation for 
-        - plantinfo
-        - data submission
-        - login submission
-        - register submission
+        ✔ plantinfo @done(23-06-14 20:07)
+        ✔ data submission @done(23-06-14 20:08)
+        ✔ login submission @done(23-06-14 20:08)
+        ✔ register submission @done(23-06-14 20:08)
         - account activation
         - password reset mail request
         - password change
