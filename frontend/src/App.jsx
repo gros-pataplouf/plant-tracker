@@ -1,7 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { useState } from "react";
 import Header from "./components/elements/Header";
-import Footer from "./components/elements/Footer";
 
 const classes = {
   wrapper: "relative 100vh",
@@ -18,7 +17,6 @@ function App() {
       <div className={classes.main} id="detail">
         <Outlet context={[isLoggedIn, setIsLoggedIn]} />
       </div>
-      <Footer props={{ isLoggedIn, setIsLoggedIn }} />
     </div>
   );
 }
