@@ -3,7 +3,6 @@ from rest_framework import permissions
 from django.conf import settings
 from django.views.static import serve
 
-
 from .views import PlantDetail, PlantList, LocationDetail, LocationList, PlantImages, LocationImages
 
 urlpatterns = [

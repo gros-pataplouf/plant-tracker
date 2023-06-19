@@ -68,10 +68,6 @@
     border-radius: 0.5rem !important;
   }
 
-  html {
-    overflow: -moz-scrollbars-vertical;
-    overflow-y: scroll;
-  }
 
   @font-face {
     font-family: "Roboto Slab";

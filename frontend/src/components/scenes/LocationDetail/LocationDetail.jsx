@@ -28,12 +28,11 @@ export default function LocationDetail() {
   const [location, setLocation] = useState(null);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    const id = window.location.href.trim("/").split("/").at(-1);
+    const id = window.location.href.replaceAll("/", " ").trim().split(" ").at(-1);
     axiosInstance
       .get(`api/locations/${id}`)
       .then((res) => {
         setLocation(res.data);
-        console.log(res.data);
         const matchingPlant = axiosInstance.get(`api/plants/${res.data.plant}`);
         const locationPhotos = axiosInstance.get(
           `api/locations/images?location=${id}`
