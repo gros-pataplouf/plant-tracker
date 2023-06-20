@@ -5,6 +5,7 @@ import Carousel from "../../elements/Carousel";
 import { MapContainer, Marker, TileLayer } from "react-leaflet";
 import { leafletLowZIndex, convertGPS } from "../../../helpers/leafletHelpers";
 import AnimationLoading from "../../elements/AnimationLoading";
+import { Link } from "react-router-dom";
 
 const classes = {
   wrapper: "h-[80vh]",
@@ -110,7 +111,7 @@ export default function LocationDetail() {
             <tbody>
               <tr>
                 <td>Name</td>
-                <td>{location.plant.common_name_en}</td>
+                <td><Link to={`/plants/${location.plant.id}`}>{location.plant.common_name_en}</Link></td>
               </tr>
               <tr>
                 <td>Coordinates</td>

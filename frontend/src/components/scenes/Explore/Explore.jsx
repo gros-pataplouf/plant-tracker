@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { MapContainer, TileLayer } from "react-leaflet";
 import axiosInstance from "../../../helpers/axios";
 import { leafletLowZIndex } from "../../../helpers/leafletHelpers";
-import { Legend, markers } from "../../elements/MapComponents";
+import { Legend, markers, Search } from "../../elements/MapComponents";
 import AnimationLoading from "../../elements/AnimationLoading";
+import { CenterAutomatically } from "../../elements/MapComponents";
 
 const classes = {
   mapContainer: "border-mint/99 border-2 rounded-lg h-[80vh] m-4",
@@ -14,6 +15,12 @@ export default function Explore() {
   const [plantList, setPlantList] = useState([]);
   const [initialLocationList, setInitialLocationList] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [location, setLocation] = useState([50, 10]);
+  const [coords, setCoords] = useState([50, 10]);
+  const [results, setResults] = useState([]);
+  const [zoom, setZoom] = useState(12);
+
+
 
   useEffect(() => {
     Promise.all([
@@ -37,11 +44,13 @@ export default function Explore() {
     </AnimationLoading>
   ) : (
     <>
+    <h3>Discover invasive plant species near you</h3>
+    
       <MapContainer
         className={classes.mapContainer}
         id="map"
         center={[54.06325355147857, 9.86409912109375]}
-        zoom={8}
+        zoom={5}
         scrollWheelZoom={false}
         whenReady={leafletLowZIndex}
       >
@@ -59,6 +68,8 @@ export default function Explore() {
             setLoading,
           }}
         />
+        <Search props={{ setLocation, location, coords, results, setResults, zoom, setZoom }} />
+        <CenterAutomatically location={location}/>
       </MapContainer>
     </>
   );

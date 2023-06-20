@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import axiosInstance from "../../../helpers/axios";
 import AnimationLoading from "../../elements/AnimationLoading";
 import Carousel from "../../elements/Carousel";
-
+import { Link } from "react-router-dom";
 
 const classes = {
   wrapper: "h-[80vh]",
@@ -19,16 +19,19 @@ const classes = {
 export default function PlantList() {
   const [plant, setPlant] = useState(null);
   const [photos, setPhotos] = useState(null);
+  const [findings, setFindings] = useState(null);
 
   useEffect(() => {
     const id = window.location.href.replaceAll("/", " ").trim().split(" ").at(-1);
     const plant = axiosInstance.get(`api/plants/${id}`);
     const photos = axiosInstance.get("api/plants/images");
+    const places = axiosInstance.get("api/locations");
 
-    Promise.all([plant, photos])
+    Promise.all([plant, photos, places])
     .then(values => {
       setPlant(values[0].data);
       setPhotos(values[1].data.filter(_ => {return String(_.plant) === id}));
+      setFindings(values[2].data)
     })
     .catch(err => console.error(err));
 }, [])
@@ -44,10 +47,10 @@ export default function PlantList() {
       <Carousel>
 {        photos.filter(photo => photo.type !== 'identification').map(
           (photo) => (
-            <div key={photo.id} id="emblaSlide" className={classes.emblaSlide}>
+            <figure key={photo.id} id="emblaSlide" className={classes.emblaSlide}>
               <img src={photo.image} alt={photo.description_en} />
-              <caption className={classes.caption}>{photo.description_en}</caption>
-            </div>
+              <figcaption className={classes.caption}>{photo.description_en}</figcaption>
+            </figure>
           )            
         )      
 }
@@ -57,16 +60,27 @@ export default function PlantList() {
       <Carousel>
 {        photos.filter(photo => photo.type === 'identification').map(
           (photo) => (
-            <div key={photo.id} id="emblaSlide" className={classes.emblaSlide}>
+            <figure key={photo.id} id="emblaSlide" className={classes.emblaSlide}>
               <img src={photo.image} alt={photo.description_en} />
-              <caption className={classes.caption}>{photo.description_en}</caption>
-            </div>
+              <figcaption className={classes.caption}>{photo.description_en}</figcaption>
+            </figure>
           )            
         )      
 }
       </Carousel>
       <h4>Ecology</h4>
       <p>{plant.ecology_en}</p>
+      <h4>Recent findings</h4>
+      <ul>
+        {findings && findings.filter(_ => _.plant === plant.id).map(_ => {
+          return (
+            <li key={_.id}>
+              <Link to={`/locations/${_.id}`}>{_.area} m² near {_.display_name}, {new Date(_.created_at).toLocaleString("en-GB")}</Link>
+            </li>
+          )
+        })}
+      </ul>
+
       </> 
       : <AnimationLoading>
         Getting data from the server...

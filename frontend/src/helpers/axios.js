@@ -2,7 +2,8 @@ import axios from "axios";
 const baseURL = "https://planttracker-be.onrender.com/";
 const axiosInstance = axios.create({
   baseURL: baseURL,
-  timeout: 20000,
+  timeout: 120000,
+  timeoutErrorMessage: "We are gently waking up our backend service. Please have a little more patient."
 });
 
 axiosInstance.interceptors.request.use(function (config) {
@@ -21,7 +22,7 @@ axiosInstance.interceptors.response.use(
   },
   async function (error) {
     const originalRequest = error.config;
-    console.log(error.response.status, originalRequest.url);
+    console.log(error, originalRequest.url);
 
     if (typeof error.response === "undefined") {
       console.timeLog(

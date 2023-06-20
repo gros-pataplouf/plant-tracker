@@ -22,7 +22,8 @@ function Animation() {
 
 // the leaflet map
 function Map({ props }) {
-  const { location, setLocation, coords, results, setResults } = props;
+  const { location, setLocation, coords, results, setResults, isGeolocationEnabled } = props;
+  console.log(isGeolocationEnabled)
   useEffect(() => {
     if (coords) {
       setLocation([coords.latitude, coords.longitude]);
@@ -33,7 +34,7 @@ function Map({ props }) {
       className={classes.mapContainer}
       id="map"
       center={location}
-      zoom={5}
+      zoom={isGeolocationEnabled? 16 : 5}
       scrollWheelZoom={true}
       whenReady={leafletLowZIndex}
     >
@@ -72,13 +73,15 @@ export default function TrackMap({ props }) {
     positionError,
   } = useGeolocated({
     positionOptions: {
-      enableHighAccuracy: false,
+      enableHighAccuracy: true,
+      maximumAge: 240000
+          
     },
     userDecisionTimeout: 10000,
   });
   return !isGeolocationAvailable || !isGeolocationEnabled || coords ? (
     <>
-      <Map props={{ location, setLocation, coords, results, setResults }} />
+      <Map props={{ location, setLocation, coords, results, setResults, isGeolocationEnabled }} />
       <ContinueButton props={{ location, setDisplay }} />
     </>
   ) : (

@@ -10,7 +10,7 @@ const classes = {
   mobileMenu:
     "bg-emerald-950 flex flex-col justify-center items-center p-4 fixed top-0 left-0 right-0 w-screen h-screen z-30 font-roboto-700 text-2xl [&>*:not(:first-child)]:my-8 [&>li]:text-yellow-50 [&>li]:text-4xl [&>li:not(:first-child)]:py-7",
   mobileMenuClose: "fixed p-2 top-2 right-2 bg-emerald-900 rounded-full",
-  hamburger: "bg-red-700 rounded-full fixed top-2 right-2",
+  hamburger: "bg-emerald-950 p-2 rounded-full fixed top-2 right-2",
   title: "text-yellow-50 p-4 text-5xl",
   titleContainer: "flex pl-4",
   login:

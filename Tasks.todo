@@ -1,17 +1,18 @@
 Learning: 
     ☐ How to do error handling in functional components (class components had error boundary )
-    => react docs recommend this : https://github.com/bvaughn/react-error-boundary
+   => react docs recommend this : https://github.com/bvaughn/react-error-boundary
     ☐ Learn how to do social logins: https://not-ytb.blocus.ch/watch?v=wlcCvzOLL8w    | 5h
     ☐ Learn how to set up a cron job for emptying the token blacklist table (is this even compatible with render) | 2h
 
 Features: 
-    ☐ @critical Plant detail page => determine sections (identification, ecology) => change model  | 3h
-    ☐ @critical @easy Explore.jsx also needs geolocation, address search widget, | 1h 
-    ☐ @critical @easy Track.jsx needs higher leaflet zoom | 1h
-    ☐ @easy Adjust Leaflet zoom if geolocation is enabled / disabled / times out / not available | 15min 
+    ✔ @critical Plant detail page => determine sections (identification, ecology) => change model  | 3h @done(23-06-19 18:56)
+    ✔ @critical @easy Explore.jsx also needs address search widget, | 1h @done(23-06-20 18:10)
+    ✔ @critical @easy Track.jsx needs higher leaflet zoom when geolocation is enabled | 1h @done(23-06-20 19:22)
     ☐ @hard Carousel with dots instead of arrows (mobile) => keep arrows only in desktop version and they only appear 
     ☐ @low @hard social login (google is enough) | 2 days?
     ☐ @critical @easy write a Readme | 3h
+    ☐ @critical activation mail and pwd reset mail | 1h
+
 
 Style: Finish styling mobile version:
     ☐ @critical @medium find a coherent design for the tailwind part (rules for naming the const classes keys, order of tailwind classes ) | 4h

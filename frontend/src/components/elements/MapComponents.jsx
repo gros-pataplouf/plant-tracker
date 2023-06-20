@@ -14,8 +14,10 @@ const classes = {
     "z-10 absolute top-[10px] right-2 leaflet-bar leaflet-control w-[80%] max-h-[66%] overflow-scroll",
   searchInput: "bg-white p-[5px] h-[30px] w-full",
   searchResult: "border-2 border-slate-50 bg-white p-[3px] w-[100%]",
-  legend: "absolute z-20 bg-slate-100 right-0 p-2 rounded-2xl",
-  legendItem: "flex p-2",
+  toggleLegend: "z-100",
+  legend : `absolute z-20 bg-slate-100 right-0 bottom-8 p-2 rounded-2xl`,
+  legendTitle: (showLegend) => `${!Boolean(showLegend) && "hidden" }`,
+  legendItem: (showLegend) => `${!Boolean(showLegend) && "hidden" } flex p-2`,
   input: "h-6 w-6 my-auto",
 };
 
@@ -65,8 +67,8 @@ export function CenterAutomatically({ location }) {
 
 // users can search for address and map fliess to selected location
 export function Search({ props }) {
-  const { setLocation, location, coords, results, setResults } = props;
-  const inputField = document.querySelector("input");
+  const { setLocation, location, coords, results, setResults, zoom } = props;
+  const inputField = document.querySelector("#inputfield");
   const map = useMap();
 
   function inputHandler() {
@@ -86,7 +88,8 @@ export function Search({ props }) {
     const [filtered] = results.filter((i) => i.place_id == dataindex);
     setLocation([parseFloat(filtered.lat), parseFloat(filtered.lon)]);
     setResults([]);
-    map.setZoom(17);
+    if (zoom) {
+      map.setZoom(8)} else {map.setZoom(17)};
     inputField.value = "";
   }
   return (
@@ -119,6 +122,7 @@ function svgFile(color) {
 }
 
 export function markers(plants, locations) {
+  console.log(plants.length)
   return locations.map((location) => {
     const customIcon = new L.divIcon({
       html: svgFile(
@@ -156,6 +160,8 @@ export function markers(plants, locations) {
 export function Legend({ props }) {
   const [plantList, setPlantList] = useState([]);
   const { locationList, setLocationList, initialLocationList } = props;
+  const [showLegend, setShowLegend] = useState(true); 
+
 
   useEffect(() => {
     axiosInstance
@@ -168,11 +174,16 @@ export function Legend({ props }) {
       });
   }, []);
 
+  function toggleLegend() {
+    setShowLegend(!showLegend);
+  }
+
   return (
+    <> 
     <form id="selectionForm" className={classes.legend}>
-      <p>Filter by species</p>
+    <button onClick={toggleLegend}>{showLegend?"↘️ Hide":"↖️ Show"} filters</button>
       {plantList.map((plant) => (
-        <div className={classes.legendItem} key={plant.id}>
+        <div className={classes.legendItem(showLegend)} key={plant.id}>
           <Checkbox
             props={{
               plant,
@@ -200,6 +211,7 @@ export function Legend({ props }) {
         </div>
       ))}
     </form>
+    </>
   );
 }
 
@@ -210,8 +222,10 @@ function Checkbox({ props }) {
     setLocationList,
     initialLocationList,
     plantList,
+
   } = props;
   const [checked, setChecked] = useState(true);
+
   useEffect(() => {
     const inputBoxes = document.querySelectorAll("input");
     let userChoices = [];
@@ -221,8 +235,7 @@ function Checkbox({ props }) {
 
     setLocationList(
       initialLocationList.filter((loc) => {
-        console.log(loc.plant, plantList.length);
-        return userChoices[(loc.plant % plantList.length) - 1];
+        return userChoices[(loc.plant % plantList.length) + 1];
       })
     );
   }, [checked]);
@@ -232,6 +245,7 @@ function Checkbox({ props }) {
     console.log(locationList, initialLocationList);
     return null;
   }
+
   return (
     <input
       className={classes.input}
