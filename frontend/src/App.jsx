@@ -3,7 +3,7 @@ import { useState } from "react";
 import Header from "./components/elements/Header";
 
 const classes = {
-  wrapper: "relative 100vh",
+  wrapper: "relative 100vh touch-none",
   main: "absolute top-[10vh] flex flex-col h-[80vh] w-screen overflow-x-clip",
 };
 
