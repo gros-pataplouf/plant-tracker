@@ -14,7 +14,7 @@ const classes = {
     "z-10 absolute top-[10px] right-2 leaflet-bar leaflet-control w-[80%] max-h-[66%] overflow-scroll",
   searchInput: "bg-white p-[5px] h-[30px] w-full",
   searchResult: "border-2 border-slate-50 bg-white p-[3px] w-[100%]",
-  toggleLegend: "z-100",
+  showLegend: "p-2",
   legend : `absolute z-20 bg-slate-100 right-0 bottom-8 p-2 rounded-2xl`,
   legendTitle: (showLegend) => `${!Boolean(showLegend) && "hidden" }`,
   legendItem: (showLegend) => `${!Boolean(showLegend) && "hidden" } flex p-2`,
@@ -174,14 +174,15 @@ export function Legend({ props }) {
       });
   }, []);
 
-  function toggleLegend() {
+  function toggleLegend(e) {
+    e.preventDefault();
     setShowLegend(!showLegend);
   }
 
   return (
     <> 
     <form id="selectionForm" className={classes.legend}>
-    <button onClick={toggleLegend}>{showLegend?"↘️ Hide":"↖️ Show"} filters</button>
+    <button className={classes.showLegend} onClick={toggleLegend}>{showLegend?"↘️ Hide":"↖️ Show"} filters</button>
       {plantList.map((plant) => (
         <div className={classes.legendItem(showLegend)} key={plant.id}>
           <Checkbox
