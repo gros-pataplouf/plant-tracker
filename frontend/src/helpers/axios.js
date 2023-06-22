@@ -3,7 +3,8 @@ const baseURL = "https://planttracker-be.onrender.com/";
 const axiosInstance = axios.create({
   baseURL: baseURL,
   timeout: 120000,
-  timeoutErrorMessage: "We are gently waking up our backend service. Please have a little more patient."
+  timeoutErrorMessage:
+    "We are gently waking up our backend service. Please have a little more patient.",
 });
 
 axiosInstance.interceptors.request.use(function (config) {

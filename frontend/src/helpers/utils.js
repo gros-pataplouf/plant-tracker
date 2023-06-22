@@ -10,14 +10,6 @@ export const debounce = (func, delay = 1000) => {
   };
 };
 
-// export const sliceAfterNearestSpace = (string, index) => {
-//   for (let i = index; i > 0; i--) {
-//     if (string[i] === " ") {
-//       return string.slice(0,i);
-//     }
-//   }
-//   }
-
 export const resizeTiles = () => {
   console.log("resizing");
   console.log(document.querySelectorAll(".emblaSlide"));

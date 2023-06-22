@@ -20,8 +20,6 @@ export default function Explore() {
   const [results, setResults] = useState([]);
   const [zoom, setZoom] = useState(12);
 
-
-
   useEffect(() => {
     Promise.all([
       axiosInstance.get("api/locations/"),
@@ -44,8 +42,8 @@ export default function Explore() {
     </AnimationLoading>
   ) : (
     <>
-    <h3>Discover invasive plant species near you</h3>
-    
+      <h3>Discover invasive plant species near you</h3>
+
       <MapContainer
         className={classes.mapContainer}
         id="map"
@@ -68,8 +66,18 @@ export default function Explore() {
             setLoading,
           }}
         />
-        <Search props={{ setLocation, location, coords, results, setResults, zoom, setZoom }} />
-        <CenterAutomatically location={location}/>
+        <Search
+          props={{
+            setLocation,
+            location,
+            coords,
+            results,
+            setResults,
+            zoom,
+            setZoom,
+          }}
+        />
+        <CenterAutomatically location={location} />
       </MapContainer>
     </>
   );

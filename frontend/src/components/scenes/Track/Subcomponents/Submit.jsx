@@ -5,10 +5,9 @@ import addphoto from "../../../../assets/icons/addphoto.svg";
 import bin from "../../../../assets/icons/bin.svg";
 import axiosInstance from "../../../../helpers/axios";
 import Carousel from "../../../elements/Carousel";
+import Tile from "../../../elements/Tile";
 
 const classes = {
-  wrapper:
-    "flex flex-col justify-between m-auto w-[95%] h-max-[78vh] p-8 rounded-xl shadow-lg shadow-slate-500/50 border-solid border-2 border-slate-300 m-4 bg-white",
   title: "pt-4 text-emerald-800",
   emblaSlide:
     "emblaSlide relative border-b-8 mx-8 border-white h-[20vh] flex-[0_0_100%] pb-4 bg-yellow-50 overflow-hidden rounded-xl shadow-lg shadow-slate-500/50 border-solid border-2 border-slate-300",
@@ -87,10 +86,10 @@ export default function TrackForm({ props }) {
   }
 
   return (
-    <>
+    <Tile>
       {!submitting && !success && (
         <form
-          className={classes.wrapper}
+          className={classes.form}
           method="post"
           encType="multipart/form-data"
           id="submitform"
@@ -190,6 +189,6 @@ export default function TrackForm({ props }) {
           <Link to={`/locations/${message}`}>View submission</Link>
         </div>
       )}
-    </>
+    </Tile>
   );
 }

@@ -28,8 +28,20 @@ Security:
     
 Fixes: 
     ☐ backend: rotate refresh tokens 
+    ☐ how does the refresh token end up being undefined
     ☐ deal with server timeouts  by displaying meaningful message to users along with loading animation
-    ☐ axios.js => resend request if it times out
+    ☐ axios.js => resend request if it times out => solved by timeout 1min
+    ✔ no scrolling on iOs Safari @done(23-06-21 21:23)
+    ☐ expired token with undefined refresh token gets prompted to log in even if view is not restricted
+    ✔ Hide legend button too small, add padding @done(23-06-20 23:52)
+    ☐ resize image before upload https://www.tutsmake.com/react-js-resize-image-before-upload/
+
+   
+    
+
+
+
+
 
 Chores:
     ☐ check for unused dependencies in backend and frontend and remove them 

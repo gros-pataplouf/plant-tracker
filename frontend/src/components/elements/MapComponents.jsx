@@ -15,9 +15,9 @@ const classes = {
   searchInput: "bg-white p-[5px] h-[30px] w-full",
   searchResult: "border-2 border-slate-50 bg-white p-[3px] w-[100%]",
   showLegend: "p-2",
-  legend : `absolute z-20 bg-slate-100 right-0 bottom-8 p-2 rounded-2xl`,
-  legendTitle: (showLegend) => `${!Boolean(showLegend) && "hidden" }`,
-  legendItem: (showLegend) => `${!Boolean(showLegend) && "hidden" } flex p-2`,
+  legend: `absolute z-20 bg-slate-100 right-0 bottom-8 p-2 rounded-2xl`,
+  legendTitle: (showLegend) => `${!Boolean(showLegend) && "hidden"}`,
+  legendItem: (showLegend) => `${!Boolean(showLegend) && "hidden"} flex p-2`,
   input: "h-6 w-6 my-auto",
 };
 
@@ -89,7 +89,10 @@ export function Search({ props }) {
     setLocation([parseFloat(filtered.lat), parseFloat(filtered.lon)]);
     setResults([]);
     if (zoom) {
-      map.setZoom(8)} else {map.setZoom(17)};
+      map.setZoom(8);
+    } else {
+      map.setZoom(17);
+    }
     inputField.value = "";
   }
   return (
@@ -122,7 +125,7 @@ function svgFile(color) {
 }
 
 export function markers(plants, locations) {
-  console.log(plants.length)
+  console.log(plants.length);
   return locations.map((location) => {
     const customIcon = new L.divIcon({
       html: svgFile(
@@ -160,8 +163,7 @@ export function markers(plants, locations) {
 export function Legend({ props }) {
   const [plantList, setPlantList] = useState([]);
   const { locationList, setLocationList, initialLocationList } = props;
-  const [showLegend, setShowLegend] = useState(true); 
-
+  const [showLegend, setShowLegend] = useState(true);
 
   useEffect(() => {
     axiosInstance
@@ -180,38 +182,40 @@ export function Legend({ props }) {
   }
 
   return (
-    <> 
-    <form id="selectionForm" className={classes.legend}>
-    <button className={classes.showLegend} onClick={toggleLegend}>{showLegend?"↘️ Hide":"↖️ Show"} filters</button>
-      {plantList.map((plant) => (
-        <div className={classes.legendItem(showLegend)} key={plant.id}>
-          <Checkbox
-            props={{
-              plant,
-              locationList,
-              setLocationList,
-              initialLocationList,
-              plantList,
-            }}
-          />
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="20"
-            viewBox="0 96 960 960"
-            width="20"
-          >
-            <path
-              d="M480.089 566Q509 566 529.5 545.411q20.5-20.588 20.5-49.5Q550 467 529.411 446.5q-20.588-20.5-49.5-20.5Q451 426 430.5 446.589q-20.5 20.588-20.5 49.5Q410 525 430.589 545.5q20.588 20.5 49.5 20.5ZM480 976Q319 839 239.5 721.5T160 504q0-150 96.5-239T480 176q127 0 223.5 89T800 504q0 100-79.5 217.5T480 976Z"
-              stroke="red"
-              fill={`hsl(${
-                (360 / plantList.length) * (plant.id - 1 - plantList.length)
-              }, 50%, 50%)`}
+    <>
+      <form id="selectionForm" className={classes.legend}>
+        <button className={classes.showLegend} onClick={toggleLegend}>
+          {showLegend ? "↘️ Hide" : "↖️ Show"} filters
+        </button>
+        {plantList.map((plant) => (
+          <div className={classes.legendItem(showLegend)} key={plant.id}>
+            <Checkbox
+              props={{
+                plant,
+                locationList,
+                setLocationList,
+                initialLocationList,
+                plantList,
+              }}
             />
-          </svg>
-          <label htmlFor={plant.id}>{plant.common_name_en}</label>
-        </div>
-      ))}
-    </form>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="20"
+              viewBox="0 96 960 960"
+              width="20"
+            >
+              <path
+                d="M480.089 566Q509 566 529.5 545.411q20.5-20.588 20.5-49.5Q550 467 529.411 446.5q-20.588-20.5-49.5-20.5Q451 426 430.5 446.589q-20.5 20.588-20.5 49.5Q410 525 430.589 545.5q20.588 20.5 49.5 20.5ZM480 976Q319 839 239.5 721.5T160 504q0-150 96.5-239T480 176q127 0 223.5 89T800 504q0 100-79.5 217.5T480 976Z"
+                stroke="red"
+                fill={`hsl(${
+                  (360 / plantList.length) * (plant.id - 1 - plantList.length)
+                }, 50%, 50%)`}
+              />
+            </svg>
+            <label htmlFor={plant.id}>{plant.common_name_en}</label>
+          </div>
+        ))}
+      </form>
     </>
   );
 }
@@ -223,7 +227,6 @@ function Checkbox({ props }) {
     setLocationList,
     initialLocationList,
     plantList,
-
   } = props;
   const [checked, setChecked] = useState(true);
 

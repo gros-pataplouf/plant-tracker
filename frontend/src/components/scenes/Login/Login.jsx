@@ -4,10 +4,8 @@ import axiosInstance from "../../../helpers/axios";
 import InputField from "../../elements/InputField";
 import { Modal, handleModal } from "../../elements/Modal";
 import RequestReset from "./Subcomponents/RequestReset";
-
+import Tile from "../../elements/Tile";
 const classes = {
-  wrapper:
-    "flex flex-col justify-between w-[70vw] m-auto p-8 bg-white rounded-xl shadow-lg shadow-slate-500/50 border-solid border-2 border-slate-300 m-4",
   title: "py-8",
   form: "flex flex-col ",
   label: "mt-4 mb-2",
@@ -50,7 +48,7 @@ export default function Login() {
   }
 
   return (
-    <div className={classes.wrapper}>
+    <Tile>
       <h3 className={classes.title}>Log in</h3>
       <form className={classes.form} id="loginForm" onSubmit={submitHandler}>
         <InputField
@@ -100,6 +98,6 @@ export default function Login() {
           👉 Register
         </Link>
       </div>
-    </div>
+    </Tile>
   );
 }

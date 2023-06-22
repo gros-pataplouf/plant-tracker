@@ -29,7 +29,11 @@ export default function LocationDetail() {
   const [location, setLocation] = useState(null);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    const id = window.location.href.replaceAll("/", " ").trim().split(" ").at(-1);
+    const id = window.location.href
+      .replaceAll("/", " ")
+      .trim()
+      .split(" ")
+      .at(-1);
     axiosInstance
       .get(`api/locations/${id}`)
       .then((res) => {
@@ -111,7 +115,11 @@ export default function LocationDetail() {
             <tbody>
               <tr>
                 <td>Name</td>
-                <td><Link to={`/plants/${location.plant.id}`}>{location.plant.common_name_en}</Link></td>
+                <td>
+                  <Link to={`/plants/${location.plant.id}`}>
+                    {location.plant.common_name_en}
+                  </Link>
+                </td>
               </tr>
               <tr>
                 <td>Coordinates</td>

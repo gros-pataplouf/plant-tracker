@@ -31,6 +31,11 @@
     font-size: 62.5%;
     @apply bg-yellow-100 text-slate-950 m-0;
   }
+  body,
+  #root,
+  #root > div {
+    min-height: 100vh;
+  }
 
   h1 {
     font: normal 900 4.8rem/5.6rem "Roboto", sans-serif;
@@ -67,7 +72,6 @@
     @apply block appearance-none w-full mt-2 bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight;
     border-radius: 0.5rem !important;
   }
-
 
   @font-face {
     font-family: "Roboto Slab";

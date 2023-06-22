@@ -82,8 +82,18 @@ class UserList(generics.CreateAPIView):
             try:
                 send_mail(
                 'Welcome to the Planttracker Project',
-                f"Please click on the following link to activate your account:\
-                localhost:5173/activate?{uuid}",
+                f"\
+                Dear Nature Lover🌻!
+                
+                Thank you for participating in the planttracker project.
+                Please click on the following link to activate your account:\
+                https://planttracker.onrender.com/activate?{uuid}.
+                
+                We are looking forward to your contributions as a citizen scientist.
+                
+                Your sincerely, 
+                Your Planttracker Team",
+                
                 'planttrackerapp@gmx.de',
                 [request.data['email']],
                 fail_silently=False,
@@ -121,19 +131,27 @@ class CreateResetLink(generics.CreateAPIView):
         if uuid_serializer.is_valid():
             uuid_serializer.save()
             uuid = uuid_serializer.data['id']
-            print(uuid)
             try:
                 send_mail(
-                'You have requested a reset link',
-                f"Please click on the following link to activate your account:\
-                localhost:5173/#/reset?{uuid}",
+                'Your reset link for the Planttracker Project',
+                f"\
+                Dear Nature Lover🌻!
+                
+                You have requested a password reset link.
+                Please reset your password by clicking on the following link:
+                
+                https://planttracker.onrender.com/#/reset?{uuid}.
+                
+                See you soon on The Planttracker Project!
+                ",
+                
                 'planttrackerapp@gmx.de',
                 [email],
                 fail_silently=False,
                 )
             except Exception as err:
-                return Response("An error occured while sending the reset mail. This may be due to an invalid email address.", status=status.HTTP_500_INTERNAL_SERVER_ERROR)                
-        return Response("Please open your mailbox, we have sent you an password reset link.", status=status.HTTP_201_CREATED)
+                return Response({"email": "An error occured while sending the reset mail. This may be due to an invalid email address."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)                
+        return Response({"success":"Please open your mailbox, we have sent you an password reset link."}, status=status.HTTP_201_CREATED)
 
 
 class ResetPassword(generics.UpdateAPIView):

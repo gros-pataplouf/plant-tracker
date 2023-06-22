@@ -16,7 +16,9 @@ export default function Track() {
         console.error(err);
         window.alert("You need to be logged in to submit data.");
         window.location.href = `#/login?${window.location.href
-          .split("/")
+          .replaceAll("/", " ")
+          .trim()
+          .split(" ")
           .at(-1)}`;
       });
   }, []);
