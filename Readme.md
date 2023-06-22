@@ -11,7 +11,7 @@
 
 Description(Describe by words and images alike)
 ## Technologies & General Design 
-![Architecture](https://github.com/gros-pataplouf/plant-tracker/blob/main/architecture.draw.io.svg?raw=true)
+![Architecture](https://github.com/gros-pataplouf/plant-tracker/blob/main/architecture.drawio.svg?raw=true)
 
 
 ## Challenges & Solutions
