@@ -103,7 +103,7 @@ class UserList(generics.CreateAPIView):
             return Response({"success": "Your account has been created. An email with an activation code has been sent."}, status=status.HTTP_201_CREATED)
         else:
             return Response(user_serializer.errors, status=status.HTTP_403_FORBIDDEN)
-        return Response({error: "An unknown error has occured"}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"error": "An unknown error has occured"}, status=status.HTTP_400_BAD_REQUEST)
 
 class UserActivate(generics.RetrieveAPIView):
     queryset = ActivationUUID.objects.all()
@@ -136,7 +136,7 @@ class CreateResetLink(generics.CreateAPIView):
                 'Your reset link for the Planttracker Project',
                 f"\
                 Dear Nature Lover🌻!
-                
+
                 You have requested a password reset link.
                 Please reset your password by clicking on the following link:
                 
