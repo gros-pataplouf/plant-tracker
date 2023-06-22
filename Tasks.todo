@@ -13,7 +13,6 @@ Features:
     ☐ @critical @easy write a Readme | 3h
     ☐ @critical activation mail and pwd reset mail | 1h
 
-
 Style: Finish styling mobile version:
     ☐ @critical @medium find a coherent design for the tailwind part (rules for naming the const classes keys, order of tailwind classes ) | 4h
     ☐ @critical @easy "elements" first => clean up tailwind first 1 day
@@ -35,6 +34,13 @@ Fixes:
     ☐ expired token with undefined refresh token gets prompted to log in even if view is not restricted
     ✔ Hide legend button too small, add padding @done(23-06-20 23:52)
     ☐ resize image before upload https://www.tutsmake.com/react-js-resize-image-before-upload/
+    ✔ after password reset redirect to /login instead of #/login @done(23-06-22 17:37)
+
+    ☐ password reset: currently no feedback when submitting
+    ☐ commit / test again: typo in activation link url https://planttracker.onrender.com/activate?ae2e6ff0-f3d7-4582-af4e-db1bc28dc327
+    ☐ commit / test again: wrong redirect after activation 
+
+
 
    
     

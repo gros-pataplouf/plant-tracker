@@ -34,11 +34,11 @@ export default function Hero() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setLoading(false);
+    setLoading(true);
 
     setTimeout(() => {
       setLoading(false);
-    }, 5000);
+    }, 20000);
   }, []);
 
   return loading ? (

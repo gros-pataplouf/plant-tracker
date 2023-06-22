@@ -7,10 +7,8 @@ import axiosInstance from "../../../helpers/axios";
 import { testPassword } from "../../../helpers/checks";
 
 import InputField from "../../elements/InputField";
-
+import Tile from "../../elements/Tile";
 const classes = {
-  wrapper:
-    "flex flex-col justify-between w-[90vw] m-auto p-8 bg-white rounded-xl shadow-lg shadow-slate-500/50 border-solid border-2 border-slate-300 m-4",
   title: "py-8",
   form: "flex flex-col ",
   input: "",
@@ -47,7 +45,7 @@ export default function Reset() {
       .then((res) => {
         setMessage("Your password has been reset ✅");
         setTimeout(() => {
-          window.location.href = "login/";
+          window.location.href = "#/login/";
         }, 5000);
       })
       .catch((error) => {
@@ -56,7 +54,7 @@ export default function Reset() {
       });
   }
   return (
-    <div className={classes.wrapper}>
+    <Tile>
       <h3 className={classes.title}>Password reset ✍️</h3>
       {!success && (
         <form
@@ -109,6 +107,6 @@ export default function Reset() {
           👉 Register
         </Link>
       </div>
-    </div>
+    </Tile>
   );
 }

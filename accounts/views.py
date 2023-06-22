@@ -86,7 +86,7 @@ class UserList(generics.CreateAPIView):
                     "Dear Nature Lover🌻!", 
                     "Thank you for participating in the planttracker project.",
                     "Please click on the following link to activate your account:",
-                    f"https://planttracker.onrender.com/activate?{uuid}",
+                    f"https://planttracker.onrender.com/#/activate?{uuid}",
                     "Yours sincerely",
                     "Your Planttracker Team"
                     ]),
