@@ -47,7 +47,6 @@ class LocationList(generics.ListCreateAPIView):
             request.data['author'] = token.payload['user_id']
             # get coordinates out of query dict
             coordinates = json.loads(dict(request.data)['location'][0])['coordinates']
-            print(round(coordinates[0]))
             lon = str(coordinates[0])
             lat = str(coordinates[1])
             url = f"https://nominatim.openstreetmap.org/reverse?format=json&lat={lat}&lon={lon}"
