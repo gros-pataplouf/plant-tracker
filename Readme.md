@@ -62,19 +62,48 @@ One or several images can be uploaded and can be removed again by the user while
 
 
 ## Installation
+All instructions are intended for Linux Fedora and may very on other distribution. 
+### Run the frontend:
+
+To see if you already have [Node.js](https://nodejs.org/en/download) and [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) installed and check the installed version, run the following commands:
+`node -v`
+`npm -v`
+
+Or install node as per instructions [here](https://nodejs.org/en/download/package-manager)
+and the run. 
+`npm install -g npm`
+
+Install dependencies: 
+`cd frontend && npm install`
+### Run the database locally: 
+- Ensure to have docker install. 
+- Pull the official kartoza image 
+`docker pull kartoza/postgis:latest`
+- run the database instance 
+`docker run --name=postgis -d -e POSTGRES_USER=user001 -e POSTGRES_PASS=123456789 -e POSTGRES_DBNAME=gis -p 5432:5432 kartoza/postgis:latest`
+- create a .env file from the sample.env file in the root folder and adapt the variables POSTGRES_USER, POSTGRES_DBNAME, POSTGRES_PASS
+
+### Run the backend: 
+- install python 3.10 on your local machine
+- install pipenv
+`pip install pipenv` 
+- cd to the folder containing Pipfile.lock and install dependencies
+`pipenv install`
+- activate the virtual environment and run the server
+`pipenv shell && python manage.py runserver`
+- if you are starting with an empty PostGIS database, migrate
+`python manage.py makemigrations && python manage.py migrate`
+- create a superuser 
+`python manage.py createsuperuser`
 
 
 ## Thanks & credits
 
 Free Lottie animations used: 
-
-Chinedu Chuks' [Plantix Animation](https://lottiefiles.com/130892-plantix-loader-logo-animation) has been the starting point for our loading page animation.
-[Green loading dots](https://lottiefiles.com/jkd1w8obe5 ) by Ignacio Farías Valladares 
-[Transparent spinner](https://lottiefiles.com/46810-infinite-spinner) by Rav Kumar
-Geolocation animation has been removed from [Lottie](https://lottiefiles.com/), unknown author. 
-
-All texts and information regarding invasive plant species origin from wikipedia and wikimedia, unless mentioned otherwise. 
-
-The axios interceptor code has been borrowed from Very Academy's [Django tutorial series](https://youtu.be/soxd_xdHR0o).
-
-Last but not least, credits to my lovely wife Anja for her insights, design tips and valuable resources. ❤️
+- Chinedu Chuks' [Plantix Animation](https://lottiefiles.com/130892-plantix-loader-logo-animation) has been the starting point for our loading page animation.
+- [Green loading dots](https://lottiefiles.com/jkd1w8obe5 ) by Ignacio Farías Valladares 
+- [Transparent spinner](https://lottiefiles.com/46810-infinite-spinner) by Rav Kumar
+- Geolocation animation has been removed from [Lottie](https://lottiefiles.com/), unknown author. 
+- All texts and information regarding invasive plant species origin from wikipedia and wikimedia, unless mentioned otherwise. 
+- The axios interceptor code has been borrowed from Very Academy's [Django tutorial series](https://youtu.be/soxd_xdHR0o)
+- Last but not least, credits to my lovely wife Anja for her insights, design tips and valuable resources. ❤️

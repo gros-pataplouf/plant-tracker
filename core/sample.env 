@@ -1,0 +1,21 @@
+FRONTEND_URL="your frontend url"
+
+EMAIL_USE_TLS=True
+EMAIL_HOST="the email host you want to use to send mails to users"
+EMAIL_PORT=XXX
+EMAIL_HOST_USER="the email address you want to use to send mails to users"
+EMAIL_HOST_PASSWORD="your email password"
+DB_NAME="the name of your postgres/postgis database"
+DB_USER="your database user"
+DB_PASSWORD="your db password"
+DB_HOST="your DB host"
+DB_PORT="your db port, usually 5432"
+SECRET_KEY="a random secret key"
+
+# If you want to use AWS S3 for image storage
+USE_S3=True
+AWS_ACCESS_KEY_ID="your AWS access key id"
+AWS_SECRET_ACCESS_KEY = "your AWS secret access key"
+AWS_STORAGE_BUCKET_NAME = "the name of your AWS bucket"
+
+
