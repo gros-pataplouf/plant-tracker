@@ -1,5 +1,5 @@
 const classes = {
-  title: "bg-emerald-900 text-yellow-50 p-4",
+  title: "",
   submissions: "scroll",
 };
 

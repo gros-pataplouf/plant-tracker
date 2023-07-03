@@ -6,13 +6,16 @@ import { Modal, handleModal } from "../../elements/Modal";
 import RequestReset from "./Subcomponents/RequestReset";
 import Tile from "../../elements/Tile";
 import AnimationLoading from "../../elements/AnimationLoading";
+import AnimationConfirm from "../../elements/AnimationConfirm";
+
+
 
 const classes = {
   title: "py-8",
   form: "flex flex-col ",
   label: "mt-4 mb-2",
   btn: "btn my-8",
-  success: "font-bold my-[50%]",
+  success: "font-bold",
   failure: "font-bold text-red-800",
   info: "mt-4",
   link: "block pt-2 mr-10 text-emerald-900 font-bold active:decoration-solid",
@@ -37,13 +40,13 @@ export default function Login() {
       .then((res) => {
         localStorage.setItem("planttrackerAccess", res.data.access);
         localStorage.setItem("planttrackerRefresh", res.data.refresh);
-        setIsLoggedIn(true);
-        setMessage("Login successful ✅");
+        setMessage("Login successful.");
         setSubmitting(false);
+        setIsLoggedIn(true);
         if (location.search) {
           return (window.location.href = `#/${location.search.slice(1)}`);
         } else {
-          return (window.location.href = "/");
+          return null;
         }
       })
       .catch((error) => {
@@ -55,8 +58,7 @@ export default function Login() {
 
   return (
     <Tile>
-
-      {!submitting && 
+      {!submitting && !isLoggedIn &&
       <>      <h3 className={classes.title}>Log in</h3>
       <form className={classes.form} id="loginForm" onSubmit={submitHandler}>
       <InputField
@@ -93,10 +95,15 @@ export default function Login() {
       {submitting && <AnimationLoading>
         <p>Logging in...
           </p></AnimationLoading>}
-
-
-      <div>
-        <p className={classes.failure}>{message}</p>
+        
+      {!submitting && isLoggedIn && 
+      <AnimationConfirm>
+         <p className={classes.success}>{message || "You are already logged in."}</p>
+         </AnimationConfirm>
+      }
+    
+        {!submitting && !isLoggedIn && 
+        <div>
 
         <p className={classes.info}> Password forgotten? </p>
         <button className={classes.link} name="openModal" onClick={handleModal}>
@@ -113,7 +120,8 @@ export default function Login() {
           {" "}
           👉 Register
         </Link>
-      </div>
+      </div> }
+      
     </Tile>
   );
 }

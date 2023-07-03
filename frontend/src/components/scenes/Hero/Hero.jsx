@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import Lottie from "lottie-react";
 import plant from "../../../assets/animations/plant.json";
+import Tile from "../../elements/Tile";
 
 const classes = {
-  text: "p-8",
-  wrapper: "absolute h-[80vh]",
   loadingAnimation:
-    "fixed top-0 h-[100vh] w-[100vw] z-30 bg-emerald-950 flex flex-col justify-center",
+    "top-0 h-screen w-screen z-30 bg-emerald-950 flex flex-col justify-center",
   loadingTitle: "text-yellow-100 text-center loadingHero mb-10",
   image: "mx-auto h-20 mt-20",
+  introList: "list-disc [&>li]:ml-6 space-y-6 mt-6 text-3xl"
 };
 
 function Animation() {
@@ -38,7 +38,7 @@ export default function Hero() {
 
     setTimeout(() => {
       setLoading(false);
-    }, 20000);
+    }, 5000);
   }, []);
 
   return loading ? (
@@ -48,31 +48,22 @@ export default function Hero() {
       <Animation />
     </div>
   ) : (
-    <div className={classes.wrapper}>
+    <Tile >
       <div>
-        <h3>Why the planttracker app</h3>
+        <h3>Welcome to the Planttracker App</h3>
+        <ul className={classes.introList}>
+          <li>Learn about invasive plant species and their impact on native ecosystems</li>
+          <li>Discover the submissions of fellow users  </li>
+          <li>Become a citizen scientist and inventory invasive plant species by uploading data and photos through our live map.</li>
+          <li>Help protectionists and scientists identify areas at risk </li>
+          <li>Make your outdoor activities more fun  </li>
+        </ul>
+
+
         <p>
-          Citizen scientists can play a vital role in managing invasive plant
-          species by using the planttracker app to inventory their distribution
-          and abundance. Invasive species can have severe ecological impacts on
-          native ecosystems, and having accurate information about their
-          distribution is critical to managing them effectively. The
-          planttracker app allows citizen scientists to easily collect and share
-          information about the location and abundance of invasive plant
-          species. This includes uploading photos and location data of invasive
-          plants, which can then be used to create distribution maps and track
-          changes over time. By using citizen scientists to inventory invasive
-          plant species, a much larger area can be covered than would be
-          possible with only professional scientists. Involving citizen
-          scientists in the inventory process can also raise public awareness
-          about the issue of invasive species. Through participation, citizens
-          can learn about the impact of invasive species on native ecosystems
-          and become more invested in efforts to manage them. Additionally, the
-          planttracker app can help prioritize management efforts by identifying
-          areas where invasive species are most abundant or where native
-          ecosystems are at high risk of invasion.
+
         </p>
       </div>
-    </div>
+    </Tile>
   );
 }

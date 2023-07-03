@@ -25,17 +25,7 @@ export default function Track() {
 
   if (display === "map") {
     return <Map props={{ location, setLocation, setDisplay }} />;
-  } else if (display === "form") {
+  } else {
     return <Submit props={{ location, setDisplay }} />;
-  } else if (display === "success") {
-    return (
-      <div>
-        <p>Thanks for submitting your data ✅</p>
-        <p>
-          View submission:
-          <Link to></Link>
-        </p>
-      </div>
-    );
-  }
+  } 
 }

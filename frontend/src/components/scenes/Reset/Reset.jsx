@@ -19,7 +19,7 @@ const classes = {
   tooltipSpan: "relative",
   tooltipDiv:
     "absolute w-[80vw] bg-black top-4 p-4 border-spacing-2 border-2 rounded-3xl text-yellow-50 hidden m-4 leading-none z-10",
-  btn: "btn my-8",
+  btn: "btn my-8 w-content",
   success: "font-bold my-[50%]",
   failure: "font-bold text-red-800",
   link: "block pt-2 mr-10 text-emerald-900 font-bold active:decoration-solid",
@@ -88,7 +88,7 @@ export default function Reset() {
           />
 
           <button className={classes.btn} type="submit">
-            Reset password
+            Save
           </button>
           <p className={classes.errorSpan}>{incompleteErr}</p>
         </form>

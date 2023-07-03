@@ -13,7 +13,10 @@ import {
 
 const classes = {
   mapContainer: "border-mint/99 border-2 rounded-md m-4",
-  btn: "btn my-4",
+  btn: "btn block my-4 m-auto",
+  wrapper: "mt-40",
+  explainer: "font-bold text-3xl px-4"
+
 };
 
 function Animation() {
@@ -86,7 +89,8 @@ export default function TrackMap({ props }) {
     userDecisionTimeout: 10000,
   });
   return !isGeolocationAvailable || !isGeolocationEnabled || coords ? (
-    <>
+    <div className={classes.wrapper}>
+      <p className={classes.explainer}>Drag the map under the cursor or search an address.</p>
       <Map
         props={{
           location,
@@ -98,7 +102,7 @@ export default function TrackMap({ props }) {
         }}
       />
       <ContinueButton props={{ location, setDisplay }} />
-    </>
+    </div>
   ) : (
     <Animation />
   );

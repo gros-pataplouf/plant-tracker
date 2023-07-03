@@ -31,6 +31,7 @@ export default function Logout({ props }) {
         localStorage.removeItem("planttrackerAccess");
         localStorage.removeItem("planttrackerRefresh");
         setIsLoggedIn(false);
+        window.location.href = "#/login/"
       })
       .catch((err) => {
         console.error(err);
@@ -38,7 +39,7 @@ export default function Logout({ props }) {
         localStorage.removeItem("planttrackerRefresh");
         setIsLoggedIn(false);
         setLoading(false);
-        window.location.href = "/";
+        window.alert("An error has occured logging you out. Please refresh the page and try again if you are still logged in.")
       });
   }
 
