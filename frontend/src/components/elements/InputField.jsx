@@ -7,12 +7,14 @@ import { testMail, testPassword } from "../../helpers/checks";
 const classes = {
   passwordWrapper:
     "flex relative [&>button]:absolute [&>button]:top-2 [&>button]:right-2",
-  input: (err) => `grow ${err && "bg-red-100"}`,
-  visibilitySvg: "h-6",
-  tooltipIcon: "inline w-7 align-top",
-  tooltipSpan: "relative",
+  input: (err) => `grow mb-4 h-16 text-2xl ${err && "bg-red-100"}`,
+  label: "relative [&>span]:ml-2 [&>span]:text-3xl mb-2 text-3xl",
+  visibilitySvg: "w-8",
+  tooltipIcon: "inline w-8 align-top",
   tooltipDiv:
-    "absolute w-[80vw] bg-black top-4 p-4 border-spacing-2 border-2 rounded-3xl text-yellow-50 hidden m-4 leading-none z-20",
+    "js__tooltip hidden absolute w-[80vw] bg-black -top-24 m-auto p-6 -translate-x-2/4 left-2/4 border-spacing-2 border-2 rounded-lg text-yellow-50 leading-none z-20",
+  tooltipTriangle: "absolute z-50 m-auto -translate-x-2/4 translate-y-4 left-2/4 w-0 h-0 border-t-[20px] border-t-black border-x-[20px] border-x-transparent border-solid", 
+  close: "ml-20"
 };
 
 const checks = {
@@ -65,10 +67,12 @@ export default function InputField({ props }) {
   }
 
   function toggleTooltip(e) {
-    const tooltip = e.target.nextElementSibling || e.target;
-    tooltip.classList.toggle("hidden");
+    // discarding all open tooltips by clicking anywhere is defined on App.jsx
+    e.stopPropagation();
+    if (e.target.nextElementSibling && e.target.nextElementSibling.getAttribute("role") === "tooltip"){
+      e.target.nextElementSibling.classList.toggle("hidden");
+    }
   }
-
   return (
     <>
       <label className={classes.label} htmlFor={id}>
@@ -76,13 +80,17 @@ export default function InputField({ props }) {
         {tooltip && err && (
           <span className={classes.errorSpan}>
             <span
-              className={classes.tooltipSpan}
               onTouchStart={toggleTooltip}
               onClick={toggleTooltip}
             >
               <img className={classes.tooltipIcon} src={info} />
-              <div className={classes.tooltipDiv} role="tooltip" id="tooltip">
+              <div className={classes.tooltipDiv} role="tooltip" >
+              <div>
+                <p>
                 {err}
+                </p>
+              <div className={classes.tooltipTriangle}></div>
+              </div>
               </div>
             </span>
           </span>

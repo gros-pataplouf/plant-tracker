@@ -3,7 +3,7 @@ import cancel from "../../assets/icons/cancel.svg";
 const classes = {
   modal: "p-0 backdrop:bg-gray-700 backdrop:bg-opacity-90 rounded-lg w-[85vw]",
   wrapper: "p-8",
-  icon: "inline",
+  icon: "-ml-4 -mt-4",
 };
 
 export function handleModal(e) {

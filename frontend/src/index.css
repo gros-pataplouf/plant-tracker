@@ -158,6 +158,6 @@
 
 @layer components {
   .btn {
-    @apply rounded-full m-3 p-4 w-6/12 mx-auto content-center text-yellow-50 bg-emerald-800  active:bg-emerald-950  active:shadow-green-950/50 active:text-white;
+    @apply rounded-full m-3 p-6 w-6/12 mx-auto content-center text-yellow-50 bg-emerald-800  active:bg-emerald-950  active:shadow-green-950/50 active:text-white;
   }
 }

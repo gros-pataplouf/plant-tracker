@@ -3,7 +3,7 @@ import axiosInstance from "../../../../helpers/axios";
 import InputField from "../../../elements/InputField";
 
 const classes = {
-  title: "py-8",
+  title: "py-8 font-bold",
   form: "flex flex-col ",
   btn: "btn my-8",
 };
@@ -35,7 +35,7 @@ export default function RequestReset() {
   }
   return (
     <div>
-      <h3 className={classes.title}>Request a password reset link</h3>
+      <h4 className={classes.title}>Request a password reset link</h4>
       <form className={classes.form} id="getResetLink" onSubmit={getResetLink}>
         <InputField
           props={{
