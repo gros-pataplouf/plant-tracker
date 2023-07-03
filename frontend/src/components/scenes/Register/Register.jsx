@@ -5,11 +5,11 @@ import AnimationLoading from "../../elements/AnimationLoading";
 
 const classes = {
   wrapper:
-    "flex flex-col justify-between m-auto p-8 rounded-xl shadow-lg shadow-slate-500/50 border-solid border-2 border-slate-300 m-4 bg-white",
+    "flex flex-col justify-between min-h-[30vh] max-h-4/5 m-auto p-8 rounded-xl shadow-lg shadow-slate-500/50 border-solid border-2 border-slate-300 m-4 bg-white",
   title: "py-8",
   form: "flex flex-col ",
   btn: "btn my-8",
-  success: "font-bold my-[50%]",
+  success: "font-bold mb-20",
   failure: "font-bold",
 };
 

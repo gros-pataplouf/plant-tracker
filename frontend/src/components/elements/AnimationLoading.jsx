@@ -3,7 +3,7 @@ import loading from "../../assets/animations/dots-loading.json";
 
 const classes = {
   loadingContainer:
-    "flex flex-col items-center justify-center text-emerald-950 m-auto",
+    "flex flex-col items-center justify-center text-emerald-950 m-auto [&>*]:font-bold [&>*]:text-3xl",
 };
 
 export default function AnimationLoading({ children }) {

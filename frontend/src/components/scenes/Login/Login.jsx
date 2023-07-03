@@ -5,6 +5,8 @@ import InputField from "../../elements/InputField";
 import { Modal, handleModal } from "../../elements/Modal";
 import RequestReset from "./Subcomponents/RequestReset";
 import Tile from "../../elements/Tile";
+import AnimationLoading from "../../elements/AnimationLoading";
+
 const classes = {
   title: "py-8",
   form: "flex flex-col ",
@@ -19,6 +21,7 @@ const classes = {
 export default function Login() {
   const [isLoggedIn, setIsLoggedIn] = useOutletContext();
   const [message, setMessage] = useState();
+  const [submitting, setSubmitting] = useState(false);
   const location = useLocation();
   const [formValid, setFormValid] = useState(false);
   function submitHandler(e) {
@@ -27,6 +30,7 @@ export default function Login() {
       setMessage("Cannot submit empty form. ⛔");
       return null;
     }
+    setSubmitting(true);
 
     axiosInstance
       .post("accounts/token/", document.querySelector("#loginForm"))
@@ -35,6 +39,7 @@ export default function Login() {
         localStorage.setItem("planttrackerRefresh", res.data.refresh);
         setIsLoggedIn(true);
         setMessage("Login successful ✅");
+        setSubmitting(false);
         if (location.search) {
           return (window.location.href = `#/${location.search.slice(1)}`);
         } else {
@@ -43,42 +48,53 @@ export default function Login() {
       })
       .catch((error) => {
         console.error(error.response);
+        setSubmitting(false);
         setMessage("Login unsuccessful ⛔");
       });
   }
 
   return (
     <Tile>
-      <h3 className={classes.title}>Log in</h3>
+
+      {!submitting && 
+      <>      <h3 className={classes.title}>Log in</h3>
       <form className={classes.form} id="loginForm" onSubmit={submitHandler}>
-        <InputField
-          props={{
-            label: "Username",
-            tooltip: false,
-            id: "username",
-            placeholder: "required",
-            type: "text",
-            tests: ["notEmpty"],
-            setFormValid,
-          }}
-        />
+      <InputField
+        props={{
+          label: "Username",
+          tooltip: false,
+          id: "username",
+          placeholder: "required",
+          type: "text",
+          tests: ["notEmpty"],
+          setFormValid,
+        }}
+      />
 
-        <InputField
-          props={{
-            label: "Password",
-            tooltip: true,
-            id: "password",
-            placeholder: "required",
-            type: "password",
-            tests: ["notEmpty"],
-            setFormValid,
-          }}
-        />
+      <InputField
+        props={{
+          label: "Password",
+          tooltip: true,
+          id: "password",
+          placeholder: "required",
+          type: "password",
+          tests: ["notEmpty"],
+          setFormValid,
+        }}
+      />
 
-        <button className={classes.btn} type="submit">
-          Submit
-        </button>
-      </form>
+      <button className={classes.btn} type="submit">
+        Submit
+      </button>
+    </form>
+    </>
+      }
+
+      {submitting && <AnimationLoading>
+        <p>Logging in...
+          </p></AnimationLoading>}
+
+
       <div>
         <p className={classes.failure}>{message}</p>
 
