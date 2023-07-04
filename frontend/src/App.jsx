@@ -4,7 +4,7 @@ import Header from "./components/elements/Header";
 
 const classes = {
   wrapper: "relative",
-  main: "absolute -translate-x-2/4 -translate-y-2/4 left-2/4 top-2/4 flex flex-col w-screen overflow-x-clip",
+  main: "absolute top-[10vh] flex flex-col w-screen overflow-x-clip",
 };
 
 function App() {

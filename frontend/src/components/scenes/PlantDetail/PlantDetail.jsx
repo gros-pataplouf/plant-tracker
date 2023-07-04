@@ -3,9 +3,11 @@ import axiosInstance from "../../../helpers/axios";
 import AnimationLoading from "../../elements/AnimationLoading";
 import Carousel from "../../elements/Carousel";
 import { Link } from "react-router-dom";
+import Tile from "../../elements/Tile";
+import TileXL from "../../elements/TileXL";
 
 const classes = {
-  wrapper: "",
+  wrapper: "flex flex-col justify-center h-[90vh]",
   emblaSlide:
     "group/item flex-[0_0_95%] border-r-white min-w-0 space-y-2 p-2 bg-yellow-50 rounded-xl shadow-lg shadow-slate-500/50 border-solid border-2 border-slate-300 m-8",
   title: "px-2 text-emerald-800",
@@ -43,9 +45,10 @@ export default function PlantList() {
   }, []);
 
   return (
-    <div className={classes.wrapper}>
+    <div>
       {plant ? (
-        <>
+        
+        <TileXL>
           <h2 className={classes.title}>{plant.common_name_en}</h2>
           <h4>Description</h4>
           <p>{plant.description_en}</p>
@@ -102,9 +105,15 @@ export default function PlantList() {
                   );
                 })}
           </ul>
-        </>
+        </TileXL>
       ) : (
-        <AnimationLoading>Getting data from the server...</AnimationLoading>
+        <div className={classes.wrapper}>
+          <Tile>
+          <AnimationLoading>
+          <p>Getting data from the server...</p>
+        </AnimationLoading>
+          </Tile>
+        </div>
       )}
     </div>
   );

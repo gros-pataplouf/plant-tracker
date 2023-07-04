@@ -6,9 +6,9 @@ import ChangePassword from "./Subcomponents/ChangePassword";
 import DeleteAccount from "./Subcomponents/DeleteAccount";
 import Submissions from "./Subcomponents/Submissions";
 import UpdateEmail from "./Subcomponents/UpdateEmail";
-import Tile from "../../elements/Tile";
+import ScrollTile from "../../elements/TileXL";
+
 const classes = {
-  account: "",
   title: "",
   paragraph: "",
   button: "",
@@ -55,8 +55,8 @@ export default function Account() {
       <p>Loading...</p>
     </AnimationLoading>
   ) : (
-    <div className="mt-96">
-      <Tile>
+    <div>
+      <ScrollTile>
         <h3 className={classes.title}>My account settings</h3>
         <div>
           <p className={classes.paragraph}>Username</p>
@@ -105,10 +105,10 @@ export default function Account() {
             </Modal>
           </div>
         </div>
-      </Tile>
-      <Tile>
+      </ScrollTile>
+      <ScrollTile>
         <Submissions props={{ submissions }} />
-      </Tile>
+      </ScrollTile>
     </div>
   );
 }

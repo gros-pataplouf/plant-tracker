@@ -8,10 +8,11 @@ import Carousel from "../../../elements/Carousel";
 import Tile from "../../../elements/Tile";
 
 const classes = {
+  wrapper: "h-[90vh] flex flex-col justify-center",
   title: "pt-4 text-emerald-800",
   emblaSlide:
     "emblaSlide relative border-b-8 mx-8 border-white h-[20vh] flex-[0_0_100%] pb-4 bg-yellow-50 overflow-hidden rounded-xl shadow-lg shadow-slate-500/50 border-solid border-2 border-slate-300",
-  form: "flex flex-col ",
+  form: "flex flex-col",
   photoBtn:
     "text-slate-950 pr-[26px]  whitespace-nowrap block font-bold rounded-lg w-min p-2 px-4  bg-lime/50 border-2 border-emerald-800  mt-6 ml-0 [&>img]:inline-block",
   img: "object-fill",
@@ -89,6 +90,7 @@ export default function TrackForm({ props }) {
   }
 
   return (
+    <div className={classes.wrapper}>
     <Tile>
       {!submitting && !success && (
         <form
@@ -185,6 +187,7 @@ export default function TrackForm({ props }) {
         <AnimationLoading>
           <h3>Submitting...</h3>
         </AnimationLoading>
+
       )}
       {message && success && (
         <div class={classes.successDiv}>
@@ -198,5 +201,6 @@ export default function TrackForm({ props }) {
         </div>
       )}
     </Tile>
+    </div>
   );
 }

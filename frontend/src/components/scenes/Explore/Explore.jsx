@@ -5,9 +5,14 @@ import { leafletLowZIndex } from "../../../helpers/leafletHelpers";
 import { Legend, markers, Search } from "../../elements/MapComponents";
 import AnimationLoading from "../../elements/AnimationLoading";
 import { CenterAutomatically } from "../../elements/MapComponents";
+import Tile from "../../elements/Tile";
+import TileXL from "../../elements/TileXL";
+
 
 const classes = {
   mapContainer: "border-mint/99 border-2 rounded-lg h-[80vh] m-4",
+  wrapper: "flex flex-col justify-center h-[90vh]",
+  title: "px-4"
 };
 
 export default function Explore() {
@@ -37,12 +42,18 @@ export default function Explore() {
   }, []);
 
   return loading ? (
-    <AnimationLoading>
+    <div className={classes.wrapper}>
+      <Tile>
+      <AnimationLoading>
       <p>Getting data from the server...</p>
     </AnimationLoading>
+      </Tile>
+    </div>
+
   ) : (
-    <>
-      <h3>Discover invasive plant species near you</h3>
+    <div className={classes.wrapper}>
+    <TileXL>
+      <h1 className={classes.title}>Discover invasive plant species near you</h1>
 
       <MapContainer
         className={classes.mapContainer}
@@ -79,6 +90,7 @@ export default function Explore() {
         />
         <CenterAutomatically location={location} />
       </MapContainer>
-    </>
+    </TileXL>
+    </div>
   );
 }

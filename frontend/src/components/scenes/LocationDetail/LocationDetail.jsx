@@ -6,9 +6,11 @@ import { MapContainer, Marker, TileLayer } from "react-leaflet";
 import { leafletLowZIndex, convertGPS } from "../../../helpers/leafletHelpers";
 import AnimationLoading from "../../elements/AnimationLoading";
 import { Link } from "react-router-dom";
+import Tile from "../../elements/Tile";
+import ScrollTile from "../../elements/TileXL";
 
 const classes = {
-  wrapper: "h-[80vh]",
+  wrapper: "flex flex-col justify-center h-[90vh]",
   embla: "overflow-hidden",
   emblaContainer: "flex ",
   emblaSlide:
@@ -21,8 +23,8 @@ const classes = {
   mapContainer: "border-mint/99 border-2 rounded-md m-4 h-[95%]",
   locationImage: "h-full object-contain",
   table:
-    "bg-emerald-900 w-[95vw] p-8 mx-auto text-8 font-bold rounded-md [&>tbody>tr>td]:p-2 text-white [&>tbody>tr]:p-2 text-white",
-  tableCell: "p-6 text-white",
+    "w-[95%] p-2 mx-auto text-8 rounded-md [&>tbody>tr>td]:p-2 [&>tbody>tr]:p-2 text-white bg-emerald-900 font-bold",
+  tableCell: "p-2",
 };
 
 export default function LocationDetail() {
@@ -58,11 +60,16 @@ export default function LocationDetail() {
   }, []);
 
   return loading ? (
+    <div className={classes.wrapper}>
+    <Tile>
     <AnimationLoading>
       <h3>Loading...</h3>
     </AnimationLoading>
+    </Tile>
+    </div>
   ) : (
     <div className={classes.wrapper}>
+      <ScrollTile>
       <h2 className={classes.title}>Location detail</h2>
       {location && (
         <>
@@ -153,6 +160,7 @@ export default function LocationDetail() {
           </table>
         </>
       )}
+    </ScrollTile>
     </div>
   );
 }
