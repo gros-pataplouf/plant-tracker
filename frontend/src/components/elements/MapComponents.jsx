@@ -125,7 +125,6 @@ function svgFile(color) {
 }
 
 export function markers(plants, locations) {
-  console.log(plants.length);
   return locations.map((location) => {
     const customIcon = new L.divIcon({
       html: svgFile(
@@ -231,22 +230,27 @@ function Checkbox({ props }) {
   const [checked, setChecked] = useState(true);
 
   useEffect(() => {
-    const inputBoxes = document.querySelectorAll("input");
+    const inputBoxes = document.querySelectorAll("input[type=checkbox]");
     let userChoices = [];
     for (let box of inputBoxes) {
-      userChoices.push(box.checked);
+      let id = parseInt(box.getAttribute("id"));
+      if (box.checked) {
+        userChoices.push(id);
+      }
     }
 
-    setLocationList(
-      initialLocationList.filter((loc) => {
-        return userChoices[(loc.plant % plantList.length) + 1];
-      })
-    );
+    let newList = initialLocationList.filter((loc) => {
+      return userChoices.some((elt) => {
+        return elt === loc.plant;
+      });
+    });
+
+    setLocationList(newList);
+    // );
   }, [checked]);
 
   function handleCheckbox() {
     setChecked(!checked);
-    console.log(locationList, initialLocationList);
     return null;
   }
 

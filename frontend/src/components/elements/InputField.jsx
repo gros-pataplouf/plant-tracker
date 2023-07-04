@@ -13,8 +13,9 @@ const classes = {
   tooltipIcon: "inline w-8 align-top",
   tooltipDiv:
     "js__tooltip hidden absolute w-[80vw] bg-black -top-24 m-auto p-6 -translate-x-2/4 left-2/4 border-spacing-2 border-2 rounded-lg text-yellow-50 leading-none z-20",
-  tooltipTriangle: "absolute z-50 m-auto -translate-x-2/4 translate-y-4 left-2/4 w-0 h-0 border-t-[20px] border-t-black border-x-[20px] border-x-transparent border-solid", 
-  close: "ml-20"
+  tooltipTriangle:
+    "absolute z-50 m-auto -translate-x-2/4 translate-y-4 left-2/4 w-0 h-0 border-t-[20px] border-t-black border-x-[20px] border-x-transparent border-solid",
+  close: "ml-20",
 };
 
 const checks = {
@@ -69,7 +70,10 @@ export default function InputField({ props }) {
   function toggleTooltip(e) {
     // discarding all open tooltips by clicking anywhere is defined on App.jsx
     e.stopPropagation();
-    if (e.target.nextElementSibling && e.target.nextElementSibling.getAttribute("role") === "tooltip"){
+    if (
+      e.target.nextElementSibling &&
+      e.target.nextElementSibling.getAttribute("role") === "tooltip"
+    ) {
       e.target.nextElementSibling.classList.toggle("hidden");
     }
   }
@@ -79,18 +83,13 @@ export default function InputField({ props }) {
         {label}
         {tooltip && err && (
           <span className={classes.errorSpan}>
-            <span
-              onTouchStart={toggleTooltip}
-              onClick={toggleTooltip}
-            >
+            <span onTouchStart={toggleTooltip} onClick={toggleTooltip}>
               <img className={classes.tooltipIcon} src={info} />
-              <div className={classes.tooltipDiv} role="tooltip" >
-              <div>
-                <p>
-                {err}
-                </p>
-              <div className={classes.tooltipTriangle}></div>
-              </div>
+              <div className={classes.tooltipDiv} role="tooltip">
+                <div>
+                  <p>{err}</p>
+                  <div className={classes.tooltipTriangle}></div>
+                </div>
               </div>
             </span>
           </span>

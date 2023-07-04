@@ -20,7 +20,7 @@ const classes = {
   input: "invalid:bg-red-200",
   successDiv: "flex flex-col justify-center items-center min-h-[30vh]",
   successMessage: "font-bold text-3xl text-center p-4",
-  successLink: "text-3xl p-4 font-bold text-center text-emerald-900 underline"
+  successLink: "text-3xl p-4 font-bold text-center text-emerald-900 underline",
 };
 
 export default function TrackForm({ props }) {
@@ -188,9 +188,13 @@ export default function TrackForm({ props }) {
       )}
       {message && success && (
         <div class={classes.successDiv}>
-        <p class={classes.successMessage}>Thanks for submitting your observations ✅</p>
-        <p ></p>
-          <Link class={classes.successLink} to={`/locations/${message}`}>View submission</Link>
+          <p class={classes.successMessage}>
+            Thanks for submitting your observations ✅
+          </p>
+          <p></p>
+          <Link class={classes.successLink} to={`/locations/${message}`}>
+            View submission
+          </Link>
         </div>
       )}
     </Tile>

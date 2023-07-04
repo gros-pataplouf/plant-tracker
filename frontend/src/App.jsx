@@ -12,12 +12,13 @@ function App() {
     Boolean(localStorage.getItem("planttrackerAccess"))
   );
   function discardTooltips(e) {
-    const openTooltips = document.querySelectorAll("div[role=tooltip]:not(.hidden)");
+    const openTooltips = document.querySelectorAll(
+      "div[role=tooltip]:not(.hidden)"
+    );
     openTooltips.forEach((elt) => {
       elt.classList.toggle("hidden");
-    })
-
-  };
+    });
+  }
   return (
     <div className={classes.wrapper} onClick={discardTooltips}>
       <Header props={{ isLoggedIn, setIsLoggedIn }} />

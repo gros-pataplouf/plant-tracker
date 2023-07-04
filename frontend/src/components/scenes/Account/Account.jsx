@@ -13,14 +13,12 @@ const classes = {
   paragraph: "",
   button: "",
   dangerbutton: "",
-  cancelbutton:
-    "",
+  cancelbutton: "",
   dangertext: "",
   message: "",
   buttonwrapper: "flex space-4",
-  dangercancelbutton:
-    "",
-  };
+  dangercancelbutton: "",
+};
 
 export default function Account() {
   const [user, setUser] = useState();
@@ -58,59 +56,59 @@ export default function Account() {
     </AnimationLoading>
   ) : (
     <div className="mt-96">
-    <Tile >
-      <h3 className={classes.title}>My account settings</h3>
-      <div>
-        <p className={classes.paragraph}>Username</p>
-        {user && <p>{user.username}</p>}
-      </div>
-      {/* Email */}
-      <div>
-        <p className={classes.paragraph}>Email</p>
-        {user && <p className={classes.paragraph}>{user.email}</p>}
-        <button
-          className={classes.button}
-          name="openModal"
-          onClick={handleModal}
-        >
-          Update
-        </button>
-        {/* Change email */}
-        <Modal>
-          <UpdateEmail props={{ changes, setChanges }} />
-        </Modal>
-      </div>
-      {/* Password change */}
-      <div>
-        <button
-          className={classes.button}
-          onClick={handleModal}
-          name="openModal"
-        >
-          Change password
-        </button>
-        <Modal>
-          <ChangePassword />
-        </Modal>
-
-        {/* Delete account */}
+      <Tile>
+        <h3 className={classes.title}>My account settings</h3>
         <div>
+          <p className={classes.paragraph}>Username</p>
+          {user && <p>{user.username}</p>}
+        </div>
+        {/* Email */}
+        <div>
+          <p className={classes.paragraph}>Email</p>
+          {user && <p className={classes.paragraph}>{user.email}</p>}
           <button
             className={classes.button}
             name="openModal"
             onClick={handleModal}
           >
-            Delete account
+            Update
           </button>
+          {/* Change email */}
           <Modal>
-            <DeleteAccount />
+            <UpdateEmail props={{ changes, setChanges }} />
           </Modal>
         </div>
-      </div>
+        {/* Password change */}
+        <div>
+          <button
+            className={classes.button}
+            onClick={handleModal}
+            name="openModal"
+          >
+            Change password
+          </button>
+          <Modal>
+            <ChangePassword />
+          </Modal>
+
+          {/* Delete account */}
+          <div>
+            <button
+              className={classes.button}
+              name="openModal"
+              onClick={handleModal}
+            >
+              Delete account
+            </button>
+            <Modal>
+              <DeleteAccount />
+            </Modal>
+          </div>
+        </div>
       </Tile>
       <Tile>
-      <Submissions props={{ submissions }} />
+        <Submissions props={{ submissions }} />
       </Tile>
-      </div>
+    </div>
   );
 }

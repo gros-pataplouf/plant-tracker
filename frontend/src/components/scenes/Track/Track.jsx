@@ -27,5 +27,5 @@ export default function Track() {
     return <Map props={{ location, setLocation, setDisplay }} />;
   } else {
     return <Submit props={{ location, setDisplay }} />;
-  } 
+  }
 }

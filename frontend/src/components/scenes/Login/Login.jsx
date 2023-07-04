@@ -8,8 +8,6 @@ import Tile from "../../elements/Tile";
 import AnimationLoading from "../../elements/AnimationLoading";
 import AnimationConfirm from "../../elements/AnimationConfirm";
 
-
-
 const classes = {
   title: "py-8",
   form: "flex flex-col ",
@@ -58,70 +56,83 @@ export default function Login() {
 
   return (
     <Tile>
-      {!submitting && !isLoggedIn &&
-      <>      <h3 className={classes.title}>Log in</h3>
-      <form className={classes.form} id="loginForm" onSubmit={submitHandler}>
-      <InputField
-        props={{
-          label: "Username",
-          tooltip: false,
-          id: "username",
-          placeholder: "required",
-          type: "text",
-          tests: ["notEmpty"],
-          setFormValid,
-        }}
-      />
+      {!submitting && !isLoggedIn && (
+        <>
+          {" "}
+          <h3 className={classes.title}>Log in</h3>
+          <form
+            className={classes.form}
+            id="loginForm"
+            onSubmit={submitHandler}
+          >
+            <InputField
+              props={{
+                label: "Username",
+                tooltip: false,
+                id: "username",
+                placeholder: "required",
+                type: "text",
+                tests: ["notEmpty"],
+                setFormValid,
+              }}
+            />
 
-      <InputField
-        props={{
-          label: "Password",
-          tooltip: true,
-          id: "password",
-          placeholder: "required",
-          type: "password",
-          tests: ["notEmpty"],
-          setFormValid,
-        }}
-      />
+            <InputField
+              props={{
+                label: "Password",
+                tooltip: true,
+                id: "password",
+                placeholder: "required",
+                type: "password",
+                tests: ["notEmpty"],
+                setFormValid,
+              }}
+            />
 
-      <button className={classes.btn} type="submit">
-        Submit
-      </button>
-    </form>
-    </>
-      }
+            <button className={classes.btn} type="submit">
+              Submit
+            </button>
+          </form>
+        </>
+      )}
 
-      {submitting && <AnimationLoading>
-        <p>Logging in...
-          </p></AnimationLoading>}
-        
-      {!submitting && isLoggedIn && 
-      <AnimationConfirm>
-         <p className={classes.success}>{message || "You are already logged in."}</p>
-         </AnimationConfirm>
-      }
-    
-        {!submitting && !isLoggedIn && 
+      {submitting && (
+        <AnimationLoading>
+          <p>Logging in...</p>
+        </AnimationLoading>
+      )}
+
+      {!submitting && isLoggedIn && (
+        <AnimationConfirm>
+          <p className={classes.success}>
+            {message || "You are already logged in."}
+          </p>
+        </AnimationConfirm>
+      )}
+
+      {!submitting && !isLoggedIn && (
         <div>
+          <p className={classes.info}> Password forgotten? </p>
+          <button
+            className={classes.link}
+            name="openModal"
+            onClick={handleModal}
+          >
+            {" "}
+            👉 Reset password
+          </button>
 
-        <p className={classes.info}> Password forgotten? </p>
-        <button className={classes.link} name="openModal" onClick={handleModal}>
-          {" "}
-          👉 Reset password
-        </button>
+          <Modal>
+            <RequestReset />
+          </Modal>
 
-        <Modal>
-          <RequestReset />
-        </Modal>
-
-        <p className={classes.info}>No account yet?</p>
-        <Link className={classes.link} to="/register">
-          {" "}
-          👉 Register
-        </Link>
-      </div> }
-      
+          <p className={classes.info}>No account yet?</p>
+          <Link className={classes.link} to="/register">
+            {" "}
+            👉 Register
+          </Link>
+        </div>
+      )}
     </Tile>
   );
 }
