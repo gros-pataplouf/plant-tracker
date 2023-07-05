@@ -16,7 +16,6 @@ import Reset from "./components/scenes/Reset/Reset";
 import Track from "./components/scenes/Track/Track";
 import "./index.css";
 
-window.scrollTo(0, 1);
 
 
 const router = createHashRouter([
