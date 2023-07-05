@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "./components/elements/Header";
 
 const classes = {
@@ -11,6 +11,10 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(
     Boolean(localStorage.getItem("planttrackerAccess"))
   );
+
+  useEffect(() => {
+    window.scrollTo(0, 1);
+  }, [])
   function discardTooltips(e) {
     const openTooltips = document.querySelectorAll(
       "div[role=tooltip]:not(.hidden)"
