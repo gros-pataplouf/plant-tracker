@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 #map {
-  height: 70vh;
+  height: 70svh;
 }
 
 #smallmap {
@@ -34,7 +34,7 @@
   body,
   #root,
   #root > div {
-    min-height: 100vh;
+    min-height: 100svh;
   }
 
   h1 {
