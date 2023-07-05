@@ -12,9 +12,6 @@ function App() {
     Boolean(localStorage.getItem("planttrackerAccess"))
   );
 
-  useEffect(() => {
-    window.scrollTo(0, 1);
-  }, [])
   function discardTooltips(e) {
     const openTooltips = document.querySelectorAll(
       "div[role=tooltip]:not(.hidden)"
