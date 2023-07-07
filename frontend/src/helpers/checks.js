@@ -17,3 +17,12 @@ export function testPassword(password) {
     re4.exec(password)
   );
 }
+
+export function validateForm(e, message) {
+  const invalidFields = e.target.querySelectorAll("input[invalid]");
+  if (invalidFields.length) {
+    window.alert(message);
+    return false;
+  } 
+  return true;
+  }

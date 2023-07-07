@@ -1,13 +1,10 @@
 import { useState } from "react";
-import { Link, useLocation, useOutletContext } from "react-router-dom";
-import info from "../../../assets/icons/info.svg";
-import visibility from "../../../assets/icons/visibility.svg";
-import visibility_off from "../../../assets/icons/visibility_off.svg";
+import { Link } from "react-router-dom";
 import axiosInstance from "../../../helpers/axios";
-import { testPassword } from "../../../helpers/checks";
-
 import InputField from "../../elements/InputField";
 import Tile from "../../elements/Tile";
+import { validateForm } from "../../../helpers/checks";
+
 const classes = {
   title: "py-8",
   form: "flex flex-col ",
@@ -32,14 +29,14 @@ export default function Reset() {
   const [incompleteErr, setIncompleteErr] = useState("");
   const [success, setSuccess] = useState(false);
 
-  function validateForm() {}
 
   function submitHandler(e) {
     e.preventDefault();
-    if (!formValid) {
-      setMessage("Cannot submit empty or invalid form. ⛔");
+    if (validateForm(e, "Invalid form, please check the data provided!")) {
+      setMessage("Cannot submit empty or invalid form. ⛔")
       return null;
-    }
+    };
+
     axiosInstance
       .put(`accounts/reset/${uuid}`, document.querySelector("#resetForm"))
       .then((res) => {
@@ -71,7 +68,6 @@ export default function Reset() {
               placeholder: "required",
               type: "password",
               tests: ["safePassword", "notEmpty"],
-              setFormValid,
             }}
           />
 
@@ -83,7 +79,6 @@ export default function Reset() {
               placeholder: "required",
               type: "password",
               tests: ["passwordsMatch", "notEmpty"],
-              setFormValid,
             }}
           />
 

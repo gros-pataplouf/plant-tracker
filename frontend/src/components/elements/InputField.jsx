@@ -48,23 +48,23 @@ export default function InputField({ props }) {
     placeholder, // string
     type, // string
     tests, //array of strings. "match", "not_empty", "safe", "email"
-    setFormValid, //state variable, starts with false
   } = props;
   const [showPwd, setShowPwd] = useState(false);
   const [err, setErr] = useState(false);
 
   function handleChange(e) {
     setErr("");
-    setFormValid(false);
+    const currentField = e.target.closest(`#${id}`);
     const value = e.target.closest(`#${id}`).value.trim();
+    currentField.removeAttribute("invalid")
     // run field level validations
     for (let _ in checks) {
       if (tests.includes(_) && checks[_](value)) {
         setErr(checks[_](value));
+        currentField.setAttribute("invalid", "");
         return null;
       }
     }
-    setFormValid(true);
   }
 
   function toggleTooltip(e) {

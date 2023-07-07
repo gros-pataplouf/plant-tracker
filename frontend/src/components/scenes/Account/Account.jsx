@@ -6,18 +6,11 @@ import ChangePassword from "./Subcomponents/ChangePassword";
 import DeleteAccount from "./Subcomponents/DeleteAccount";
 import Submissions from "./Subcomponents/Submissions";
 import UpdateEmail from "./Subcomponents/UpdateEmail";
-import ScrollTile from "../../elements/TileXL";
-
+import TileXL from "../../elements/TileXL";
+import Tile from "../../elements/Tile";
 const classes = {
-  title: "",
-  paragraph: "",
-  button: "",
-  dangerbutton: "",
-  cancelbutton: "",
-  dangertext: "",
-  message: "",
-  buttonwrapper: "flex space-4",
-  dangercancelbutton: "",
+  wrapper: "flex flex-col h-[90vh] justify-center items-center",
+  wrapperxl: "mt-6 space-y-6 last:mb-6"
 };
 
 export default function Account() {
@@ -51,23 +44,28 @@ export default function Account() {
   }, [changes]);
 
   return loading ? (
-    <AnimationLoading>
+
+    <div className={classes.wrapper}>
+      <Tile>
+      <AnimationLoading>
       <p>Loading...</p>
     </AnimationLoading>
+      </Tile>
+    </div>
+
   ) : (
-    <div>
-      <ScrollTile>
-        <h3 className={classes.title}>My account settings</h3>
+    <div className={classes.wrapperxl}>
+      <TileXL>
+        <h3>My account settings</h3>
         <div>
-          <p className={classes.paragraph}>Username</p>
+          <p>Username</p>
           {user && <p>{user.username}</p>}
         </div>
         {/* Email */}
         <div>
-          <p className={classes.paragraph}>Email</p>
-          {user && <p className={classes.paragraph}>{user.email}</p>}
+          <p>Email</p>
+          {user && <p>{user.email}</p>}
           <button
-            className={classes.button}
             name="openModal"
             onClick={handleModal}
           >
@@ -81,7 +79,6 @@ export default function Account() {
         {/* Password change */}
         <div>
           <button
-            className={classes.button}
             onClick={handleModal}
             name="openModal"
           >
@@ -94,7 +91,6 @@ export default function Account() {
           {/* Delete account */}
           <div>
             <button
-              className={classes.button}
               name="openModal"
               onClick={handleModal}
             >
@@ -105,10 +101,10 @@ export default function Account() {
             </Modal>
           </div>
         </div>
-      </ScrollTile>
-      <ScrollTile>
+      </TileXL>
+      <TileXL>
         <Submissions props={{ submissions }} />
-      </ScrollTile>
+      </TileXL>
     </div>
   );
 }

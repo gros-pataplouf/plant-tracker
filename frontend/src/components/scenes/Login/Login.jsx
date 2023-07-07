@@ -7,8 +7,10 @@ import RequestReset from "./Subcomponents/RequestReset";
 import Tile from "../../elements/Tile";
 import AnimationLoading from "../../elements/AnimationLoading";
 import AnimationConfirm from "../../elements/AnimationConfirm";
+import { validateForm } from "../../../helpers/checks";
 
 const classes = {
+  wrapper: "flex flex-col h-[90vh] justify-center items-center",
   title: "py-8",
   form: "flex flex-col ",
   label: "mt-4 mb-2",
@@ -24,15 +26,15 @@ export default function Login() {
   const [message, setMessage] = useState();
   const [submitting, setSubmitting] = useState(false);
   const location = useLocation();
-  const [formValid, setFormValid] = useState(false);
+
+
   function submitHandler(e) {
     e.preventDefault();
-    if (!formValid) {
-      setMessage("Cannot submit empty form. ⛔");
+    if (validateForm(e, "Invalid form, please check the data provided!")) {
+      setMessage("Cannot submit empty or invalid form. ⛔")
       return null;
-    }
+    };
     setSubmitting(true);
-
     axiosInstance
       .post("accounts/token/", document.querySelector("#loginForm"))
       .then((res) => {
@@ -55,6 +57,7 @@ export default function Login() {
   }
 
   return (
+    <div className={classes.wrapper}>
     <Tile>
       {!submitting && !isLoggedIn && (
         <>
@@ -73,7 +76,6 @@ export default function Login() {
                 placeholder: "required",
                 type: "text",
                 tests: ["notEmpty"],
-                setFormValid,
               }}
             />
 
@@ -85,7 +87,6 @@ export default function Login() {
                 placeholder: "required",
                 type: "password",
                 tests: ["notEmpty"],
-                setFormValid,
               }}
             />
 
@@ -134,5 +135,6 @@ export default function Login() {
         </div>
       )}
     </Tile>
+    </div>
   );
 }

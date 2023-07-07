@@ -6,14 +6,17 @@ import { handleModal } from "../../../elements/Modal";
 import AnimationLoading from "../../../elements/AnimationLoading";
 import AnimationConfirm from "../../../elements/AnimationConfirm";
 import InputField from "../../../elements/InputField";
+import { validateForm } from "../../../../helpers/checks";
 
 const classes = {
-  button: "btn rounded-none",
+  button: "btn rounded-lg first:mr-4",
   form: "flex flex-col",
   message: "border-red-800 active:outline-red-800",
   buttonwrapper: "flex space-4",
   confirmModal: "flex flex-col",
 };
+
+
 
 const passwordFormData = new FormData();
 
@@ -21,14 +24,13 @@ export default function ChangePassword() {
   const [errMessage, setErrMessage] = useState("");
   const [submitting, setSubmitting] = useState("");
   const [success, setSuccess] = useState(false);
-  const [formValid, setFormValid] = useState(false);
 
   function handlePasswordSubmit(e) {
     e.preventDefault();
-    if (!formValid) {
-      return window.alert("Invalid form, please check the data provided!");
+    if(!validateForm(e, "Invalid form, please provide a valid password!")) {
+      return null;
     }
-    setSubmitting(true);
+     setSubmitting(true);
     passwordFormData.append(
       "password",
       document.querySelector("#password").value.trim()
@@ -71,7 +73,6 @@ export default function ChangePassword() {
                 placeholder: "required",
                 type: "password",
                 tests: ["safePassword", "notEmpty"],
-                setFormValid,
               }}
             />
             <InputField
@@ -82,7 +83,6 @@ export default function ChangePassword() {
                 placeholder: "required",
                 type: "password",
                 tests: ["passwordsMatch", "notEmpty"],
-                setFormValid,
               }}
             />
 

@@ -1,6 +1,6 @@
 import axiosInstance from "../../../helpers/axios";
 import { useState } from "react";
-import Tile from "../../elements/Tile";
+import TileXL from "../../elements/TileXL";
 import AnimationLoading from "../../elements/AnimationLoading";
 
 const classes = {

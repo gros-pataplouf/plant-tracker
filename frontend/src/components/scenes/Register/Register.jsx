@@ -2,6 +2,7 @@ import { useState } from "react";
 import axiosInstance from "../../../helpers/axios";
 import InputField from "../../elements/InputField";
 import AnimationLoading from "../../elements/AnimationLoading";
+import { validateForm } from "../../../helpers/checks";
 
 const classes = {
   wrapper:
@@ -16,16 +17,16 @@ const classes = {
 export default function Register() {
   const [message, setMessage] = useState("");
   const [success, setSuccess] = useState(false);
-  const [formValid, setFormValid] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
   const formData = new FormData();
 
   function submitHandler(e) {
     e.preventDefault();
-    if (!formValid) {
-      return window.alert("Invalid form, please check the data provided!");
-    }
+    if (validateForm(e, "Invalid form, please check the data provided!")) {
+      setMessage("Cannot submit empty or invalid form. ⛔")
+      return null;
+    };
     setSubmitting(true);
     formData.append("email", document.getElementById("email").value.trim());
     formData.append(
@@ -51,7 +52,6 @@ export default function Register() {
         console.error(error.response);
         setSubmitting(false);
         setMessage(Object.values(error.response.data).join(" "));
-        setFormValid(false);
       });
   }
   return (
@@ -74,7 +74,6 @@ export default function Register() {
               placeholder: "required",
               type: "text",
               tests: ["validEmail", "notEmpty"],
-              setFormValid,
             }}
           />
           <InputField
@@ -85,7 +84,6 @@ export default function Register() {
               placeholder: "required",
               type: "text",
               tests: [],
-              setFormValid,
             }}
           />
           <InputField
@@ -96,7 +94,6 @@ export default function Register() {
               placeholder: "required",
               type: "password",
               tests: ["safePassword", "notEmpty"],
-              setFormValid,
             }}
           />
 
@@ -108,7 +105,6 @@ export default function Register() {
               placeholder: "required",
               type: "password",
               tests: ["passwordsMatch", "notEmpty"],
-              setFormValid,
             }}
           />
 
