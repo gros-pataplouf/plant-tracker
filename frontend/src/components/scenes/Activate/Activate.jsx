@@ -1,10 +1,11 @@
 import { useState } from "react";
 import axiosInstance from "../../../helpers/axios";
 import AnimationLoading from "../../elements/AnimationLoading";
+import Tile from "../../elements/Tile";
 
 export default function Activate() {
   let activationToken = window.location.href.trim("/").split("?").at(-1);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState(null);
   axiosInstance
     .get(`accounts/activate/${activationToken}`)
     .then((res) => {
