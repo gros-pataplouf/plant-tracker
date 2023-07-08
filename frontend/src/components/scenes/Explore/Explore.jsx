@@ -11,7 +11,7 @@ import TileXL from "../../elements/TileXL";
 
 const classes = {
   mapContainer: "border-mint/99 border-2 rounded-lg h-[80vh] m-4",
-  wrapper: "flex flex-col justify-center h-[90vh]",
+  wrapper: "wrapper-tile",
   title: "px-4"
 };
 

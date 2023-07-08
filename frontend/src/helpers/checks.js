@@ -23,6 +23,6 @@ export function validateForm(e, message) {
   if (invalidFields.length) {
     window.alert(message);
     return false;
-  } 
-  return true;
+  } else {
+  return true;}
   }

@@ -9,6 +9,7 @@ const classes = {
   loadingTitle: "text-yellow-100 text-center loadingHero mb-10",
   image: "mx-auto h-20 mt-20",
   introList: "list-disc [&>li]:ml-6 space-y-6 mt-6 text-3xl",
+  wrapper: "wrapper-tile"
 };
 
 function Animation() {
@@ -48,6 +49,7 @@ export default function Hero() {
       <Animation />
     </div>
   ) : (
+    <div className={classes.wrapper}>
     <Tile>
       <div>
         <h3>Welcome to the Planttracker App</h3>
@@ -68,5 +70,6 @@ export default function Hero() {
         <p></p>
       </div>
     </Tile>
+    </div>
   );
 }

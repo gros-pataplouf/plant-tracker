@@ -38,7 +38,6 @@ export default function ChangePassword() {
     axiosInstance
       .patch("accounts/me/", passwordFormData)
       .then((res) => {
-        console.log(res);
         setSubmitting(false);
         setSuccess(true);
         setTimeout(() => {

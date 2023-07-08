@@ -160,4 +160,10 @@
   .btn {
     @apply rounded-full m-3 p-6 w-6/12 mx-auto content-center text-yellow-50 bg-emerald-800  active:bg-emerald-950  active:shadow-green-950/50 active:text-white;
   }
+  .wrapper-tile {
+    @apply flex flex-col h-[90vh] justify-center items-center
+  }
+  .embla-slide {
+    @apply flex-[0_0_95%] border-r-white p-2 m-8 h-[40vh] bg-yellow-50 rounded-xl shadow-lg shadow-slate-500/50 border-solid border-2 border-slate-300
+  }
 }

@@ -10,11 +10,11 @@ import Tile from "../../elements/Tile";
 import ScrollTile from "../../elements/TileXL";
 
 const classes = {
-  wrapper: "flex flex-col justify-center h-[90vh]",
+  wrapper: "wrapper-tile",
   embla: "overflow-hidden",
   emblaContainer: "flex ",
   emblaSlide:
-    "group/item overflow-clip flex-[0_0_95%] border-r-white overflow-clip min-w-0 space-y-2 p-2 bg-yellow-50 rounded-xl shadow-lg shadow-slate-500/50 border-solid border-2 border-slate-300 m-8 h-[40vh]",
+    "embla-slide",
   title: "p-4 text-emerald-800",
   name: "",
   scientific: "italic",

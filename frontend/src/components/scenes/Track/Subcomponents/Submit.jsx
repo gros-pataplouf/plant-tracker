@@ -8,14 +8,14 @@ import Carousel from "../../../elements/Carousel";
 import Tile from "../../../elements/Tile";
 
 const classes = {
-  wrapper: "h-[90vh] flex flex-col justify-center",
+  wrapper: "wrapper-tile",
   title: "pt-4 text-emerald-800",
   emblaSlide:
-    "emblaSlide relative border-b-8 mx-8 border-white h-[20vh] flex-[0_0_100%] pb-4 bg-yellow-50 overflow-hidden rounded-xl shadow-lg shadow-slate-500/50 border-solid border-2 border-slate-300",
-  form: "flex flex-col",
+    "relative embla-slide overflow-hidden border-b-8 h-[20vh] flex-[0_0_100%] ",
+  form: "flex flex-col space-y-2",
   photoBtn:
-    "text-slate-950 pr-[26px]  whitespace-nowrap block font-bold rounded-lg w-min p-2 px-4  bg-lime/50 border-2 border-emerald-800  mt-6 ml-0 [&>img]:inline-block",
-  img: "object-fill",
+    "text-slate-950 pr-[26px] whitespace-nowrap block font-bold rounded-lg w-min p-2 px-4 bg-lime/50 border-2 border-emerald-800  mt-6 ml-0 [&>img]:inline-block",
+  img: "",
   imageInput: "hidden",
   bin: "absolute block rounded-full bg-white top-0 right-0 p-2 border-red-500 border-2 border-solid",
   input: "invalid:bg-red-200",
@@ -190,12 +190,12 @@ export default function TrackForm({ props }) {
 
       )}
       {message && success && (
-        <div class={classes.successDiv}>
-          <p class={classes.successMessage}>
+        <div className={classes.successDiv}>
+          <p className={classes.successMessage}>
             Thanks for submitting your observations ✅
           </p>
           <p></p>
-          <Link class={classes.successLink} to={`/locations/${message}`}>
+          <Link className={classes.successLink} to={`/locations/${message}`}>
             View submission
           </Link>
         </div>

@@ -10,7 +10,7 @@ import AnimationConfirm from "../../elements/AnimationConfirm";
 import { validateForm } from "../../../helpers/checks";
 
 const classes = {
-  wrapper: "flex flex-col h-[90vh] justify-center items-center",
+  wrapper: "wrapper-tile",
   title: "py-8",
   form: "flex flex-col ",
   label: "mt-4 mb-2",
@@ -30,7 +30,7 @@ export default function Login() {
 
   function submitHandler(e) {
     e.preventDefault();
-    if (validateForm(e, "Invalid form, please check the data provided!")) {
+    if (!validateForm(e, "Invalid form, please check the data provided!")) {
       setMessage("Cannot submit empty or invalid form. ⛔")
       return null;
     };

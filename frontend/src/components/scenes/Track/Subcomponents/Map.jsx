@@ -32,7 +32,6 @@ function Map({ props }) {
     setResults,
     isGeolocationEnabled,
   } = props;
-  console.log(isGeolocationEnabled);
   useEffect(() => {
     if (coords) {
       setLocation([coords.latitude, coords.longitude]);

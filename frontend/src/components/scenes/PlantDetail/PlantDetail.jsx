@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axiosInstance from "../../../helpers/axios";
 import AnimationLoading from "../../elements/AnimationLoading";
 import Carousel from "../../elements/Carousel";
@@ -7,12 +7,12 @@ import Tile from "../../elements/Tile";
 import TileXL from "../../elements/TileXL";
 
 const classes = {
-  wrapper: "flex flex-col justify-center h-[90vh]",
+  wrapper: "wrapper-tile",
   emblaSlide:
-    "group/item flex-[0_0_95%] border-r-white min-w-0 space-y-2 p-2 bg-yellow-50 rounded-xl shadow-lg shadow-slate-500/50 border-solid border-2 border-slate-300 m-8",
+    "embla-slide",
   title: "px-2 text-emerald-800",
-  name: "",
   scientific: "italic",
+  photo: "tbd, must be clipped if too high",
   caption: "block w-full",
 };
 
@@ -62,7 +62,7 @@ export default function PlantList() {
                   id="emblaSlide"
                   className={classes.emblaSlide}
                 >
-                  <img src={photo.image} alt={photo.description_en} />
+                  <img src={photo.image} alt={photo.description_en} className={classes.photo} />
                   <figcaption className={classes.caption}>
                     {photo.description_en}
                   </figcaption>

@@ -15,7 +15,6 @@ export function handleModal(e) {
     const currentModal = e.target.nextElementSibling;
     currentModal.showModal();
   } else if (e.target.getAttribute("name") === "closeModal") {
-    console.log(e.target);
     // the modal is always the closest ancestor of
     const currentModal = e.target.closest("dialog");
     currentModal.close();

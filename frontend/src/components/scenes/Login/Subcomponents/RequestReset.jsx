@@ -12,8 +12,7 @@ const classes = {
 export default function RequestReset() {
   function getResetLink(e) {
     e.preventDefault();
-    if (validateForm(e, "Invalid form, please check the data provided!")) {
-      setMessage("Cannot submit empty or invalid form. ⛔")
+    if (!validateForm(e, "Invalid form, please check the data provided!")) {
       return null;
     };
     axiosInstance

@@ -27,7 +27,6 @@ export default function Logout({ props }) {
       })
       .then((res) => {
         setLoading(false);
-        console.log(res);
         localStorage.removeItem("planttrackerAccess");
         localStorage.removeItem("planttrackerRefresh");
         setIsLoggedIn(false);

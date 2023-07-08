@@ -9,7 +9,7 @@ import UpdateEmail from "./Subcomponents/UpdateEmail";
 import TileXL from "../../elements/TileXL";
 import Tile from "../../elements/Tile";
 const classes = {
-  wrapper: "flex flex-col h-[90vh] justify-center items-center",
+  wrapper: "wrapper-tile",
   wrapperxl: "mt-6 space-y-6 last:mb-6"
 };
 
@@ -31,7 +31,6 @@ export default function Account() {
           .then((res) => {
             setSubmissions(res.data);
             setLoading(false);
-            console.log(submissions);
           })
           .catch((err) => {
             console.error(err);
@@ -39,7 +38,7 @@ export default function Account() {
           });
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   }, [changes]);
 

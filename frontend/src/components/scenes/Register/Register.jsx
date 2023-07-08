@@ -3,14 +3,15 @@ import axiosInstance from "../../../helpers/axios";
 import InputField from "../../elements/InputField";
 import AnimationLoading from "../../elements/AnimationLoading";
 import { validateForm } from "../../../helpers/checks";
+import Tile from "../../elements/Tile";
+import TileXL from "../../elements/TileXL";
 
 const classes = {
-  wrapper:
-    "flex flex-col justify-between min-h-[30vh] max-h-4/5 m-auto p-8 rounded-xl shadow-lg shadow-slate-500/50 border-solid border-2 border-slate-300 m-4 bg-white",
-  title: "py-8",
+  wrapper: "wrapper-tile",
+  title: "text-4xl text-center mb-12",
   form: "flex flex-col ",
   btn: "btn my-8",
-  success: "font-bold mb-20",
+  success: "font-bold my-20",
   failure: "font-bold",
 };
 
@@ -23,9 +24,8 @@ export default function Register() {
 
   function submitHandler(e) {
     e.preventDefault();
-    if (validateForm(e, "Invalid form, please check the data provided!")) {
-      setMessage("Cannot submit empty or invalid form. ⛔")
-      return null;
+    if (!validateForm(e, "Invalid form, please check the data provided!")) {
+      return setMessage("Cannot submit empty or invalid form.")
     };
     setSubmitting(true);
     formData.append("email", document.getElementById("email").value.trim());
@@ -56,7 +56,8 @@ export default function Register() {
   }
   return (
     <div className={classes.wrapper}>
-      <h3 className={classes.title}>Sign up and contribute 💚</h3>
+    <Tile>
+      <h1 className={classes.title}>Sign up and contribute 💚</h1>
       {!success && !submitting && (
         <form
           className={classes.form}
@@ -125,6 +126,7 @@ export default function Register() {
       ) : (
         message && <p className={classes.failure}>⚠️ {message}</p>
       )}
+    </Tile>
     </div>
   );
 }

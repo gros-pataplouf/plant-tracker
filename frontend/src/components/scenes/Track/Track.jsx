@@ -9,9 +9,6 @@ export default function Track() {
   useEffect(() => {
     axiosInstance
       .get("accounts/me/")
-      .then((res) => {
-        console.log(res);
-      })
       .catch((err) => {
         console.error(err);
         window.alert("You need to be logged in to submit data.");

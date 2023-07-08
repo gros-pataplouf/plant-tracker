@@ -24,7 +24,7 @@ export default function UpdateEmail({ props }) {
 
   function handleEmailSubmit(e) {
     e.preventDefault();
-    if (validateForm(e, "Invalid form, please check the data provided!")) {
+    if (!validateForm(e, "Invalid form, please check the data provided!")) {
       return null;
     };
     emailFormData.append(
@@ -37,7 +37,6 @@ export default function UpdateEmail({ props }) {
         email: document.querySelector("input#email").value.trim(),
       })
       .then((res) => {
-        console.log(res);
         setSubmitting(false);
         setSuccess(true);
         setChanges("email");

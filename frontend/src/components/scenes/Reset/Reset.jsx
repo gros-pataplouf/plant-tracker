@@ -6,6 +6,7 @@ import Tile from "../../elements/Tile";
 import { validateForm } from "../../../helpers/checks";
 
 const classes = {
+  wrapper: "wrapper-tile",
   title: "py-8",
   form: "flex flex-col ",
   input: "",
@@ -25,14 +26,13 @@ const classes = {
 export default function Reset() {
   let uuid = window.location.href.trim("/").split("?").at(-1);
   const [message, setMessage] = useState("");
-  const [formValid, setFormValid] = useState(false);
   const [incompleteErr, setIncompleteErr] = useState("");
   const [success, setSuccess] = useState(false);
 
 
   function submitHandler(e) {
     e.preventDefault();
-    if (validateForm(e, "Invalid form, please check the data provided!")) {
+    if (!validateForm(e, "Invalid form, please check the data provided!")) {
       setMessage("Cannot submit empty or invalid form. ⛔")
       return null;
     };
@@ -51,6 +51,7 @@ export default function Reset() {
       });
   }
   return (
+    <div className={classes.wrapper}>
     <Tile>
       <h3 className={classes.title}>Password reset ✍️</h3>
       {!success && (
@@ -103,5 +104,6 @@ export default function Reset() {
         </Link>
       </div>
     </Tile>
+    </div>
   );
 }

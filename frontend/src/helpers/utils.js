@@ -11,14 +11,9 @@ export const debounce = (func, delay = 1000) => {
 };
 
 export const resizeTiles = () => {
-  console.log("resizing");
-  console.log(document.querySelectorAll(".emblaSlide"));
-  for (let slide of document.querySelectorAll(".emblaSlide")) {
+  for (let slide of document.querySelectorAll(".js__utils__resizeTiles")) {
     const slideHeight = slide.getBoundingClientRect().height;
-    const titleHeight = document
-      .querySelector("#title")
-      .getBoundingClientRect().height;
-    const slideMaxHeight = 0.76 * window.innerHeight - titleHeight;
+    const slideMaxHeight = 0.76 * window.innerHeight;
     const diff = slideHeight - slideMaxHeight;
     if (diff > 0) {
       slide.setAttribute("style", `max-height: ${slideMaxHeight}px`);

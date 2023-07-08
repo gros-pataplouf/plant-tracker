@@ -8,7 +8,7 @@ import Carousel from "../../elements/Carousel";
 const classes = {
   wrapper: "",
   emblaSlide:
-    "emblaSlide relative border-b-8 border-white h-auto flex-[0_0_95%] min-w-0 pb-4 space-y-2 p-2 bg-yellow-50 overflow-hidden rounded-xl shadow-lg shadow-slate-500/50 border-solid border-2 border-slate-300 m-4",
+    "js__utils__resizeTiles relative overflow-hidden h-auto embla-slide",
   title: "pt-6 ml-2 text-emerald-800",
   name: "",
   scientific: "italic",
