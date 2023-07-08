@@ -1,20 +1,13 @@
-import { useState } from "react";
 import axiosInstance from "../../../../helpers/axios";
-import InputField from "../../../elements/InputField";
 import { validateForm } from "../../../../helpers/checks";
-
-const classes = {
-  title: "py-8 font-bold",
-  form: "flex flex-col ",
-  btn: "btn my-8",
-};
+import InputField from "../../../elements/InputField";
 
 export default function RequestReset() {
   function getResetLink(e) {
     e.preventDefault();
     if (!validateForm(e, "Invalid form, please check the data provided!")) {
       return null;
-    };
+    }
     axiosInstance
       .post("accounts/reset/", document.querySelector("#getResetLink"))
       .then((res) => {
@@ -31,8 +24,8 @@ export default function RequestReset() {
   }
   return (
     <div>
-      <h4 className={classes.title}>Request a password reset link</h4>
-      <form className={classes.form} id="getResetLink" onSubmit={getResetLink}>
+      <h4 className="py-8 font-bold">Request a password reset link</h4>
+      <form className="flex flex-col" id="getResetLink" onSubmit={getResetLink}>
         <InputField
           props={{
             label: "Email",
@@ -43,7 +36,7 @@ export default function RequestReset() {
             tests: ["notEmpty", "validEmail"],
           }}
         />
-        <button className={classes.btn} type="submit">
+        <button className="my-8 btn" type="submit">
           Get Reset Link
         </button>
       </form>

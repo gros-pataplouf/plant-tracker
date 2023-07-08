@@ -1,25 +1,13 @@
 import { useState } from "react";
 import { Link, useLocation, useOutletContext } from "react-router-dom";
 import axiosInstance from "../../../helpers/axios";
+import { validateForm } from "../../../helpers/checks";
+import AnimationConfirm from "../../elements/AnimationConfirm";
+import AnimationLoading from "../../elements/AnimationLoading";
 import InputField from "../../elements/InputField";
 import { Modal, handleModal } from "../../elements/Modal";
-import RequestReset from "./Subcomponents/RequestReset";
 import Tile from "../../elements/Tile";
-import AnimationLoading from "../../elements/AnimationLoading";
-import AnimationConfirm from "../../elements/AnimationConfirm";
-import { validateForm } from "../../../helpers/checks";
-
-const classes = {
-  wrapper: "wrapper-tile",
-  title: "py-8",
-  form: "flex flex-col ",
-  label: "mt-4 mb-2",
-  btn: "btn my-8",
-  success: "font-bold",
-  failure: "font-bold text-red-800",
-  info: "mt-4",
-  link: "block pt-2 mr-10 text-emerald-900 font-bold active:decoration-solid",
-};
+import RequestReset from "./Subcomponents/RequestReset";
 
 export default function Login() {
   const [isLoggedIn, setIsLoggedIn] = useOutletContext();
@@ -27,13 +15,12 @@ export default function Login() {
   const [submitting, setSubmitting] = useState(false);
   const location = useLocation();
 
-
   function submitHandler(e) {
     e.preventDefault();
     if (!validateForm(e, "Invalid form, please check the data provided!")) {
-      setMessage("Cannot submit empty or invalid form. ⛔")
+      setMessage("Cannot submit empty or invalid form. ⛔");
       return null;
-    };
+    }
     setSubmitting(true);
     axiosInstance
       .post("accounts/token/", document.querySelector("#loginForm"))
@@ -57,84 +44,87 @@ export default function Login() {
   }
 
   return (
-    <div className={classes.wrapper}>
-    <Tile>
-      {!submitting && !isLoggedIn && (
-        <>
-          {" "}
-          <h3 className={classes.title}>Log in</h3>
-          <form
-            className={classes.form}
-            id="loginForm"
-            onSubmit={submitHandler}
-          >
-            <InputField
-              props={{
-                label: "Username",
-                tooltip: false,
-                id: "username",
-                placeholder: "required",
-                type: "text",
-                tests: ["notEmpty"],
-              }}
-            />
+    <div className="wrapper-tile">
+      <Tile>
+        {!submitting && !isLoggedIn && (
+          <>
+            {" "}
+            <h1 className="my-8">Log in</h1>
+            <form
+              className="flex flex-col"
+              id="loginForm"
+              onSubmit={submitHandler}
+            >
+              <InputField
+                props={{
+                  label: "Username",
+                  tooltip: false,
+                  id: "username",
+                  placeholder: "required",
+                  type: "text",
+                  tests: ["notEmpty"],
+                }}
+              />
 
-            <InputField
-              props={{
-                label: "Password",
-                tooltip: true,
-                id: "password",
-                placeholder: "required",
-                type: "password",
-                tests: ["notEmpty"],
-              }}
-            />
+              <InputField
+                props={{
+                  label: "Password",
+                  tooltip: true,
+                  id: "password",
+                  placeholder: "required",
+                  type: "password",
+                  tests: ["notEmpty"],
+                }}
+              />
 
-            <button className={classes.btn} type="submit">
-              Submit
+              <button className="my-8 btn" type="submit">
+                Submit
+              </button>
+            </form>
+          </>
+        )}
+
+        {submitting && (
+          <AnimationLoading>
+            <p>Logging in...</p>
+          </AnimationLoading>
+        )}
+
+        {!submitting && isLoggedIn && (
+          <AnimationConfirm>
+            <p className="font-bold">
+              {message || "You are already logged in."}
+            </p>
+          </AnimationConfirm>
+        )}
+
+        {!submitting && !isLoggedIn && (
+          <div>
+            <p className="mt-4"> Password forgotten? </p>
+            <button
+              className="block pt-2 mr-10 font-bold text-emerald-900 active:decoration-solid"
+              name="openModal"
+              onClick={handleModal}
+            >
+              {" "}
+              👉 Reset password
             </button>
-          </form>
-        </>
-      )}
 
-      {submitting && (
-        <AnimationLoading>
-          <p>Logging in...</p>
-        </AnimationLoading>
-      )}
+            <Modal>
+              <RequestReset />
+            </Modal>
 
-      {!submitting && isLoggedIn && (
-        <AnimationConfirm>
-          <p className={classes.success}>
-            {message || "You are already logged in."}
-          </p>
-        </AnimationConfirm>
-      )}
-
-      {!submitting && !isLoggedIn && (
-        <div>
-          <p className={classes.info}> Password forgotten? </p>
-          <button
-            className={classes.link}
-            name="openModal"
-            onClick={handleModal}
-          >
-            {" "}
-            👉 Reset password
-          </button>
-
-          <Modal>
-            <RequestReset />
-          </Modal>
-
-          <p className={classes.info}>No account yet?</p>
-          <Link className={classes.link} to="/register">
-            {" "}
-            👉 Register
-          </Link>
-        </div>
-      )}
-    </Tile>
+            <p className="mt-4">No account yet?</p>
+            <Link
+              className="block pt-2 mr-10 font-bold text-emerald-900 active:decoration-solid"
+              to="/register"
+            >
+              {" "}
+              👉 Register
+            </Link>
+          </div>
+        )}
+      </Tile>
     </div>
   );
 }

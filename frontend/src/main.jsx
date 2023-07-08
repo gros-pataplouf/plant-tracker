@@ -16,8 +16,6 @@ import Reset from "./components/scenes/Reset/Reset";
 import Track from "./components/scenes/Track/Track";
 import "./index.css";
 
-
-
 const router = createHashRouter([
   {
     path: "/",

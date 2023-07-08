@@ -6,19 +6,7 @@ import Tile from "../../elements/Tile";
 import { validateForm } from "../../../helpers/checks";
 
 const classes = {
-  wrapper: "wrapper-tile",
-  title: "py-8",
-  form: "flex flex-col ",
-  input: "",
-  label: "mt-4 mb-2",
-  errorInput: "border-red-800 active:outline-red-800",
-  errorSpan: "text-red-800 italic",
-  tooltipIcon: "inline w-7 align-top",
-  tooltipSpan: "relative",
-  tooltipDiv:
-    "absolute w-[80vw] bg-black top-4 p-4 border-spacing-2 border-2 rounded-3xl text-yellow-50 hidden m-4 leading-none z-10",
   btn: "btn my-8 w-content",
-  success: "font-bold my-[50%]",
   failure: "font-bold text-red-800",
   link: "block pt-2 mr-10 text-emerald-900 font-bold active:decoration-solid",
 };
@@ -29,13 +17,12 @@ export default function Reset() {
   const [incompleteErr, setIncompleteErr] = useState("");
   const [success, setSuccess] = useState(false);
 
-
   function submitHandler(e) {
     e.preventDefault();
     if (!validateForm(e, "Invalid form, please check the data provided!")) {
-      setMessage("Cannot submit empty or invalid form. ⛔")
+      setMessage("Cannot submit empty or invalid form. ⛔");
       return null;
-    };
+    }
 
     axiosInstance
       .put(`accounts/reset/${uuid}`, document.querySelector("#resetForm"))
@@ -51,59 +38,65 @@ export default function Reset() {
       });
   }
   return (
-    <div className={classes.wrapper}>
-    <Tile>
-      <h3 className={classes.title}>Password reset ✍️</h3>
-      {!success && (
-        <form
-          className={classes.form}
-          id="resetForm"
-          onSubmit={submitHandler}
-          onChange={validateForm}
-        >
-          <InputField
-            props={{
-              label: "New password",
-              tooltip: true,
-              id: "password",
-              placeholder: "required",
-              type: "password",
-              tests: ["safePassword", "notEmpty"],
-            }}
-          />
+    <div className="wrapper-tile">
+      <Tile>
+        <h3 className="py-8">Password reset ✍️</h3>
+        {!success && (
+          <form
+            className="flex flex-col"
+            id="resetForm"
+            onSubmit={submitHandler}
+            onChange={validateForm}
+          >
+            <InputField
+              props={{
+                label: "New password",
+                tooltip: true,
+                id: "password",
+                placeholder: "required",
+                type: "password",
+                tests: ["safePassword", "notEmpty"],
+              }}
+            />
 
-          <InputField
-            props={{
-              label: "Confirm password",
-              tooltip: true,
-              id: "passwordConfirmation",
-              placeholder: "required",
-              type: "password",
-              tests: ["passwordsMatch", "notEmpty"],
-            }}
-          />
+            <InputField
+              props={{
+                label: "Confirm password",
+                tooltip: true,
+                id: "passwordConfirmation",
+                placeholder: "required",
+                type: "password",
+                tests: ["passwordsMatch", "notEmpty"],
+              }}
+            />
 
-          <button className={classes.btn} type="submit">
-            Save
-          </button>
-          <p className={classes.errorSpan}>{incompleteErr}</p>
-        </form>
-      )}
-      <div>
-        <p className={classes.failure}>{message}</p>
+            <button className="my-8 btn w-content" type="submit">
+              Save
+            </button>
+            <p className={classes.errorSpan}>{incompleteErr}</p>
+          </form>
+        )}
+        <div>
+          <p className="font-bold text-red-800">{message}</p>
 
-        <p className={classes.info}> Want to login? </p>
-        <Link className={classes.link} to="/login">
-          {" "}
-          👉 Login page
-        </Link>
-        <p className={classes.info}>No account yet?</p>
-        <Link className={classes.link} to="/register">
-          {" "}
-          👉 Register
-        </Link>
-      </div>
-    </Tile>
+          <p className="mt-4"> Want to login? </p>
+          <Link
+            className="block pt-2 mr-10 font-bold text-emerald-900 active:decoration-solid"
+            to="/login"
+          >
+            {" "}
+            👉 Login page
+          </Link>
+          <p className="mt-4">No account yet?</p>
+          <Link
+            className="block pt-2 mr-10 font-bold text-emerald-900 active:decoration-solid"
+            to="/register"
+          >
+            {" "}
+            👉 Register
+          </Link>
+        </div>
+      </Tile>
     </div>
   );
 }

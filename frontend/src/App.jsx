@@ -1,11 +1,6 @@
 import { Outlet } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Header from "./components/elements/Header";
-
-const classes = {
-  wrapper: "relative",
-  main: "absolute top-[10vh] flex flex-col w-screen overflow-x-clip",
-};
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(
@@ -21,9 +16,12 @@ function App() {
     });
   }
   return (
-    <div className={classes.wrapper} onClick={discardTooltips}>
+    <div className="relative" onClick={discardTooltips}>
       <Header props={{ isLoggedIn, setIsLoggedIn }} />
-      <div className={classes.main} id="detail">
+      <div
+        className="absolute top-[10vh] flex flex-col w-screen overflow-x-clip"
+        id="detail"
+      >
         <Outlet context={[isLoggedIn, setIsLoggedIn]} />
       </div>
     </div>

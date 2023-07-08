@@ -3,14 +3,6 @@ import { useCallback } from "react";
 import chevron_left from "../../assets/icons/chevron_left.svg";
 import chevron_right from "../../assets/icons/chevron_right.svg";
 
-const classes = {
-  embla: "relative",
-  emblaContainer: "flex ",
-  chevronLeft: "bg-slate-500/80 absolute rounded-[50%] top-[50%] -left-6 z-10",
-  chevronRight:
-    "bg-slate-500/80 absolute rounded-[50%] top-[50%] -right-6 z-10",
-};
-
 export default function Carousel({ children }) {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
   const scrollPrev = useCallback(() => {
@@ -22,20 +14,26 @@ export default function Carousel({ children }) {
   }, [emblaApi]);
 
   return (
-    <div className={classes.embla}>
+    <div className="relative">
       {/* the previous and next buttons are only shown if more than 1 children */}
       {children.length > 1 && (
-        <button className={classes.chevronLeft} onClick={scrollPrev}>
+        <button
+          className="absolute z-10 rounded-full bg-slate-500/80 top-1/2 -left-6"
+          onClick={scrollPrev}
+        >
           <img src={chevron_left} alt="forward" />
         </button>
       )}
       {children.length > 1 && (
-        <button className={classes.chevronRight} onClick={scrollNext}>
+        <button
+          className="absolute z-10 rounded-full bg-slate-500/80 top-1/2 -right-6"
+          onClick={scrollNext}
+        >
           <img src={chevron_right} alt="back" />
         </button>
       )}
       <div ref={emblaRef}>
-        <div id="emblaContainer" className={classes.emblaContainer}>
+        <div id="emblaContainer" className="flex">
           {children}
         </div>
       </div>

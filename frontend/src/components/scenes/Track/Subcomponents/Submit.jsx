@@ -7,23 +7,6 @@ import axiosInstance from "../../../../helpers/axios";
 import Carousel from "../../../elements/Carousel";
 import Tile from "../../../elements/Tile";
 
-const classes = {
-  wrapper: "wrapper-tile",
-  title: "pt-4 text-emerald-800",
-  emblaSlide:
-    "relative embla-slide overflow-hidden border-b-8 h-[20vh] flex-[0_0_100%] ",
-  form: "flex flex-col space-y-2",
-  photoBtn:
-    "text-slate-950 pr-[26px] whitespace-nowrap block font-bold rounded-lg w-min p-2 px-4 bg-lime/50 border-2 border-emerald-800  mt-6 ml-0 [&>img]:inline-block",
-  img: "",
-  imageInput: "hidden",
-  bin: "absolute block rounded-full bg-white top-0 right-0 p-2 border-red-500 border-2 border-solid",
-  input: "invalid:bg-red-200",
-  successDiv: "flex flex-col justify-center items-center min-h-[30vh]",
-  successMessage: "font-bold text-3xl text-center p-4",
-  successLink: "text-3xl p-4 font-bold text-center text-emerald-900 underline",
-};
-
 export default function TrackForm({ props }) {
   const { location } = props;
   const [lng, lat] = location;
@@ -90,117 +73,122 @@ export default function TrackForm({ props }) {
   }
 
   return (
-    <div className={classes.wrapper}>
-    <Tile>
-      {!submitting && !success && (
-        <form
-          className={classes.form}
-          method="post"
-          encType="multipart/form-data"
-          id="submitform"
-        >
-          <h3 className={classes.title}>Complete and submit</h3>
+    <div className="wrapper-tile">
+      <Tile>
+        {!submitting && !success && (
+          <form
+            className="flex flex-col space-y-2"
+            method="post"
+            encType="multipart/form-data"
+            id="submitform"
+          >
+            <h3 className="pt-4 text-emerald-800">Complete and submit</h3>
 
-          <label className={classes.label} htmlFor="location">
-            Surface (m²)
-          </label>
-          <input
-            className={classes.input}
-            type="number"
-            min="0"
-            name="area"
-            id="area"
-            required
-            placeholder="required, no decimals"
-          />
+            <label htmlFor="location">Surface (m²)</label>
+            <input
+              className="invalid:bg-red-200"
+              type="number"
+              min="0"
+              name="area"
+              id="area"
+              required
+              placeholder="required, no decimals"
+            />
 
-          <label className={classes.label} htmlFor="description">
-            Add a comment
-          </label>
-          <textarea name="description" id="description" rows="4" cols="50" />
+            <label htmlFor="description">Add a comment</label>
+            <textarea name="description" id="description" rows="4" cols="50" />
 
-          <label className={classes.label} htmlFor="description">
-            Species
-          </label>
-          <select name="plant" id="plant" required className={classes.input}>
-            <option value="">Select a species</option>
-            {plantList.map((plant) => {
-              return (
-                <option
-                  key={plant.id}
-                  id={plant.id}
-                  name={plant.common_name_en}
-                >
-                  {plant.common_name_en}
-                </option>
-              );
-            })}
-          </select>
-          <label className={classes.photoBtn} htmlFor="images">
-            Add photo <img id="camsymbol" src={addphoto} alt="add photo" />
-          </label>
-          <input
-            className={classes.imageInput}
-            accept="image/"
-            id="images"
-            name="images"
-            type="file"
-            multiple
-            onChange={handleChange}
-          />
-          {/* in order to show preview, convert FileList to Ecmascript array if there are any images in state*/}
-          {images.length > 0 && (
-            <Carousel>
-              {Array.from(images).map((img) => {
+            <label htmlFor="description">Species</label>
+            <select className="mb-6" name="plant" id="plant" required>
+              <option value="">Select a species</option>
+              {plantList.map((plant) => {
                 return (
-                  <div
-                    id="emblaSlide"
-                    key={img.name}
-                    dataindex={img.name}
-                    className={classes.emblaSlide}
+                  <option
+                    key={plant.id}
+                    id={plant.id}
+                    name={plant.common_name_en}
                   >
-                    <button onClick={deleteImage}>
-                      <img className={classes.bin} src={bin} alt="delete" />
-                    </button>
-                    <img
-                      className={classes.img}
-                      src={URL.createObjectURL(img)}
-                      alt="preview"
-                    />
-                  </div>
+                    {plant.common_name_en}
+                  </option>
                 );
               })}
-            </Carousel>
-          )}
+            </select>
+            <label
+              className="block text-slate-950 pr-[26px] my-4 whitespace-nowrap font-bold rounded-lg w-min p-2 px-4 bg-lime/50 border-2 border-emerald-800"
+              htmlFor="images"
+            >
+              Add photo{" "}
+              <img
+                className="inline-block"
+                id="camsymbol"
+                src={addphoto}
+                alt="add photo"
+              />
+            </label>
+            <input
+              className="hidden"
+              accept="image/"
+              id="images"
+              name="images"
+              type="file"
+              multiple
+              onChange={handleChange}
+            />
+            {/* in order to show preview, convert FileList to Ecmascript array if there are any images in state*/}
+            {images.length > 0 && (
+              <Carousel>
+                {Array.from(images).map((img) => {
+                  return (
+                    <div
+                      id="emblaSlide"
+                      key={img.name}
+                      dataindex={img.name}
+                      className="relative embla-slide overflow-hidden border-b-8 h-[20vh] flex-[0_0_100%]"
+                    >
+                      <button onClick={deleteImage}>
+                        <img
+                          className="absolute top-0 right-0 block p-2 bg-white border-2 border-red-500 border-solid rounded-full"
+                          src={bin}
+                          alt="delete"
+                        />
+                      </button>
+                      <img src={URL.createObjectURL(img)} alt="preview" />
+                    </div>
+                  );
+                })}
+              </Carousel>
+            )}
 
-          <button
-            type="submit"
-            className="btn mt-4"
-            value="Submit"
-            onClick={submitHandler}
-          >
-            Submit
-          </button>
-        </form>
-      )}
-      {submitting && !success && (
-        <AnimationLoading>
-          <h3>Submitting...</h3>
-        </AnimationLoading>
-
-      )}
-      {message && success && (
-        <div className={classes.successDiv}>
-          <p className={classes.successMessage}>
-            Thanks for submitting your observations ✅
-          </p>
-          <p></p>
-          <Link className={classes.successLink} to={`/locations/${message}`}>
-            View submission
-          </Link>
-        </div>
-      )}
-    </Tile>
+            <button
+              type="submit"
+              className="mt-4 btn"
+              value="Submit"
+              onClick={submitHandler}
+            >
+              Submit
+            </button>
+          </form>
+        )}
+        {submitting && !success && (
+          <AnimationLoading>
+            <h3>Submitting...</h3>
+          </AnimationLoading>
+        )}
+        {message && success && (
+          <div className="flex flex-col justify-center items-center min-h-[30vh]">
+            <p className="p-4 text-3xl font-bold text-center">
+              Thanks for submitting your observations ✅
+            </p>
+            <p></p>
+            <Link
+              className="p-4 text-3xl font-bold text-center underline text-emerald-900"
+              to={`/locations/${message}`}
+            >
+              View submission
+            </Link>
+          </div>
+        )}
+      </Tile>
     </div>
   );
 }

@@ -1,23 +1,22 @@
-const classes = {
-  title: "",
-  submissions: "scroll",
-};
+import { Link } from "react-router-dom";
 
 export default function Submissions({ props }) {
   const { submissions } = props;
   return (
-    <div className={classes.submissions}>
-      <h3 className={classes.title}>My submissions</h3>
+    <div>
+      <h1 className="my-6">My submissions</h1>
       <ul>
         {!submissions ? (
           <li>You have not submitted any data yet.</li>
         ) : (
           submissions.map((submission) => {
             return (
-              <li key={submission.id}>
-                📌 {new Date(submission.created_at).toLocaleString("en-GB")}{" "}
-                near {submission.display_name || "unknown address"}
-              </li>
+              <Link to={`/locations/${submission.id}`}>
+                <li key={submission.id}>
+                  📌 {new Date(submission.created_at).toLocaleString("en-GB")}{" "}
+                  near {submission.display_name || "unknown address"}
+                </li>
+              </Link>
             );
           })
         )}

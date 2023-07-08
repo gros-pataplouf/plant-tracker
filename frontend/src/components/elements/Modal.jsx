@@ -1,11 +1,5 @@
 import cancel from "../../assets/icons/cancel.svg";
 
-const classes = {
-  modal: "p-0 backdrop:bg-gray-700 backdrop:bg-opacity-90 rounded-lg w-[85vw]",
-  wrapper: "p-8",
-  icon: "-ml-4 -mt-4",
-};
-
 export function handleModal(e) {
   e.preventDefault();
 
@@ -27,7 +21,7 @@ export function handleModal(e) {
 export function Modal({ children }) {
   return (
     <dialog
-      className={classes.modal}
+      className="p-0 backdrop:bg-gray-700 backdrop:bg-opacity-90 rounded-lg w-[85vw]"
       onClick={(e) => {
         // only close the target if the actualy modal, and none of its child nodes, have been clicked
         try {
@@ -38,10 +32,10 @@ export function Modal({ children }) {
       }}
     >
       {" "}
-      <div className={classes.wrapper}>
+      <div className="p-8">
         <img
           onClick={handleModal}
-          className={classes.icon}
+          className="-mt-4 -ml-4"
           name="closeModal"
           src={cancel}
           alt=""

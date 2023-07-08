@@ -24,5 +24,6 @@ export function validateForm(e, message) {
     window.alert(message);
     return false;
   } else {
-  return true;}
+    return true;
   }
+}

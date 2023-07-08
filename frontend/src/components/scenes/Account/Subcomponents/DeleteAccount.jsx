@@ -1,14 +1,11 @@
 import { useState } from "react";
 import axiosInstance from "../../../../helpers/axios";
-import { handleModal } from "../../../elements/Modal";
 import AnimationLoading from "../../../elements/AnimationLoading";
+import { handleModal } from "../../../elements/Modal";
 
 const classes = {
-  dangerbutton: "btn bg-red-800 text-white",
-  cancelbutton:
-    "btn bg-yellow-50 text-emerald-950 border-solid border-2 border-emerald-800",
-  dangertext: "text-red-800 font-bold",
-  buttonwrapper: "flex space-4",
+  dangertext: "text-red-800 font-bold my-12",
+  buttonwrapper: "flex",
 };
 
 export default function DeleteAccount() {
@@ -19,7 +16,6 @@ export default function DeleteAccount() {
     axiosInstance
       .delete("accounts/me/")
       .then((res) => {
-        console.log(res);
         window.alert("Your account has been deleted.");
         localStorage.clear();
         window.location.href = "/";
@@ -34,15 +30,18 @@ export default function DeleteAccount() {
   ) : (
     <div>
       <form action="">
-        <p className={classes.dangertext}>
+        <p className="my-8 font-bold text-red-800">
           Are you sure you want to delete your account? This cannot be undone!
         </p>
-        <div className={classes.buttonwrapper}>
-          <button className={classes.dangerbutton} onClick={handleDelete}>
+        <div className="flex">
+          <button
+            className="mr-4 text-white bg-red-800 rounded-lg btn"
+            onClick={handleDelete}
+          >
             Yes, I'm sure
           </button>
           <button
-            className={classes.cancelbutton}
+            className="text-red-800 border-2 border-red-800 border-solid rounded-lg btn bg-yellow-50"
             name="closeModal"
             onClick={handleModal}
           >

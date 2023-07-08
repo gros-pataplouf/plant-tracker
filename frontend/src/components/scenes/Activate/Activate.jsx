@@ -1,11 +1,6 @@
-import axiosInstance from "../../../helpers/axios";
 import { useState } from "react";
-import TileXL from "../../elements/TileXL";
+import axiosInstance from "../../../helpers/axios";
 import AnimationLoading from "../../elements/AnimationLoading";
-
-const classes = {
-  message: "font-bold text-3xl self-center",
-};
 
 export default function Activate() {
   let activationToken = window.location.href.trim("/").split("?").at(-1);
@@ -32,7 +27,7 @@ export default function Activate() {
             <p>Activating</p>
           </AnimationLoading>
         )}
-        <p className={classes.message}>{message && message}</p>
+        <p className="self-center text-3xl font-bold">{message && message}</p>
       </Tile>
     </>
   );

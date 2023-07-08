@@ -4,18 +4,8 @@ import visibility from "../../assets/icons/visibility.svg";
 import visibility_off from "../../assets/icons/visibility_off.svg";
 import { testMail, testPassword } from "../../helpers/checks";
 
-const classes = {
-  passwordWrapper:
-    "flex relative [&>button]:absolute [&>button]:top-2 [&>button]:right-2",
+const dynamicClasses = {
   input: (err) => `grow mb-4 h-16 text-2xl ${err && "bg-red-100"}`,
-  label: "relative [&>span]:ml-2 [&>span]:text-3xl mb-2 text-3xl",
-  visibilitySvg: "w-8",
-  tooltipIcon: "inline w-8 align-top",
-  tooltipDiv:
-    "js__tooltip hidden absolute w-[80vw] bg-black -top-24 m-auto p-6 -translate-x-2/4 left-2/4 border-spacing-2 border-2 rounded-lg text-yellow-50 leading-none z-20",
-  tooltipTriangle:
-    "absolute z-50 m-auto -translate-x-2/4 translate-y-4 left-2/4 w-0 h-0 border-t-[20px] border-t-black border-x-[20px] border-x-transparent border-solid",
-  close: "ml-20",
 };
 
 const checks = {
@@ -56,7 +46,7 @@ export default function InputField({ props }) {
     setErr("");
     const currentField = e.target.closest(`#${id}`);
     const value = e.target.closest(`#${id}`).value.trim();
-    currentField.removeAttribute("invalid")
+    currentField.removeAttribute("invalid");
     // run field level validations
     for (let _ in checks) {
       if (tests.includes(_) && checks[_](value)) {
@@ -79,16 +69,19 @@ export default function InputField({ props }) {
   }
   return (
     <>
-      <label className={classes.label} htmlFor={id}>
+      <label className="relative mb-2 text-3xl" htmlFor={id}>
         {label}
         {tooltip && err && (
-          <span className={classes.errorSpan}>
+          <span className="ml-2">
             <span onTouchStart={toggleTooltip} onClick={toggleTooltip}>
-              <img className={classes.tooltipIcon} src={info} />
-              <div className={classes.tooltipDiv} role="tooltip">
+              <img className="inline w-8 align-top" src={info} />
+              <div
+                className="js__tooltip hidden absolute w-[80vw] bg-black -top-24 m-auto p-6 -translate-x-2/4 left-2/4 border-spacing-2 border-2 rounded-lg text-yellow-50 leading-none z-20"
+                role="tooltip"
+              >
                 <div>
                   <p>{err}</p>
-                  <div className={classes.tooltipTriangle}></div>
+                  <div className="absolute z-50 m-auto -translate-x-2/4 translate-y-4 left-2/4 w-0 h-0 border-t-[20px] border-t-black border-x-[20px] border-x-transparent border-solid"></div>
                 </div>
               </div>
             </span>
@@ -96,19 +89,20 @@ export default function InputField({ props }) {
         )}
       </label>
 
-      <div className={classes.passwordWrapper}>
+      <div className="relative flex">
         <input
           id={id}
           name={id}
           type={type}
           autoComplete={id}
-          className={classes.input(err)}
+          className={dynamicClasses.input(err)}
           placeholder={placeholder}
           onChange={handleChange}
         />
         {/* the toggle visibility button is only used in fields of type password */}
         {type === "password" && (
           <button
+            className="absolute top-2 right-2"
             onClick={(e) => {
               e.preventDefault();
               document
@@ -118,7 +112,7 @@ export default function InputField({ props }) {
             }}
           >
             <img
-              className={classes.visibilitySvg}
+              className="w-8"
               src={showPwd ? visibility : visibility_off}
               alt=""
             />

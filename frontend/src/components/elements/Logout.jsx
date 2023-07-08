@@ -1,12 +1,7 @@
-import axiosInstance from "../../helpers/axios";
 import Lottie from "lottie-react";
+import { useEffect, useState } from "react";
 import spinner from "../../assets/animations/spinner.json";
-import { useState, useEffect } from "react";
-const classes = {
-  wrapper: "pt-2 bg-emerald-950 h-[2.5rem] px-6 max-h-[8vh] min-h-[4vh]",
-  button:
-    "text-yellow-50 font-bold rounded-lg active:underline hover:underline decoration-2",
-};
+import axiosInstance from "../../helpers/axios";
 
 export default function Logout({ props }) {
   const { isLoggedIn, setIsLoggedIn } = props;
@@ -45,7 +40,10 @@ export default function Logout({ props }) {
   }
 
   return (
-    <div id="lottieContainer" className={classes.wrapper}>
+    <div
+      id="lottieContainer"
+      className="pt-2 bg-emerald-950 h-[2.5rem] px-6 max-h-[8vh] min-h-[4vh]"
+    >
       {loading ? (
         <Lottie
           animationData={spinner}
@@ -53,7 +51,10 @@ export default function Logout({ props }) {
           style={{ height: lottieSize, width: lottieSize }}
         />
       ) : (
-        <button className={classes.button} onClick={logOutHandler}>
+        <button
+          className="font-bold rounded-lg text-yellow-50 active:underline hover:underline decoration-2"
+          onClick={logOutHandler}
+        >
           Log out
         </button>
       )}

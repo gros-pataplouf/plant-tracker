@@ -1,20 +1,10 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import axiosInstance from "../../../helpers/axios";
 import AnimationLoading from "../../elements/AnimationLoading";
 import Carousel from "../../elements/Carousel";
-import { Link } from "react-router-dom";
 import Tile from "../../elements/Tile";
 import TileXL from "../../elements/TileXL";
-
-const classes = {
-  wrapper: "wrapper-tile",
-  emblaSlide:
-    "embla-slide",
-  title: "px-2 text-emerald-800",
-  scientific: "italic",
-  photo: "tbd, must be clipped if too high",
-  caption: "block w-full",
-};
 
 export default function PlantList() {
   const [plant, setPlant] = useState(null);
@@ -47,10 +37,9 @@ export default function PlantList() {
   return (
     <div>
       {plant ? (
-        
         <TileXL>
-          <h2 className={classes.title}>{plant.common_name_en}</h2>
-          <h4>Description</h4>
+          <h1 className="my-2 text-emerald-800">{plant.common_name_en}</h1>
+          <h2 className="my-2 font-bold text-emerald-950">Description</h2>
           <p>{plant.description_en}</p>
 
           <Carousel>
@@ -60,16 +49,20 @@ export default function PlantList() {
                 <figure
                   key={photo.id}
                   id="emblaSlide"
-                  className={classes.emblaSlide}
+                  className="flex flex-col items-center justify-center embla-slide"
                 >
-                  <img src={photo.image} alt={photo.description_en} className={classes.photo} />
-                  <figcaption className={classes.caption}>
+                  <img
+                    className="block object-scale-down max-h-[95%] m-auto"
+                    src={photo.image}
+                    alt={photo.description_en}
+                  />
+                  <figcaption className="block mx-auto mb-2 text-center">
                     {photo.description_en}
                   </figcaption>
                 </figure>
               ))}
           </Carousel>
-          <h4>Identification</h4>
+          <h2 className="my-2 font-bold text-emerald-950">Identification</h2>
           <p>{plant.identification_en}</p>
           <Carousel>
             {photos
@@ -78,18 +71,24 @@ export default function PlantList() {
                 <figure
                   key={photo.id}
                   id="emblaSlide"
-                  className={classes.emblaSlide}
+                  className="flex flex-col items-center justify-center embla-slide"
                 >
-                  <img src={photo.image} alt={photo.description_en} />
-                  <figcaption className={classes.caption}>
+                  <img
+                    className="block object-scale-down max-h-[95%] m-auto"
+                    src={photo.image}
+                    alt={photo.description_en}
+                  />
+                  <figcaption className="block mx-auto text-center">
                     {photo.description_en}
                   </figcaption>
                 </figure>
               ))}
           </Carousel>
-          <h4>Ecology</h4>
+          <h2 className="my-2 font-bold text-emerald-950">Ecology</h2>
           <p>{plant.ecology_en}</p>
-          <h4>Recent findings</h4>
+          <h2 className="mt-6 mb-2 font-bold text-emerald-950">
+            Recent findings
+          </h2>
           <ul>
             {findings &&
               findings
@@ -97,6 +96,7 @@ export default function PlantList() {
                 .map((_) => {
                   return (
                     <li key={_.id}>
+                      📌
                       <Link to={`/locations/${_.id}`}>
                         {_.area} m² near {_.display_name},{" "}
                         {new Date(_.created_at).toLocaleString("en-GB")}
@@ -107,11 +107,11 @@ export default function PlantList() {
           </ul>
         </TileXL>
       ) : (
-        <div className={classes.wrapper}>
+        <div className="wrapper-tile">
           <Tile>
-          <AnimationLoading>
-          <p>Getting data from the server...</p>
-        </AnimationLoading>
+            <AnimationLoading>
+              <p>Getting data from the server...</p>
+            </AnimationLoading>
           </Tile>
         </div>
       )}

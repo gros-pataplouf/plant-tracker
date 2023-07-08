@@ -1,17 +1,13 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../helpers/axios";
-import { Modal, handleModal } from "../../elements/Modal";
 import AnimationLoading from "../../elements/AnimationLoading";
+import { Modal, handleModal } from "../../elements/Modal";
+import Tile from "../../elements/Tile";
+import TileXL from "../../elements/TileXL";
 import ChangePassword from "./Subcomponents/ChangePassword";
 import DeleteAccount from "./Subcomponents/DeleteAccount";
 import Submissions from "./Subcomponents/Submissions";
 import UpdateEmail from "./Subcomponents/UpdateEmail";
-import TileXL from "../../elements/TileXL";
-import Tile from "../../elements/Tile";
-const classes = {
-  wrapper: "wrapper-tile",
-  wrapperxl: "mt-6 space-y-6 last:mb-6"
-};
 
 export default function Account() {
   const [user, setUser] = useState();
@@ -43,63 +39,59 @@ export default function Account() {
   }, [changes]);
 
   return loading ? (
-
-    <div className={classes.wrapper}>
+    <div className="wrapper-tile">
       <Tile>
-      <AnimationLoading>
-      <p>Loading...</p>
-    </AnimationLoading>
+        <AnimationLoading>
+          <p>Loading...</p>
+        </AnimationLoading>
       </Tile>
     </div>
-
   ) : (
-    <div className={classes.wrapperxl}>
+    <div className="mt-6 space-y-6 last:mb-6">
       <TileXL>
-        <h3>My account settings</h3>
-        <div>
-          <p>Username</p>
-          {user && <p>{user.username}</p>}
-        </div>
-        {/* Email */}
-        <div>
-          <p>Email</p>
-          {user && <p>{user.email}</p>}
-          <button
-            name="openModal"
-            onClick={handleModal}
-          >
-            Update
-          </button>
-          {/* Change email */}
-          <Modal>
-            <UpdateEmail props={{ changes, setChanges }} />
-          </Modal>
-        </div>
-        {/* Password change */}
-        <div>
-          <button
-            onClick={handleModal}
-            name="openModal"
-          >
-            Change password
-          </button>
-          <Modal>
-            <ChangePassword />
-          </Modal>
+        <h1 className="my-6">My account settings</h1>
+        <table className="h-48 [&>tr]:border-b-2 border-slate-500">
+          <tr>
+            <td>Username:</td>
+            <td>{user && user.username}</td>
+          </tr>
+          <tr>
+            <td>Email:</td>
+            <td>{user && user.email}</td>
+            <td>
+              <button name="openModal" onClick={handleModal}>
+                Update
+              </button>
+              {/* Change email */}
+              <Modal>
+                <UpdateEmail props={{ changes, setChanges }} />
+              </Modal>
+            </td>
+          </tr>
 
+          {/* Password change */}
+          <tr>
+            <td>
+              <button onClick={handleModal} name="openModal">
+                Change password
+              </button>
+              <Modal>
+                <ChangePassword />
+              </Modal>
+            </td>
+          </tr>
           {/* Delete account */}
-          <div>
-            <button
-              name="openModal"
-              onClick={handleModal}
-            >
-              Delete account
-            </button>
-            <Modal>
-              <DeleteAccount />
-            </Modal>
-          </div>
-        </div>
+          <tr className="border-none">
+            <td>
+              <button name="openModal" onClick={handleModal}>
+                Delete account
+              </button>
+              <Modal>
+                <DeleteAccount />
+              </Modal>
+            </td>
+          </tr>
+        </table>
       </TileXL>
       <TileXL>
         <Submissions props={{ submissions }} />

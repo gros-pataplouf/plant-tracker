@@ -2,23 +2,13 @@ import L from "leaflet";
 import { useEffect, useState } from "react";
 import { Marker, Popup, useMap, useMapEvents } from "react-leaflet";
 import { Link } from "react-router-dom";
+import mylocation from "../../assets/icons/mylocation.svg";
 import { API_OSM_NOMINATIM } from "../../constants/index";
 import axiosInstance from "../../helpers/axios";
 import { debounce } from "../../helpers/utils";
-import mylocation from "../../assets/icons/mylocation.svg";
 
-const classes = {
-  goBackButton:
-    "z-10 bg-white p-[5px] mt-[80px] ml-[10px] leaflet-bar leaflet-control h-[34px] w-[34px]",
-  searchModule:
-    "z-10 absolute top-[10px] right-2 leaflet-bar leaflet-control w-[80%] max-h-[66%] overflow-scroll",
-  searchInput: "bg-white p-[5px] h-[30px] w-full",
-  searchResult: "border-2 border-slate-50 bg-white p-[3px] w-[100%]",
-  showLegend: "p-2",
-  legend: `absolute z-20 bg-slate-100 right-0 bottom-8 p-2 rounded-2xl`,
-  legendTitle: (showLegend) => `${!Boolean(showLegend) && "hidden"}`,
+const dynamicClasses = {
   legendItem: (showLegend) => `${!Boolean(showLegend) && "hidden"} flex p-2`,
-  input: "h-6 w-6 my-auto",
 };
 
 //a control element of the map. Clicking on it resets center and dynamic marker to detected location. Hidden if geolocation disabled.
@@ -35,7 +25,10 @@ export function GoBackButton({ props }) {
   }
   if (coords) {
     return (
-      <button className={classes.goBackButton} onClick={goBack}>
+      <button
+        className="z-10 bg-white p-[5px] mt-[80px] ml-[10px] leaflet-bar leaflet-control h-[34px] w-[34px]"
+        onClick={goBack}
+      >
         <img src={mylocation} alt="" />
       </button>
     );
@@ -96,9 +89,9 @@ export function Search({ props }) {
     inputField.value = "";
   }
   return (
-    <div className={classes.searchModule}>
+    <div className="z-10 absolute top-[10px] right-2 leaflet-bar leaflet-control w-4/5 max-h-2/3 overflow-scroll">
       <input
-        className={classes.searchInput}
+        className="bg-white p-[5px] h-[30px] w-full"
         id="inputfield"
         onChange={debounce(inputHandler)}
         placeholder="search address"
@@ -106,7 +99,7 @@ export function Search({ props }) {
       {results.map((_) => {
         return (
           <div
-            className={classes.searchResult}
+            className="border-2 border-slate-50 bg-white p-[3px] w-full"
             dataindex={_.place_id}
             key={_.place_id}
             onClick={goToResult}
@@ -182,12 +175,15 @@ export function Legend({ props }) {
 
   return (
     <>
-      <form id="selectionForm" className={classes.legend}>
-        <button className={classes.showLegend} onClick={toggleLegend}>
+      <form
+        id="selectionForm"
+        className="absolute right-0 z-20 p-2 bg-slate-100 bottom-8 rounded-2xl"
+      >
+        <button className="p-2" onClick={toggleLegend}>
           {showLegend ? "↘️ Hide" : "↖️ Show"} filters
         </button>
         {plantList.map((plant) => (
-          <div className={classes.legendItem(showLegend)} key={plant.id}>
+          <div className={dynamicClasses.legendItem(showLegend)} key={plant.id}>
             <Checkbox
               props={{
                 plant,
@@ -256,7 +252,7 @@ function Checkbox({ props }) {
 
   return (
     <input
-      className={classes.input}
+      className="w-6 h-6 my-auto"
       type="checkbox"
       id={plant.id}
       name={plant.Id}

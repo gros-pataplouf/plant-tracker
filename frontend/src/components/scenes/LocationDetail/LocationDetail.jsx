@@ -9,24 +9,6 @@ import { Link } from "react-router-dom";
 import Tile from "../../elements/Tile";
 import ScrollTile from "../../elements/TileXL";
 
-const classes = {
-  wrapper: "wrapper-tile",
-  embla: "overflow-hidden",
-  emblaContainer: "flex ",
-  emblaSlide:
-    "embla-slide",
-  title: "p-4 text-emerald-800",
-  name: "",
-  scientific: "italic",
-  imageContainer: "relative",
-  image: "w-full rounded-xl border-emerald-950",
-  mapContainer: "border-mint/99 border-2 rounded-md m-4 h-[95%]",
-  locationImage: "h-full object-contain",
-  table:
-    "w-[95%] p-2 mx-auto text-8 rounded-md [&>tbody>tr>td]:p-2 [&>tbody>tr]:p-2 text-white bg-emerald-900 font-bold",
-  tableCell: "p-2",
-};
-
 export default function LocationDetail() {
   const [location, setLocation] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -60,107 +42,110 @@ export default function LocationDetail() {
   }, []);
 
   return loading ? (
-    <div className={classes.wrapper}>
-    <Tile>
-    <AnimationLoading>
-      <h3>Loading...</h3>
-    </AnimationLoading>
-    </Tile>
+    <div className="wrapper-tile">
+      <Tile>
+        <AnimationLoading>
+          <h3>Loading...</h3>
+        </AnimationLoading>
+      </Tile>
     </div>
   ) : (
-    <div className={classes.wrapper}>
+    <div className="wrapper-tile">
       <ScrollTile>
-      <h2 className={classes.title}>Location detail</h2>
-      {location && (
-        <>
-          {location.photos && (
-            <Carousel>
-              {[
-                <div className={classes.emblaSlide} key="map">
-                  {/* PostGis PointField has coordinates [lat, long], while leaflet needs [lng, lat]. Therefore, deepcopy must be made and coordinates reversed
+        <h2 className="p-4 font-bold text-emerald-800">Location detail</h2>
+        {location && (
+          <>
+            {location.photos && (
+              <Carousel>
+                {[
+                  <div className="embla-slide" key="map">
+                    {/* PostGis PointField has coordinates [lat, long], while leaflet needs [lng, lat]. Therefore, deepcopy must be made and coordinates reversed
             in: MapContainer (center), Marker */}
-                  <MapContainer
-                    className={classes.mapContainer}
-                    id="map smallmap"
-                    center={structuredClone(
-                      location.location.coordinates
-                    ).reverse()}
-                    zoom={12}
-                    scrollWheelZoom={false}
-                    whenReady={leafletLowZIndex}
-                  >
-                    <TileLayer
-                      attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                    />
-                    <Marker
-                      position={structuredClone(
+                    <MapContainer
+                      className="border-mint/99 border-2 rounded-md m-4 h-[95%]"
+                      id="map smallmap"
+                      center={structuredClone(
                         location.location.coordinates
                       ).reverse()}
-                    />
-                  </MapContainer>
-                </div>,
-
-                ...location.photos.map((_) => {
-                  return (
-                    <div
-                      className={classes.emblaSlide}
-                      key={Math.floor(Math.random() * 1000)}
+                      zoom={12}
+                      scrollWheelZoom={false}
+                      whenReady={leafletLowZIndex}
                     >
-                      <img
-                        className={classes.locationImage}
-                        src={_.image}
-                        alt=""
+                      <TileLayer
+                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                       />
-                    </div>
-                  );
-                }),
-              ]}
-            </Carousel>
-          )}
-          <table className={classes.table}>
-            <tbody>
-              <tr>
-                <td>Name</td>
-                <td>
-                  <Link to={`/plants/${location.plant.id}`}>
-                    {location.plant.common_name_en}
-                  </Link>
-                </td>
-              </tr>
-              <tr>
-                <td>Coordinates</td>
-                <td>
-                  {convertGPS(
-                    structuredClone(location.location.coordinates).reverse()
-                  )}
-                </td>
-              </tr>
-              <tr>
-                <td>Address</td>
-                <td>near {location.display_name}</td>
-              </tr>
-              <tr>
-                <td>Surface</td>
-                <td>{location.area} m²</td>
-              </tr>
-              <tr>
-                <td>Comment</td>
-                <td>{location.description}</td>
-              </tr>
-              <tr>
-                <td>Date</td>
-                <td>{new Date(location.created_at).toLocaleString("en-GB")}</td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-              </tr>
-            </tbody>
-          </table>
-        </>
-      )}
-    </ScrollTile>
+                      <Marker
+                        position={structuredClone(
+                          location.location.coordinates
+                        ).reverse()}
+                      />
+                    </MapContainer>
+                  </div>,
+
+                  ...location.photos.map((_) => {
+                    return (
+                      <figure
+                        key={_.id}
+                        id="emblaSlide"
+                        className="flex flex-col items-center justify-center embla-slide"
+                      >
+                        <img
+                          className="block object-scale-down max-h-[95%] m-auto"
+                          src={_.image}
+                          alt=""
+                        />
+                      </figure>
+                    );
+                  }),
+                ]}
+              </Carousel>
+            )}
+            <table className="w-[95%] p-2 mx-auto text-8 rounded-md [&>tbody>tr>td]:p-2 [&>tbody>tr]:p-2 text-white bg-emerald-900 font-bold">
+              <tbody>
+                <tr>
+                  <td>Name</td>
+                  <td>
+                    <Link to={`/plants/${location.plant.id}`}>
+                      {location.plant.common_name_en}
+                    </Link>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Coordinates</td>
+                  <td>
+                    {convertGPS(
+                      structuredClone(location.location.coordinates).reverse()
+                    )}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Address</td>
+                  <td>near {location.display_name}</td>
+                </tr>
+                <tr>
+                  <td>Surface</td>
+                  <td>{location.area} m²</td>
+                </tr>
+                <tr>
+                  <td>Comment</td>
+                  <td>{location.description}</td>
+                </tr>
+                <tr>
+                  <td>Date</td>
+                  <td>
+                    {new Date(location.created_at).toLocaleString("en-GB")}
+                  </td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </>
+        )}
+      </ScrollTile>
     </div>
   );
 }

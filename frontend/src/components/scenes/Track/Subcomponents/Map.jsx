@@ -2,21 +2,14 @@ import Lottie from "lottie-react";
 import { useEffect, useState } from "react";
 import { useGeolocated } from "react-geolocated";
 import { MapContainer, TileLayer } from "react-leaflet";
-import { leafletLowZIndex } from "../../../../helpers/leafletHelpers";
 import locating from "../../../../assets/animations/location.json";
+import { leafletLowZIndex } from "../../../../helpers/leafletHelpers";
 import {
   CenterAutomatically,
   DynamicMarker,
   GoBackButton,
   Search,
 } from "../../../elements/MapComponents";
-
-const classes = {
-  mapContainer: "border-mint/99 border-2 rounded-md m-4",
-  btn: "btn block my-4 m-auto",
-  wrapper: "mt-4",
-  explainer: "font-bold text-3xl px-4",
-};
 
 function Animation() {
   return <Lottie animationData={locating} loop={true} />;
@@ -39,7 +32,7 @@ function Map({ props }) {
   }, [coords]);
   return (
     <MapContainer
-      className={classes.mapContainer}
+      className="m-4 border-2 rounded-md border-mint/99"
       id="map"
       center={location}
       zoom={isGeolocationEnabled ? 16 : 5}
@@ -64,7 +57,7 @@ function ContinueButton({ props }) {
     setDisplay("form");
   }
   return (
-    <button className={classes.btn} onClick={clickHandler}>
+    <button className="block m-auto my-4 btn" onClick={clickHandler}>
       Continue
     </button>
   );
@@ -87,8 +80,8 @@ export default function TrackMap({ props }) {
     userDecisionTimeout: 10000,
   });
   return !isGeolocationAvailable || !isGeolocationEnabled || coords ? (
-    <div className={classes.wrapper}>
-      <p className={classes.explainer}>
+    <div className="mt-4">
+      <p className="px-4 text-3xl font-bold">
         Drag the map under the cursor or search an address.
       </p>
       <Map

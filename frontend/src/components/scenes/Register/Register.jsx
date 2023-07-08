@@ -1,19 +1,9 @@
 import { useState } from "react";
 import axiosInstance from "../../../helpers/axios";
-import InputField from "../../elements/InputField";
-import AnimationLoading from "../../elements/AnimationLoading";
 import { validateForm } from "../../../helpers/checks";
+import AnimationLoading from "../../elements/AnimationLoading";
+import InputField from "../../elements/InputField";
 import Tile from "../../elements/Tile";
-import TileXL from "../../elements/TileXL";
-
-const classes = {
-  wrapper: "wrapper-tile",
-  title: "text-4xl text-center mb-12",
-  form: "flex flex-col ",
-  btn: "btn my-8",
-  success: "font-bold my-20",
-  failure: "font-bold",
-};
 
 export default function Register() {
   const [message, setMessage] = useState("");
@@ -25,8 +15,8 @@ export default function Register() {
   function submitHandler(e) {
     e.preventDefault();
     if (!validateForm(e, "Invalid form, please check the data provided!")) {
-      return setMessage("Cannot submit empty or invalid form.")
-    };
+      return setMessage("Cannot submit empty or invalid form.");
+    }
     setSubmitting(true);
     formData.append("email", document.getElementById("email").value.trim());
     formData.append(
@@ -55,78 +45,78 @@ export default function Register() {
       });
   }
   return (
-    <div className={classes.wrapper}>
-    <Tile>
-      <h1 className={classes.title}>Sign up and contribute 💚</h1>
-      {!success && !submitting && (
-        <form
-          className={classes.form}
-          id="registrationForm"
-          onSubmit={submitHandler}
-          onChange={() => {
-            setMessage("");
-          }}
-        >
-          <InputField
-            props={{
-              label: "Email",
-              tooltip: true,
-              id: "email",
-              placeholder: "required",
-              type: "text",
-              tests: ["validEmail", "notEmpty"],
+    <div className="wrapper-tile">
+      <Tile>
+        <h1 className="mb-12 text-4xl text-center">
+          Sign up and contribute 💚
+        </h1>
+        {!success && !submitting && (
+          <form
+            className="flex flex-col"
+            id="registrationForm"
+            onSubmit={submitHandler}
+            onChange={() => {
+              setMessage("");
             }}
-          />
-          <InputField
-            props={{
-              label: "Username",
-              tooltip: false,
-              id: "username",
-              placeholder: "required",
-              type: "text",
-              tests: [],
-            }}
-          />
-          <InputField
-            props={{
-              label: "New password",
-              tooltip: true,
-              id: "password",
-              placeholder: "required",
-              type: "password",
-              tests: ["safePassword", "notEmpty"],
-            }}
-          />
+          >
+            <InputField
+              props={{
+                label: "Email",
+                tooltip: true,
+                id: "email",
+                placeholder: "required",
+                type: "text",
+                tests: ["validEmail", "notEmpty"],
+              }}
+            />
+            <InputField
+              props={{
+                label: "Username",
+                tooltip: false,
+                id: "username",
+                placeholder: "required",
+                type: "text",
+                tests: [],
+              }}
+            />
+            <InputField
+              props={{
+                label: "New password",
+                tooltip: true,
+                id: "password",
+                placeholder: "required",
+                type: "password",
+                tests: ["safePassword", "notEmpty"],
+              }}
+            />
 
-          <InputField
-            props={{
-              label: "Confirm password",
-              tooltip: true,
-              id: "passwordConfirmation",
-              placeholder: "required",
-              type: "password",
-              tests: ["passwordsMatch", "notEmpty"],
-            }}
-          />
+            <InputField
+              props={{
+                label: "Confirm password",
+                tooltip: true,
+                id: "passwordConfirmation",
+                placeholder: "required",
+                type: "password",
+                tests: ["passwordsMatch", "notEmpty"],
+              }}
+            />
 
-          <button className={classes.btn} type="submit">
-            Create account
-          </button>
-        </form>
-      )}
-      {submitting && (
-        <AnimationLoading>
-          <p>Submitting...</p>
-        </AnimationLoading>
-      )}
-      {success ? (
-        <p className={success ? classes.success : classes.errorSpan}>
-          ✅ {message}
-        </p>
-      ) : (
-        message && <p className={classes.failure}>⚠️ {message}</p>
-      )}
-    </Tile>
+            <button className="my-8 btn" type="submit">
+              Create account
+            </button>
+          </form>
+        )}
+        {submitting && (
+          <AnimationLoading>
+            <p>Submitting...</p>
+          </AnimationLoading>
+        )}
+        {success ? (
+          <p className="my-20 font-bold">✅ {message}</p>
+        ) : (
+          message && <p className="font-bold">⚠️ {message}</p>
+        )}
+      </Tile>
     </div>
   );
 }

@@ -4,20 +4,8 @@ import axiosInstance from "../../../helpers/axios";
 import { resizeTiles } from "../../../helpers/utils";
 import AnimationLoading from "../../elements/AnimationLoading";
 import Carousel from "../../elements/Carousel";
-
-const classes = {
-  wrapper: "",
-  emblaSlide:
-    "js__utils__resizeTiles relative overflow-hidden h-auto embla-slide",
-  title: "pt-6 ml-2 text-emerald-800",
-  name: "",
-  scientific: "italic",
-  image: "w-full rounded-xl",
-  link: "font-bold text-emerald-800 italic active:text-emerald-950 active:underline",
-  description: "overflow-hidden",
-  readMore:
-    "absolute right-0 font-bold bottom-0 rounded-full p-2 z-10 text-emerald-800 bg-white",
-};
+import Tile from "../../elements/Tile";
+import TileXL from "../../elements/TileXL";
 
 export default function PlantList() {
   const [plantList, setPlantList] = useState(false);
@@ -40,37 +28,56 @@ export default function PlantList() {
       .catch((err) => console.error(err));
   }, []);
 
-  return (
-    <div className={classes.wrapper} id="wrapper">
-      <h2 className={classes.title} id="title">
-        Invasive plants
-      </h2>
-      <Carousel>
-        {loading ? (
-          <AnimationLoading>
-            <h3>Loading...</h3>
-          </AnimationLoading>
-        ) : (
-          plantList.map((plant) => (
-            <div key={plant.id} id="emblaSlide" className={classes.emblaSlide}>
+  return loading ? (
+    <div className="wrapper-tile">
+      <Tile>
+        <AnimationLoading>
+          <h3>Loading...</h3>
+        </AnimationLoading>
+      </Tile>
+    </div>
+  ) : (
+    <div className="mt-2 mb-6 space-y-6">
+      <TileXL>
+        <h1 className="pt-6 ml-2 text-emerald-800">
+          Catalogue of invasive plants
+        </h1>
+        <Carousel>
+          {plantList.map((plant) => (
+            <div
+              key={plant.id}
+              id="emblaSlide"
+              className="relative h-auto overflow-hidden js__utils__resizeTiles embla-slide"
+            >
               <h3>{plant.common_name_en}</h3>
-              <p className={classes.scientific}>{plant.scientific_name}</p>
-              <img
-                className={classes.image}
-                src={
-                  // if no image for this plant is found, show default image
-                  plantImages.filter(
-                    (img) => img.plant === plant.id && img.type === "main"
-                  )[0]
-                    ? plantImages.filter(
-                        (img) => img.plant === plant.id && img.type === "main"
-                      )[0].image
-                    : plantImages.filter((img) => img.type === "default")[0]
-                        .image
-                }
-                alt=""
-              />
-              <Link to={`${plant.id}/`} className={classes.readMore}>
+
+              <figure
+                key={plant.id}
+                className="flex flex-col items-center justify-center"
+              >
+                <img
+                  className="block object-scale-down mx-auto my-2 border-2 border-solid rounded-lg max-h-96 border-slate-200"
+                  src={
+                    // if no image for this plant is found, show default image
+                    plantImages.filter(
+                      (img) => img.plant === plant.id && img.type === "main"
+                    )[0]
+                      ? plantImages.filter(
+                          (img) => img.plant === plant.id && img.type === "main"
+                        )[0].image
+                      : plantImages.filter((img) => img.type === "default")[0]
+                          .image
+                  }
+                  alt={plant.common_name_en}
+                />
+                <figcaption className="block mx-auto italic font-bold text-center">
+                  {plant.scientific_name}
+                </figcaption>
+              </figure>
+              <Link
+                to={`${plant.id}/`}
+                className="absolute bottom-0 right-0 z-10 p-2 font-bold bg-white rounded-full text-emerald-800"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   height="24"
@@ -84,16 +91,19 @@ export default function PlantList() {
                   />
                 </svg>
               </Link>
-              <p className={classes.description} id="description">
+              <p className="mt-2 overflow-hidden" id="description">
                 {plant.description_en}
-                <Link className={classes.link} to={"/plants/" + plant.id}>
+                <Link
+                  className="italic font-bold text-emerald-800 active:text-emerald-950"
+                  to={"/plants/" + plant.id}
+                >
                   Read more
                 </Link>
               </p>
             </div>
-          ))
-        )}
-      </Carousel>
+          ))}
+        </Carousel>
+      </TileXL>
     </div>
   );
 }
