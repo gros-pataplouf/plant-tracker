@@ -5,7 +5,7 @@ import Tile from "../../elements/Tile";
 
 const classes = {
   loadingAnimation:
-    "top-0 h-screen w-screen z-30 bg-emerald-950 flex flex-col justify-center",
+    "absolute -top-[10vh] h-screen w-screen z-50 bg-emerald-950 flex flex-col justify-center",
   loadingTitle: "text-yellow-100 text-center loadingHero mb-10",
   image: "mx-auto h-20 mt-20",
   introList: "list-disc [&>li]:ml-6 space-y-6 mt-6 text-3xl",
@@ -39,7 +39,7 @@ export default function Hero() {
 
     setTimeout(() => {
       setLoading(false);
-    }, 5000);
+    }, 4000);
   }, []);
 
   return loading ? (

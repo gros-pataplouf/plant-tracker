@@ -18,8 +18,6 @@ export default function RequestReset() {
     axiosInstance
       .post("accounts/reset/", document.querySelector("#getResetLink"))
       .then((res) => {
-        console.log(res);
-
         if (location.search) {
           return (window.location.href = `/${location.search.slice(1)}`);
         } else {
