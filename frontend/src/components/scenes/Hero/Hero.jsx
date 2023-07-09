@@ -47,7 +47,7 @@ export default function Hero() {
     <div className="wrapper-tile">
       <Tile>
         <div>
-          <h3>Welcome to the Planttracker App</h3>
+          <h1>Welcome to the Planttracker App</h1>
           <ul className="list-disc [&>li]:ml-6 space-y-6 mt-6 text-3xl">
             <li>
               Learn about invasive plant species and their impact on native

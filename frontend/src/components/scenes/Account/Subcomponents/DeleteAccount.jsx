@@ -30,7 +30,7 @@ export default function DeleteAccount() {
   ) : (
     <div>
       <form action="">
-        <p className="my-8 font-bold text-red-800">
+        <p className="my-8 text-2xl font-bold text-red-800">
           Are you sure you want to delete your account? This cannot be undone!
         </p>
         <div className="flex">

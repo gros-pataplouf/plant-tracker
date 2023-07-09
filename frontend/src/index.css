@@ -55,16 +55,18 @@
 
   p,
   div,
-  select {
-    font: normal 400 1.4rem/1.8rem "Roboto", sans-serif;
+  select,
+  li {
+    font: normal 400 16px/1.8rem "Roboto", sans-serif;
   }
 
   button {
-    font: normal 600 1.4rem/1.8rem "Roboto", sans-serif;
+    font: normal 600 16px/1.8rem "Roboto", sans-serif;
   }
 
   input,
-  textarea {
+  textarea { 
+    font: normal 400 16px/1.8rem "Roboto", sans-serif;
     border-radius: 0.5rem !important;
   }
 

@@ -82,7 +82,7 @@ export default function TrackForm({ props }) {
             encType="multipart/form-data"
             id="submitform"
           >
-            <h3 className="pt-4 text-emerald-800">Complete and submit</h3>
+            <h1 className="pt-4 text-emerald-800">Complete and submit</h1>
 
             <label htmlFor="location">Surface (m²)</label>
             <input
@@ -117,7 +117,7 @@ export default function TrackForm({ props }) {
               className="block text-slate-950 pr-[26px] my-4 whitespace-nowrap font-bold rounded-lg w-min p-2 px-4 bg-lime/50 border-2 border-emerald-800"
               htmlFor="images"
             >
-              Add photo{" "}
+              Add photo
               <img
                 className="inline-block"
                 id="camsymbol"
@@ -171,7 +171,7 @@ export default function TrackForm({ props }) {
         )}
         {submitting && !success && (
           <AnimationLoading>
-            <h3>Submitting...</h3>
+            <p className="font-bold text-center">Submitting...</p>
           </AnimationLoading>
         )}
         {message && success && (

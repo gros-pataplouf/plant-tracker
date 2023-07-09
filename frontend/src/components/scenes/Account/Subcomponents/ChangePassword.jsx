@@ -89,12 +89,12 @@ export default function ChangePassword() {
       )}
       {submitting && (
         <AnimationLoading>
-          <p>Submitting</p>
+          <p className="text-3xl">Submitting</p>
         </AnimationLoading>
       )}
       {success && (
         <AnimationConfirm>
-          <p>Password updated!</p>
+          <p className="text-3xl">Password updated!</p>
         </AnimationConfirm>
       )}
     </div>

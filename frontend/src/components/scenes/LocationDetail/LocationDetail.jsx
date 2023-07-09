@@ -7,7 +7,7 @@ import { leafletLowZIndex, convertGPS } from "../../../helpers/leafletHelpers";
 import AnimationLoading from "../../elements/AnimationLoading";
 import { Link } from "react-router-dom";
 import Tile from "../../elements/Tile";
-import ScrollTile from "../../elements/TileXL";
+import TileXL from "../../elements/TileXL";
 
 export default function LocationDetail() {
   const [location, setLocation] = useState(null);
@@ -45,14 +45,14 @@ export default function LocationDetail() {
     <div className="wrapper-tile">
       <Tile>
         <AnimationLoading>
-          <h3>Loading...</h3>
+          <p className="font-bold text-center">Loading...</p>
         </AnimationLoading>
       </Tile>
     </div>
   ) : (
-    <div className="wrapper-tile">
-      <ScrollTile>
-        <h2 className="p-4 font-bold text-emerald-800">Location detail</h2>
+    <div className="mt-2 mb-6 space-y-6">
+      <TileXL>
+        <h1 className="pt-4 font-bold text-center text-emerald-800">Location detail</h1>
         {location && (
           <>
             {location.photos && (
@@ -145,7 +145,7 @@ export default function LocationDetail() {
             </table>
           </>
         )}
-      </ScrollTile>
+      </TileXL>
     </div>
   );
 }

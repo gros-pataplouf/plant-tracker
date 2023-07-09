@@ -10,6 +10,8 @@ import {
   GoBackButton,
   Search,
 } from "../../../elements/MapComponents";
+import TileXL from "../../../elements/TileXL";
+import Tile from "../../../elements/Tile";
 
 function Animation() {
   return <Lottie animationData={locating} loop={true} />;
@@ -28,7 +30,7 @@ function Map({ props }) {
   useEffect(() => {
     if (coords) {
       setLocation([coords.latitude, coords.longitude]);
-    }
+    };
   }, [coords]);
   return (
     <MapContainer
@@ -80,7 +82,8 @@ export default function TrackMap({ props }) {
     userDecisionTimeout: 10000,
   });
   return !isGeolocationAvailable || !isGeolocationEnabled || coords ? (
-    <div className="mt-4">
+    <div className="mt-2 mb-6 space-y-6">
+      <TileXL>
       <p className="px-4 text-3xl font-bold">
         Drag the map under the cursor or search an address.
       </p>
@@ -95,8 +98,13 @@ export default function TrackMap({ props }) {
         }}
       />
       <ContinueButton props={{ location, setDisplay }} />
+    </TileXL>
     </div>
   ) : (
+    <div className="wrapper-tile">
+    <Tile>
     <Animation />
+    </Tile>
+    </div>
   );
 }

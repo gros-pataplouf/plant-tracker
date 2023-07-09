@@ -38,9 +38,11 @@ export default function PlantList() {
     <div>
       {plant ? (
         <TileXL>
-          <h1 className="my-2 text-emerald-800">{plant.common_name_en}</h1>
-          <h2 className="my-2 font-bold text-emerald-950">Description</h2>
-          <p>{plant.description_en}</p>
+          <h1 className="px-4 my-2 text-center text-emerald-800">{plant.common_name_en}</h1>
+          <p className="italic font-bold text-center text-slate-800">{plant.scientific_name}</p>
+
+          <h2 className="px-4 mt-6 mb-4 font-bold text-emerald-950">Description</h2>
+          <p className="px-4">{plant.description_en}</p>
 
           <Carousel>
             {photos
@@ -62,8 +64,8 @@ export default function PlantList() {
                 </figure>
               ))}
           </Carousel>
-          <h2 className="my-2 font-bold text-emerald-950">Identification</h2>
-          <p>{plant.identification_en}</p>
+          <h2 className="px-4 mt-6 mb-4 font-bold text-emerald-950">Identification</h2>
+          <p className="px-4">{plant.identification_en}</p>
           <Carousel>
             {photos
               .filter((photo) => photo.type === "identification")
@@ -84,19 +86,19 @@ export default function PlantList() {
                 </figure>
               ))}
           </Carousel>
-          <h2 className="my-2 font-bold text-emerald-950">Ecology</h2>
-          <p>{plant.ecology_en}</p>
-          <h2 className="mt-6 mb-2 font-bold text-emerald-950">
+          <h2 className="px-4 mt-6 mb-4 font-bold text-emerald-950">Ecology</h2>
+          <p className="px-4">{plant.ecology_en}</p>
+          <h2 className="px-4 mt-6 mb-2 font-bold text-emerald-950">
             Recent findings
           </h2>
-          <ul>
+          <ul className="px-4" >
             {findings &&
               findings
                 .filter((_) => _.plant === plant.id)
                 .map((_) => {
                   return (
-                    <li key={_.id}>
-                      📌
+                    <li className="block py-3" key={_.id}>
+                      📌 &nbsp;
                       <Link to={`/locations/${_.id}`}>
                         {_.area} m² near {_.display_name},{" "}
                         {new Date(_.created_at).toLocaleString("en-GB")}
@@ -110,7 +112,7 @@ export default function PlantList() {
         <div className="wrapper-tile">
           <Tile>
             <AnimationLoading>
-              <p>Getting data from the server...</p>
+              <p className="font-bold">Getting data from the server...</p>
             </AnimationLoading>
           </Tile>
         </div>

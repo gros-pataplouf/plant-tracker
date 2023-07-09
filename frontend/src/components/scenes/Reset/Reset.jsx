@@ -40,7 +40,7 @@ export default function Reset() {
   return (
     <div className="wrapper-tile">
       <Tile>
-        <h3 className="py-8">Password reset ✍️</h3>
+        <h1 className="py-8">Password reset ✍️</h1>
         {!success && (
           <form
             className="flex flex-col"

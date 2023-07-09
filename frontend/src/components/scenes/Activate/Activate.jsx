@@ -21,7 +21,7 @@ export default function Activate() {
     });
 
   return (
-    <>
+    <div className="wrapper-tile">
       <Tile>
         {!message && (
           <AnimationLoading>
@@ -30,6 +30,6 @@ export default function Activate() {
         )}
         <p className="self-center text-3xl font-bold">{message && message}</p>
       </Tile>
-    </>
+    </div>
   );
 }

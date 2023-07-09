@@ -67,7 +67,7 @@ export default function UpdateEmail({ props }) {
               tests: ["validEmail", "notEmpty"],
             }}
           />
-          {message && <p className="text-red-800">{message} </p>}
+          {message && <p className="text-3xl text-red-800">{message} </p>}
           <div className="flex space-4">
             <button className="mr-4 rounded-lg btn" value="default">
               Ok
@@ -86,13 +86,13 @@ export default function UpdateEmail({ props }) {
       )}
       {submitting && (
         <AnimationLoading>
-          <h4>Submitting...</h4>
+          <p className="text-3xl">Submitting...</p>
         </AnimationLoading>
       )}
       {success && (
         <div className="flex flex-col">
           <AnimationConfirm>
-            <h4>Succes!</h4>
+            <p className="text-3xl">Succes!</p>
           </AnimationConfirm>
           <button className="btn" name="closeModal" onClick={handleModal}>
             Close

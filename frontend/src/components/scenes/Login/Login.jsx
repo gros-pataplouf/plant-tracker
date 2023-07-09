@@ -86,13 +86,13 @@ export default function Login() {
 
         {submitting && (
           <AnimationLoading>
-            <p>Logging in...</p>
+            <p className="py-8 font-bold">Logging in...</p>
           </AnimationLoading>
         )}
 
         {!submitting && isLoggedIn && (
           <AnimationConfirm>
-            <p className="font-bold">
+            <p className="py-8 font-bold">
               {message || "You are already logged in."}
             </p>
           </AnimationConfirm>

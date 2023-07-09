@@ -15,6 +15,11 @@ function App() {
       elt.classList.toggle("hidden");
     });
   }
+
+  useEffect(() => {
+    window.scroll(0, 1);
+
+  }, [])
   return (
     <div className="relative" onClick={discardTooltips}>
       <Header props={{ isLoggedIn, setIsLoggedIn }} />

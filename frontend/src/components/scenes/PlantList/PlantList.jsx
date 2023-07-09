@@ -32,14 +32,14 @@ export default function PlantList() {
     <div className="wrapper-tile">
       <Tile>
         <AnimationLoading>
-          <h3>Loading...</h3>
+          <p className="font-bold">Loading...</p>
         </AnimationLoading>
-      </Tile>
+      </Tile>className="py-8 font-bold"
     </div>
   ) : (
     <div className="mt-2 mb-6 space-y-6">
       <TileXL>
-        <h1 className="pt-6 ml-2 text-emerald-800">
+        <h1 className="pt-6 ml-2 text-center text-emerald-950">
           Catalogue of invasive plants
         </h1>
         <Carousel>
@@ -49,11 +49,11 @@ export default function PlantList() {
               id="emblaSlide"
               className="relative h-auto overflow-hidden js__utils__resizeTiles embla-slide"
             >
-              <h3>{plant.common_name_en}</h3>
+              <h2 className="pt-6 ml-2 text-4xl font-bold text-center text-emerald-800">{plant.common_name_en}</h2>
 
               <figure
                 key={plant.id}
-                className="flex flex-col items-center justify-center"
+                className="flex flex-col items-center justify-center py-6"
               >
                 <img
                   className="block object-scale-down mx-auto my-2 border-2 border-solid rounded-lg max-h-96 border-slate-200"
@@ -91,7 +91,7 @@ export default function PlantList() {
                   />
                 </svg>
               </Link>
-              <p className="mt-2 overflow-hidden" id="description">
+              <p className="px-4 mt-2 overflow-hidden" id="description">
                 {plant.description_en}
                 <Link
                   className="italic font-bold text-emerald-800 active:text-emerald-950"
