@@ -30,7 +30,7 @@ function Map({ props }) {
   useEffect(() => {
     if (coords) {
       setLocation([coords.latitude, coords.longitude]);
-    };
+    }
   }, [coords]);
   return (
     <MapContainer
@@ -84,27 +84,27 @@ export default function TrackMap({ props }) {
   return !isGeolocationAvailable || !isGeolocationEnabled || coords ? (
     <div className="mt-2 mb-6 space-y-6">
       <TileXL>
-      <p className="px-4 text-3xl font-bold">
-        Drag the map under the cursor or search an address.
-      </p>
-      <Map
-        props={{
-          location,
-          setLocation,
-          coords,
-          results,
-          setResults,
-          isGeolocationEnabled,
-        }}
-      />
-      <ContinueButton props={{ location, setDisplay }} />
-    </TileXL>
+        <p className="px-4 text-3xl font-bold">
+          Drag the map under the cursor or search an address.
+        </p>
+        <Map
+          props={{
+            location,
+            setLocation,
+            coords,
+            results,
+            setResults,
+            isGeolocationEnabled,
+          }}
+        />
+        <ContinueButton props={{ location, setDisplay }} />
+      </TileXL>
     </div>
   ) : (
     <div className="wrapper-tile">
-    <Tile>
-    <Animation />
-    </Tile>
+      <Tile>
+        <Animation />
+      </Tile>
     </div>
   );
 }

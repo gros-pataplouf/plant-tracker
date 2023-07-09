@@ -52,7 +52,9 @@ export default function LocationDetail() {
   ) : (
     <div className="mt-2 mb-6 space-y-6">
       <TileXL>
-        <h1 className="pt-4 font-bold text-center text-emerald-800">Location detail</h1>
+        <h1 className="pt-4 font-bold text-center text-emerald-800">
+          Location detail
+        </h1>
         {location && (
           <>
             {location.photos && (

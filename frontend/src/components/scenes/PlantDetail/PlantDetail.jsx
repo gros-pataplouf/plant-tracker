@@ -38,10 +38,16 @@ export default function PlantList() {
     <div>
       {plant ? (
         <TileXL>
-          <h1 className="px-4 my-2 text-center text-emerald-800">{plant.common_name_en}</h1>
-          <p className="italic font-bold text-center text-slate-800">{plant.scientific_name}</p>
+          <h1 className="px-4 my-2 text-center text-emerald-800">
+            {plant.common_name_en}
+          </h1>
+          <p className="italic font-bold text-center text-slate-800">
+            {plant.scientific_name}
+          </p>
 
-          <h2 className="px-4 mt-6 mb-4 font-bold text-emerald-950">Description</h2>
+          <h2 className="px-4 mt-6 mb-4 font-bold text-emerald-950">
+            Description
+          </h2>
           <p className="px-4">{plant.description_en}</p>
 
           <Carousel>
@@ -64,7 +70,9 @@ export default function PlantList() {
                 </figure>
               ))}
           </Carousel>
-          <h2 className="px-4 mt-6 mb-4 font-bold text-emerald-950">Identification</h2>
+          <h2 className="px-4 mt-6 mb-4 font-bold text-emerald-950">
+            Identification
+          </h2>
           <p className="px-4">{plant.identification_en}</p>
           <Carousel>
             {photos
@@ -91,7 +99,7 @@ export default function PlantList() {
           <h2 className="px-4 mt-6 mb-2 font-bold text-emerald-950">
             Recent findings
           </h2>
-          <ul className="px-4" >
+          <ul className="px-4">
             {findings &&
               findings
                 .filter((_) => _.plant === plant.id)

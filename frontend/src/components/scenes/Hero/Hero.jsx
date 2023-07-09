@@ -17,7 +17,7 @@ function Animation() {
       lottieRef={lottieRef}
       loop={false}
       rendererSettings={{ viewBoxSize: "150 220 170 80" }}
-      style={{ height: "30vw" }}
+      style={{ height: window.innerHeight > 768 ? "20vw" : "30vw" }}
     />
   );
 }
@@ -34,11 +34,11 @@ export default function Hero() {
   }, []);
 
   return loading ? (
-    <div className="absolute -top-[10vh] h-screen w-screen z-50 bg-emerald-950 flex flex-col justify-center">
-      <h1 className="mb-10 text-6xl text-center text-yellow-100 loadingHero">
-        Planttracker App
+    <div className="absolute -top-[10vh] md:-top-[15vh] h-screen w-screen z-50 bg-emerald-950 flex flex-col justify-center">
+      <h1 className="mb-10 text-6xl text-center text-yellow-100 md:text-8xl loadingHero">
+        Plant-Tracker App
       </h1>
-      <h2 className="mb-10 text-4xl text-center text-yellow-100 loadingHero">
+      <h2 className="mb-10 text-4xl text-center text-yellow-100 md:text-6xl md:mb-24 loadingHero">
         A citizen science project
       </h2>
       <Animation />
@@ -47,7 +47,7 @@ export default function Hero() {
     <div className="wrapper-tile">
       <Tile>
         <div>
-          <h1>Welcome to the Planttracker App</h1>
+          <h1>Welcome to the Plant-Tracker App</h1>
           <ul className="list-disc [&>li]:ml-6 space-y-6 mt-6 text-3xl">
             <li>
               Learn about invasive plant species and their impact on native

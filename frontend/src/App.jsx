@@ -18,13 +18,12 @@ function App() {
 
   useEffect(() => {
     window.scroll(0, 1);
-
-  }, [])
+  }, []);
   return (
     <div className="relative" onClick={discardTooltips}>
       <Header props={{ isLoggedIn, setIsLoggedIn }} />
       <div
-        className="absolute top-[10vh] flex flex-col w-screen overflow-x-clip"
+        className="absolute top-[10vh] md:top-[15vh] flex flex-col w-screen overflow-x-clip background bg-cover"
         id="detail"
       >
         <Outlet context={[isLoggedIn, setIsLoggedIn]} />

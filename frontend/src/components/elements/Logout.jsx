@@ -52,7 +52,7 @@ export default function Logout({ props }) {
         />
       ) : (
         <button
-          className="font-bold rounded-lg text-yellow-50 active:underline hover:underline decoration-2"
+          className="font-bold rounded-lg md:text-3xl text-yellow-50 active:underline hover:underline decoration-2"
           onClick={logOutHandler}
         >
           Log out

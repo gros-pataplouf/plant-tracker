@@ -34,7 +34,7 @@ export default function PlantList() {
         <AnimationLoading>
           <p className="font-bold">Loading...</p>
         </AnimationLoading>
-      </Tile>className="py-8 font-bold"
+      </Tile>
     </div>
   ) : (
     <div className="mt-2 mb-6 space-y-6">
@@ -49,7 +49,9 @@ export default function PlantList() {
               id="emblaSlide"
               className="relative h-auto overflow-hidden js__utils__resizeTiles embla-slide"
             >
-              <h2 className="pt-6 ml-2 text-4xl font-bold text-center text-emerald-800">{plant.common_name_en}</h2>
+              <h2 className="pt-6 ml-2 text-4xl font-bold text-center text-emerald-800">
+                {plant.common_name_en}
+              </h2>
 
               <figure
                 key={plant.id}

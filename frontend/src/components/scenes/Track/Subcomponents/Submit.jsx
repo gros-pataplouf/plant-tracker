@@ -161,7 +161,7 @@ export default function TrackForm({ props }) {
 
             <button
               type="submit"
-              className="mt-4 btn"
+              className="mt-4 md:block md:mt-8 btn"
               value="Submit"
               onClick={submitHandler}
             >

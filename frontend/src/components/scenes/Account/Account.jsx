@@ -57,38 +57,47 @@ export default function Account() {
           </tr>
           <tr>
             <td>Email:</td>
-            <td>{user && user.email}
-            </td>
+            <td>{user && user.email}</td>
           </tr>
           <tr>
             <td>
-            <button className="text-3xl text-emerald-900" name="openModal" onClick={handleModal}>
+              <button
+                className="text-3xl text-emerald-900"
+                name="openModal"
+                onClick={handleModal}
+              >
                 Update email
               </button>
               {/* Change email */}
               <Modal>
                 <UpdateEmail props={{ changes, setChanges }} />
               </Modal>
-
             </td>
           </tr>
 
           {/* Password change */}
           <tr>
             <td>
-              <button onClick={handleModal} className="text-3xl text-emerald-900" name="openModal">
+              <button
+                onClick={handleModal}
+                className="text-3xl text-emerald-900"
+                name="openModal"
+              >
                 Change password
               </button>
               <Modal>
                 <ChangePassword />
               </Modal>
             </td>
-            
           </tr>
           {/* Delete account */}
           <tr>
             <td>
-              <button className="text-3xl text-red-800" name="openModal" onClick={handleModal}>
+              <button
+                className="text-3xl text-red-800"
+                name="openModal"
+                onClick={handleModal}
+              >
                 Delete account
               </button>
               <Modal>
