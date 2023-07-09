@@ -1,0 +1,71 @@
+"filename", "language", "JavaScript JSX", "CSS", "JavaScript", "XML", "JSON", "comment", "blank", "total"
+"/home/mercury/Desktop/planttracker/frontend/src/App.jsx", "JavaScript JSX", 32, 0, 0, 0, 0, 0, 5, 37
+"/home/mercury/Desktop/planttracker/frontend/src/assets/animations/confirm.json", "JSON", 0, 0, 0, 0, 231, 0, 1, 232
+"/home/mercury/Desktop/planttracker/frontend/src/assets/animations/dots-loading.json", "JSON", 0, 0, 0, 0, 602, 0, 1, 603
+"/home/mercury/Desktop/planttracker/frontend/src/assets/animations/location.json", "JSON", 0, 0, 0, 0, 6349, 0, 1, 6350
+"/home/mercury/Desktop/planttracker/frontend/src/assets/animations/plant.json", "JSON", 0, 0, 0, 0, 720, 0, 1, 721
+"/home/mercury/Desktop/planttracker/frontend/src/assets/animations/spinner.json", "JSON", 0, 0, 0, 0, 215, 0, 1, 216
+"/home/mercury/Desktop/planttracker/frontend/src/assets/icons/account.svg", "XML", 0, 0, 0, 1, 0, 0, 0, 1
+"/home/mercury/Desktop/planttracker/frontend/src/assets/icons/addphoto.svg", "XML", 0, 0, 0, 1, 0, 0, 0, 1
+"/home/mercury/Desktop/planttracker/frontend/src/assets/icons/bin.svg", "XML", 0, 0, 0, 1, 0, 0, 0, 1
+"/home/mercury/Desktop/planttracker/frontend/src/assets/icons/cam.svg", "XML", 0, 0, 0, 1, 0, 0, 0, 1
+"/home/mercury/Desktop/planttracker/frontend/src/assets/icons/cancel.svg", "XML", 0, 0, 0, 1, 0, 0, 0, 1
+"/home/mercury/Desktop/planttracker/frontend/src/assets/icons/chevron_left.svg", "XML", 0, 0, 0, 1, 0, 0, 0, 1
+"/home/mercury/Desktop/planttracker/frontend/src/assets/icons/chevron_right.svg", "XML", 0, 0, 0, 1, 0, 0, 0, 1
+"/home/mercury/Desktop/planttracker/frontend/src/assets/icons/close.svg", "XML", 0, 0, 0, 1, 0, 0, 0, 1
+"/home/mercury/Desktop/planttracker/frontend/src/assets/icons/close_white.svg", "XML", 0, 0, 0, 1, 0, 0, 0, 1
+"/home/mercury/Desktop/planttracker/frontend/src/assets/icons/hamburger.svg", "XML", 0, 0, 0, 1, 0, 0, 0, 1
+"/home/mercury/Desktop/planttracker/frontend/src/assets/icons/help.svg", "XML", 0, 0, 0, 1, 0, 0, 0, 1
+"/home/mercury/Desktop/planttracker/frontend/src/assets/icons/home.svg", "XML", 0, 0, 0, 1, 0, 0, 0, 1
+"/home/mercury/Desktop/planttracker/frontend/src/assets/icons/info.svg", "XML", 0, 0, 0, 1, 0, 0, 0, 1
+"/home/mercury/Desktop/planttracker/frontend/src/assets/icons/leaf.svg", "XML", 0, 0, 0, 1, 0, 0, 0, 1
+"/home/mercury/Desktop/planttracker/frontend/src/assets/icons/location.svg", "XML", 0, 0, 0, 1, 0, 0, 0, 1
+"/home/mercury/Desktop/planttracker/frontend/src/assets/icons/login.svg", "XML", 0, 0, 0, 1, 0, 0, 0, 1
+"/home/mercury/Desktop/planttracker/frontend/src/assets/icons/logout.svg", "XML", 0, 0, 0, 1, 0, 0, 0, 1
+"/home/mercury/Desktop/planttracker/frontend/src/assets/icons/mylocation.svg", "XML", 0, 0, 0, 1, 0, 0, 0, 1
+"/home/mercury/Desktop/planttracker/frontend/src/assets/icons/ok.svg", "XML", 0, 0, 0, 1, 0, 0, 0, 1
+"/home/mercury/Desktop/planttracker/frontend/src/assets/icons/plant1.svg", "XML", 0, 0, 0, 1, 0, 0, 0, 1
+"/home/mercury/Desktop/planttracker/frontend/src/assets/icons/plant2.svg", "XML", 0, 0, 0, 1, 0, 0, 0, 1
+"/home/mercury/Desktop/planttracker/frontend/src/assets/icons/plant3.svg", "XML", 0, 0, 0, 1, 0, 0, 0, 1
+"/home/mercury/Desktop/planttracker/frontend/src/assets/icons/plus.svg", "XML", 0, 0, 0, 1, 0, 0, 0, 1
+"/home/mercury/Desktop/planttracker/frontend/src/assets/icons/takephoto.svg", "XML", 0, 0, 0, 1, 0, 0, 0, 1
+"/home/mercury/Desktop/planttracker/frontend/src/assets/icons/turncam.svg", "XML", 0, 0, 0, 1, 0, 0, 0, 1
+"/home/mercury/Desktop/planttracker/frontend/src/assets/icons/visibility.svg", "XML", 0, 0, 0, 1, 0, 0, 0, 1
+"/home/mercury/Desktop/planttracker/frontend/src/assets/icons/visibility_off.svg", "XML", 0, 0, 0, 1, 0, 0, 0, 1
+"/home/mercury/Desktop/planttracker/frontend/src/components/elements/AnimationConfirm.jsx", "JavaScript JSX", 10, 0, 0, 0, 0, 0, 2, 12
+"/home/mercury/Desktop/planttracker/frontend/src/components/elements/AnimationLoading.jsx", "JavaScript JSX", 10, 0, 0, 0, 0, 0, 2, 12
+"/home/mercury/Desktop/planttracker/frontend/src/components/elements/Carousel.jsx", "JavaScript JSX", 38, 0, 0, 0, 0, 1, 4, 43
+"/home/mercury/Desktop/planttracker/frontend/src/components/elements/Header.jsx", "JavaScript JSX", 85, 0, 0, 0, 0, 0, 6, 91
+"/home/mercury/Desktop/planttracker/frontend/src/components/elements/InputField.jsx", "JavaScript JSX", 115, 0, 0, 0, 0, 3, 7, 125
+"/home/mercury/Desktop/planttracker/frontend/src/components/elements/Logout.jsx", "JavaScript JSX", 60, 0, 0, 0, 0, 0, 4, 64
+"/home/mercury/Desktop/planttracker/frontend/src/components/elements/MapComponents.jsx", "JavaScript JSX", 231, 0, 0, 0, 0, 11, 22, 264
+"/home/mercury/Desktop/planttracker/frontend/src/components/elements/Modal.jsx", "JavaScript JSX", 39, 0, 0, 0, 0, 5, 4, 48
+"/home/mercury/Desktop/planttracker/frontend/src/components/elements/Tile.jsx", "JavaScript JSX", 7, 0, 0, 0, 0, 0, 1, 8
+"/home/mercury/Desktop/planttracker/frontend/src/components/elements/TileXL.jsx", "JavaScript JSX", 7, 0, 0, 0, 0, 1, 1, 9
+"/home/mercury/Desktop/planttracker/frontend/src/components/scenes/Account/Account.jsx", "JavaScript JSX", 97, 0, 0, 0, 0, 4, 7, 108
+"/home/mercury/Desktop/planttracker/frontend/src/components/scenes/Account/Subcomponents/ChangePassword.jsx", "JavaScript JSX", 97, 0, 0, 0, 0, 0, 6, 103
+"/home/mercury/Desktop/planttracker/frontend/src/components/scenes/Account/Subcomponents/DeleteAccount.jsx", "JavaScript JSX", 50, 0, 0, 0, 0, 0, 5, 55
+"/home/mercury/Desktop/planttracker/frontend/src/components/scenes/Account/Subcomponents/Submissions.jsx", "JavaScript JSX", 25, 0, 0, 0, 0, 0, 2, 27
+"/home/mercury/Desktop/planttracker/frontend/src/components/scenes/Account/Subcomponents/UpdateEmail.jsx", "JavaScript JSX", 101, 0, 0, 0, 0, 0, 4, 105
+"/home/mercury/Desktop/planttracker/frontend/src/components/scenes/Activate/Activate.jsx", "JavaScript JSX", 33, 0, 0, 0, 0, 0, 3, 36
+"/home/mercury/Desktop/planttracker/frontend/src/components/scenes/ErrorPage/ErrorPage.jsx", "JavaScript JSX", 10, 0, 0, 0, 0, 1, 2, 13
+"/home/mercury/Desktop/planttracker/frontend/src/components/scenes/Explore/Explore.jsx", "JavaScript JSX", 88, 0, 0, 0, 0, 0, 5, 93
+"/home/mercury/Desktop/planttracker/frontend/src/components/scenes/Hero/Hero.jsx", "JavaScript JSX", 63, 0, 0, 0, 0, 1, 7, 71
+"/home/mercury/Desktop/planttracker/frontend/src/components/scenes/LocationDetail/LocationDetail.jsx", "JavaScript JSX", 145, 0, 0, 0, 0, 2, 5, 152
+"/home/mercury/Desktop/planttracker/frontend/src/components/scenes/Login/Login.jsx", "JavaScript JSX", 120, 0, 0, 0, 0, 0, 11, 131
+"/home/mercury/Desktop/planttracker/frontend/src/components/scenes/Login/Subcomponents/RequestReset.jsx", "JavaScript JSX", 44, 0, 0, 0, 0, 0, 2, 46
+"/home/mercury/Desktop/planttracker/frontend/src/components/scenes/PlantDetail/PlantDetail.jsx", "JavaScript JSX", 116, 0, 0, 0, 0, 0, 7, 123
+"/home/mercury/Desktop/planttracker/frontend/src/components/scenes/PlantList/PlantList.jsx", "JavaScript JSX", 103, 0, 0, 0, 0, 2, 5, 110
+"/home/mercury/Desktop/planttracker/frontend/src/components/scenes/Register/Register.jsx", "JavaScript JSX", 117, 0, 0, 0, 0, 0, 6, 123
+"/home/mercury/Desktop/planttracker/frontend/src/components/scenes/Reset/Reset.jsx", "JavaScript JSX", 95, 0, 0, 0, 0, 0, 8, 103
+"/home/mercury/Desktop/planttracker/frontend/src/components/scenes/Track/Subcomponents/Map.jsx", "JavaScript JSX", 105, 0, 0, 0, 0, 1, 5, 111
+"/home/mercury/Desktop/planttracker/frontend/src/components/scenes/Track/Subcomponents/Submit.jsx", "JavaScript JSX", 182, 0, 0, 0, 0, 3, 10, 195
+"/home/mercury/Desktop/planttracker/frontend/src/components/scenes/Track/Track.jsx", "JavaScript JSX", 24, 0, 0, 0, 0, 0, 3, 27
+"/home/mercury/Desktop/planttracker/frontend/src/constants/index.js", "JavaScript", 0, 0, 3, 0, 0, 0, 1, 4
+"/home/mercury/Desktop/planttracker/frontend/src/helpers/axios.js", "JavaScript", 0, 0, 81, 0, 0, 2, 14, 97
+"/home/mercury/Desktop/planttracker/frontend/src/helpers/checks.js", "JavaScript", 0, 0, 27, 0, 0, 0, 3, 30
+"/home/mercury/Desktop/planttracker/frontend/src/helpers/leafletHelpers.js", "JavaScript", 0, 0, 40, 0, 0, 4, 5, 49
+"/home/mercury/Desktop/planttracker/frontend/src/helpers/utils.js", "JavaScript", 0, 0, 21, 0, 0, 0, 2, 23
+"/home/mercury/Desktop/planttracker/frontend/src/index.css", "CSS", 0, 147, 0, 0, 0, 0, 25, 172
+"/home/mercury/Desktop/planttracker/frontend/src/main.jsx", "JavaScript JSX", 73, 0, 0, 0, 0, 0, 3, 76
+"Total", "-", 2322, 147, 172, 27, 8117, 41, 219, 11045

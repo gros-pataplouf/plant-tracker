@@ -102,7 +102,7 @@ export default function InputField({ props }) {
         {/* the toggle visibility button is only used in fields of type password */}
         {type === "password" && (
           <button
-            className="absolute top-2 right-2"
+            className="absolute flex flex-col items-center justify-center h-full right-2"
             onClick={(e) => {
               e.preventDefault();
               document
@@ -112,7 +112,7 @@ export default function InputField({ props }) {
             }}
           >
             <img
-              className="w-8"
+              className="block w-8 mb-4"
               src={showPwd ? visibility : visibility_off}
               alt=""
             />
