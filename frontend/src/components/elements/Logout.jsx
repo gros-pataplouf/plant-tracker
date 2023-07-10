@@ -42,7 +42,7 @@ export default function Logout({ props }) {
   return (
     <div
       id="lottieContainer"
-      className="pt-2 bg-emerald-950 h-[2.5rem] px-6 max-h-[8vh] min-h-[4vh]"
+      className="pt-2 bg-emerald-950 px-6 h-[4vh] flex items-center"
     >
       {loading ? (
         <Lottie
@@ -52,7 +52,7 @@ export default function Logout({ props }) {
         />
       ) : (
         <button
-          className="font-bold rounded-lg md:text-3xl text-yellow-50 active:underline hover:underline decoration-2"
+          className="font-bold rounded-lg md:text-3xl text-yellow-50 active:underline"
           onClick={logOutHandler}
         >
           Log out

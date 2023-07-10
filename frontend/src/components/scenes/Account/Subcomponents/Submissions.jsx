@@ -11,10 +11,11 @@ export default function Submissions({ props }) {
         ) : (
           submissions.map((submission) => {
             return (
-              <Link to={`/locations/${submission.id}`}>
+              <Link  key={submission.id}
+              to={`/locations/${submission.id}`}>
                 <li
                   className="block p-4 text-[1.7rem] leading-8"
-                  key={submission.id}
+                  
                 >
                   📌 {new Date(submission.created_at).toLocaleString("en-GB")}{" "}
                   near {submission.display_name || "unknown address"}

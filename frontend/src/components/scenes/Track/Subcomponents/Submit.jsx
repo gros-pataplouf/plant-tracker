@@ -77,7 +77,7 @@ export default function TrackForm({ props }) {
       <Tile>
         {!submitting && !success && (
           <form
-            className="flex flex-col space-y-2"
+            className="flex flex-col space-y-2 md:space-y-6"
             method="post"
             encType="multipart/form-data"
             id="submitform"

@@ -47,7 +47,7 @@ export default function PlantList() {
             <div
               key={plant.id}
               id="emblaSlide"
-              className="relative h-auto overflow-hidden js__utils__resizeTiles embla-slide"
+              className="relative w-screen h-auto overflow-hidden js__utils__resizeTiles embla-slide"
             >
               <h2 className="pt-6 ml-2 text-4xl font-bold text-center text-emerald-800">
                 {plant.common_name_en}
@@ -78,7 +78,7 @@ export default function PlantList() {
               </figure>
               <Link
                 to={`${plant.id}/`}
-                className="absolute bottom-0 right-0 z-10 p-2 font-bold bg-white rounded-full text-emerald-800"
+                className="absolute bottom-0 right-0 z-10 p-2 font-bold bg-white rounded-full md:hidden text-emerald-800"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -93,13 +93,15 @@ export default function PlantList() {
                   />
                 </svg>
               </Link>
-              <p className="px-4 mt-2 overflow-hidden" id="description">
-                {plant.description_en}
+              <p className="px-4 mt-2 text-ellipsis" id="description">
+              {plant.description_en.slice(0,1200)}
+
+                
                 <Link
-                  className="italic font-bold text-emerald-800 active:text-emerald-950"
+                  className="absolute hidden italic bg-white px-4font-bold md:block bottom-2 right-2 text-emerald-800 active:text-emerald-950"
                   to={"/plants/" + plant.id}
                 >
-                  Read more
+                  &nbsp; Read more
                 </Link>
               </p>
             </div>

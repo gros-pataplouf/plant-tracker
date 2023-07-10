@@ -23,7 +23,7 @@ function App() {
     <div className="relative" onClick={discardTooltips}>
       <Header props={{ isLoggedIn, setIsLoggedIn }} />
       <div
-        className="absolute top-[10vh] md:top-[15vh] flex flex-col w-screen overflow-x-clip background bg-cover"
+        className="absolute top-[10vh] min-h-[90vh] md:top-[15vh] md:min-h-[85vh] flex flex-col w-screen overflow-x-clip background bg-cover"
         id="detail"
       >
         <Outlet context={[isLoggedIn, setIsLoggedIn]} />

@@ -91,7 +91,7 @@ export default function Login() {
         )}
 
         {!submitting && isLoggedIn && (
-          <AnimationConfirm>
+          <AnimationConfirm className="md:h-[1vw]">
             <p className="py-8 font-bold">
               {message || "You are already logged in."}
             </p>

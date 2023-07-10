@@ -50,7 +50,8 @@ export default function Account() {
     <div className="mt-6 space-y-6 last:mb-6">
       <TileXL>
         <h1 className="my-6">My account settings</h1>
-        <table className="[&>tr]:h-12 text-3xl">
+        <table className="[&>tbody>tr]:h-12 text-3xl">
+          <tbody>
           <tr>
             <td>Username:</td>
             <td>{user && user.username}</td>
@@ -106,6 +107,7 @@ export default function Account() {
             </td>
             <td></td>
           </tr>
+          </tbody>
         </table>
       </TileXL>
       <TileXL>

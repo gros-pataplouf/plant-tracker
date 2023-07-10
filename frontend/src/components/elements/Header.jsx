@@ -15,15 +15,15 @@ export default function Header({ props }) {
 
   return (
     <div
-      className="absolute top-0 h-[10vh] md:h-[20vh] bg-emerald-900 space-4 w-screen"
+      className="absolute top-0 h-[10vh] md:h-[15vh] bg-emerald-900 space-4 w-screen"
       id="header"
     >
       {!isLoggedIn ? (
-        <div className="py-2 md:py-4 bg-emerald-950 h-[2.5rem] max-h-[8vh] min-h-[4vh]">
+        <div className="py-2 md:py-4 bg-emerald-950 h-[4vh] flex items-center">
           <button className="px-2 ml-6 font-bold rounded-lg md:text-3xl text-emerald-950 bg-yellow-50">
             <Link to={"login/"}>Log in</Link>
           </button>
-          <span className="text-yellow-50 md:text-3xl"> or</span>
+          <span className="ml-3 text-yellow-50 md:text-3xl"> or</span>
           <button className="px-2 font-bold rounded-lg md:text-3xl text-yellow-50">
             <Link to={"register/"}>Sign up</Link>
           </button>
@@ -48,12 +48,12 @@ export default function Header({ props }) {
             fill="#fefce8"
           />
         </svg>
-        <h2 className="self-center h-full p-4 text-5xl md:py-6 text-yellow-50 md:text-5xl">
+        <h2 className="self-center h-full p-4 text-5xl md:py-6 text-yellow-50 md:text-5xl md:h-[5vh]">
           Plant-Tracker
         </h2>
       </div>
-      <nav className="h-36">
-        <ul className="z-30 flex justify-start w-screen [&>li]:font-bold p-4 [&>li]:text-4xl text-white [&>li]:mx-auto bg-emerald-950 font-roboto-700">
+      <nav>
+        <ul className="z-30 flex justify-start w-screen md:[h-8vh] [&>li]:font-bold p-4 [&>li]:text-4xl text-white [&>li]:mx-auto bg-emerald-950 font-roboto-700">
           <li>
             <Link to={"plants/"}>Plant Info</Link>
           </li>
