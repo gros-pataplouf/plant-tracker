@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { useState } from "react";
 import Header from "./components/elements/Header";
-import { useEffect } from "react";
+
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(
     Boolean(localStorage.getItem("planttrackerAccess"))
@@ -16,14 +16,11 @@ function App() {
     });
   }
 
-  useEffect(() => {
-    window.scroll(0, 1);
-  }, []);
   return (
     <div className="relative" onClick={discardTooltips}>
       <Header props={{ isLoggedIn, setIsLoggedIn }} />
       <div
-        className="absolute top-[10vh] min-h-[90vh] md:top-[15vh] md:min-h-[85vh] flex flex-col w-screen overflow-x-clip background bg-cover"
+        className="absolute top-[10vh] min-h-[90vh] flex flex-col w-screen overflow-x-clip background bg-cover"
         id="detail"
       >
         <Outlet context={[isLoggedIn, setIsLoggedIn]} />

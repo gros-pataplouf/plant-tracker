@@ -7,6 +7,9 @@
   @media (min-height: 768px) {
     height: 60vh;
   }
+  @media (min-height: 1024px) {
+    height: 55vh;
+  }
 }
 
 #smallmap {
@@ -163,7 +166,7 @@
 
 @layer components {
   .btn {
-    @apply content-center w-6/12 p-6 m-3 mx-auto rounded-full text-yellow-50 bg-emerald-800 active:bg-emerald-950 active:shadow-green-950/50 active:text-white;
+    @apply content-center w-6/12 max-w-[20rem] p-6 m-3 mx-auto rounded-full text-yellow-50 bg-emerald-800 active:bg-emerald-950 active:shadow-green-950/50 active:text-white;
   }
   .wrapper-tile {
     @apply flex flex-col h-[90vh] md:h-[85vh] justify-center items-center;

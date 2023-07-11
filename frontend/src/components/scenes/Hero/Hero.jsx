@@ -17,7 +17,7 @@ function Animation() {
       lottieRef={lottieRef}
       loop={false}
       rendererSettings={{ viewBoxSize: "150 220 170 80" }}
-      style={{ height: window.innerHeight > 768 ? "20vw" : "30vw" }}
+      style={{ height: "20vh" }}
     />
   );
 }
@@ -30,11 +30,11 @@ export default function Hero() {
 
     setTimeout(() => {
       setLoading(false);
-    }, 4000);
+    }, 5000);
   }, []);
 
   return loading ? (
-    <div className="absolute -top-[10vh] md:-top-[15vh] h-screen w-screen z-50 bg-emerald-950 flex flex-col justify-center">
+    <div className="absolute -top-[10vh] h-screen w-screen z-50 bg-emerald-950 flex flex-col justify-center">
       <h1 className="mb-10 text-6xl text-center text-yellow-100 md:text-8xl loadingHero">
         Plant-Tracker App
       </h1>

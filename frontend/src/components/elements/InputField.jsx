@@ -76,7 +76,7 @@ export default function InputField({ props }) {
             <span onTouchStart={toggleTooltip} onClick={toggleTooltip}>
               <img className="inline w-8 align-top" src={info} />
               <div
-                className="js__tooltip hidden absolute w-[80vw] bg-black -top-24 m-auto p-6 -translate-x-2/4 left-2/4 border-spacing-2 border-2 rounded-lg text-yellow-50 leading-none z-20"
+                className="js__tooltip hidden absolute w-4/5 bg-black -top-24 m-auto p-6 -translate-x-2/4 left-2/4 border-spacing-2 border-2 rounded-lg text-yellow-50 leading-none z-20"
                 role="tooltip"
               >
                 <div>

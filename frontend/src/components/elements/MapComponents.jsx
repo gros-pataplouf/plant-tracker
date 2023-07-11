@@ -66,6 +66,7 @@ export function Search({ props }) {
 
   function inputHandler() {
     // get list of possible geolocation data for search string from OSM API
+    if (inputField && inputField.value){
     const url = `${API_OSM_NOMINATIM}?q=${inputField.value}&limit=8&format=json`;
     axiosInstance
       .get(url)
@@ -73,7 +74,7 @@ export function Search({ props }) {
         setResults(res.data);
       })
       .catch((e) => console.error(e));
-  }
+  }}
 
   // empty search field, search results in state and go to selected result
   function goToResult(e) {
@@ -89,7 +90,7 @@ export function Search({ props }) {
     inputField.value = "";
   }
   return (
-    <div className="z-10 absolute top-[10px] right-2 leaflet-bar leaflet-control w-4/5 max-h-2/3 overflow-scroll">
+    <div className="z-10 absolute top-[10px] right-2 leaflet-bar leaflet-control w-4/5 max-h-2/3 overflow-clip">
       <input
         className="bg-white p-[5px] h-[30px] w-full"
         id="inputfield"

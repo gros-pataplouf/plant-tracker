@@ -82,7 +82,7 @@ export default function TrackMap({ props }) {
     userDecisionTimeout: 10000,
   });
   return !isGeolocationAvailable || !isGeolocationEnabled || coords ? (
-    <div className="mt-2 mb-6 space-y-6">
+    <div className="wrapper-tile">
       <TileXL>
         <p className="px-4 text-3xl font-bold">
           Drag the map under the cursor or search an address.

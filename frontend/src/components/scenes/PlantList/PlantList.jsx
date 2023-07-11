@@ -37,7 +37,7 @@ export default function PlantList() {
       </Tile>
     </div>
   ) : (
-    <div className="mt-2 mb-6 space-y-6">
+    <div className="wrapper-tile md:mt-6">
       <TileXL>
         <h1 className="pt-6 ml-2 text-center text-emerald-950">
           Catalogue of invasive plants
@@ -98,10 +98,10 @@ export default function PlantList() {
 
                 
                 <Link
-                  className="absolute hidden italic bg-white px-4font-bold md:block bottom-2 right-2 text-emerald-800 active:text-emerald-950"
+                  className="absolute hidden italic bg-white px-4 rounded-lg lg:py-2 font-bold md:block bottom-0 right-2 text-emerald-800 active:text-emerald-950"
                   to={"/plants/" + plant.id}
                 >
-                  &nbsp; Read more
+                  &nbsp; Learn more
                 </Link>
               </p>
             </div>

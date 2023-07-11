@@ -6,11 +6,9 @@ export default function Confirmation({ children }) {
   const [ animationHeight, setAnimationHeight ] = useState(0);
   useLayoutEffect(() => {
     if (window.innerWidth < 768) {
-      setAnimationHeight("15vw");
-    } else if (window.innerWidth < 1024) {
-      setAnimationHeight("10vw");
+      setAnimationHeight("15vh");
     } else {
-      setAnimationHeight("3vw");
+      setAnimationHeight("10vh");
     }
   }, [])
 

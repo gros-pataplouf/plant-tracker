@@ -47,7 +47,7 @@ export default function Account() {
       </Tile>
     </div>
   ) : (
-    <div className="mt-6 space-y-6 last:mb-6">
+    <div className="mt-6 space-y-6 last:mb-6 lg:px-96 lg:[&>*>*]:m-4">
       <TileXL>
         <h1 className="my-6">My account settings</h1>
         <table className="[&>tbody>tr]:h-12 text-3xl">

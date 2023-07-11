@@ -5,12 +5,12 @@ import { useState,  useLayoutEffect } from "react";
 export default function AnimationLoading({ children }) {
   const [ animationHeight, setAnimationHeight ] = useState(0);
   useLayoutEffect(() => {
-    if (window.innerWidth < 768) {
-      setAnimationHeight("30vw");
-    } else if (window.innerWidth < 1024) {
-      setAnimationHeight("20vw");
+    if (window.innerHeight < 768) {
+      setAnimationHeight("15vh");
+    } else if (window.innerHeight < 1024) {
+      setAnimationHeight("10vh");
     } else {
-      setAnimationHeight("5vw");
+      setAnimationHeight("8vh");
     }
   }, [])
   return (

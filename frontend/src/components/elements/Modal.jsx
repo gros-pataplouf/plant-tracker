@@ -21,7 +21,7 @@ export function handleModal(e) {
 export function Modal({ children }) {
   return (
     <dialog
-      className="p-0 backdrop:bg-gray-700 backdrop:bg-opacity-90 rounded-lg w-[85vw]"
+      className="p-0 backdrop:bg-gray-700 backdrop:bg-opacity-90 rounded-lg w-[85vw] md:max-w-[40rem]"
       onClick={(e) => {
         // only close the target if the actualy modal, and none of its child nodes, have been clicked
         try {
@@ -32,7 +32,7 @@ export function Modal({ children }) {
       }}
     >
       {" "}
-      <div className="p-8">
+      <div className="p-8 md:py-16">
         <img
           onClick={handleModal}
           className="-mt-4 -ml-4"

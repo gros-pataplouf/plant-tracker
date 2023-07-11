@@ -15,7 +15,7 @@ export default function Header({ props }) {
 
   return (
     <div
-      className="absolute top-0 h-[10vh] md:h-[15vh] bg-emerald-900 space-4 w-screen"
+      className="absolute top-0 h-[10vh] bg-emerald-950 space-4 w-screen"
       id="header"
     >
       {!isLoggedIn ? (
@@ -32,9 +32,13 @@ export default function Header({ props }) {
         <Logout props={{ isLoggedIn, setIsLoggedIn }} />
       )}
 
-      <div id="titleContainer" className="flex pl-4 md:h-content">
-        <svg
-          className="m-2"
+      <nav id="titleContainer" className="flex md:h-content items-center">
+
+        <ul className="z-30 flex w-screen [&>li]:text-4xl [&>li]:flex [&>li]:justify-start [&>li]:items-center text-white [&>li:not(:first-child)]:mx-auto bg-emerald-950 font-roboto-700">
+        <li className="flex">
+        <Link to={"/"}>
+        <svg 
+          className="lg:ml-4"
           xmlns="http://www.w3.org/2000/svg"
           height={window.innerHeight < 768 ? 32 : 48}
           viewBox="0 96 960 960"
@@ -48,31 +52,34 @@ export default function Header({ props }) {
             fill="#fefce8"
           />
         </svg>
-        <h2 className="self-center h-full p-4 text-5xl md:py-6 text-yellow-50 md:text-5xl md:h-[5vh]">
+        </Link>
+        
+        <Link className="hover:animate-link"  to={"/"}>
+        <h1 className="self-center h-full p-4 text-5xl font-normal text-yellow-50 md:text-5xl">
           Plant-Tracker
-        </h2>
-      </div>
-      <nav>
-        <ul className="z-30 flex justify-start w-screen md:[h-8vh] [&>li]:font-bold p-4 [&>li]:text-4xl text-white [&>li]:mx-auto bg-emerald-950 font-roboto-700">
-          <li>
-            <Link to={"plants/"}>Plant Info</Link>
+        </h1>
+        </Link>
+        </li>
+          <li className="hidden md:inline-block">
+            <Link className="hidden md:inline-block hover:animate-link" to={"plants/"}>Plant Info</Link>
           </li>
-          <li>
-            <Link to={"explore/"}>Explore</Link>
+          <li className="hidden md:inline-block">
+            <Link className="hidden md:inline-block hover:animate-link" to={"explore/"}>Explore</Link>
           </li>
-          <li>
-            <Link to={"track/"}>Participate</Link>
+          <li className="hidden md:inline-block">
+            <Link className="hidden md:inline-block hover:animate-link" to={"track/"}>Participate</Link>
           </li>
           {isLoggedIn && (
-            <li>
-              <Link to={"account/"}>My Account</Link>
+            <li className="hidden md:inline-block">
+              <Link className="hidden md:inline-block hover:animate-link" to={"account/"}>My Account</Link>
             </li>
           )}
         </ul>
       </nav>
 
+
       <img
-        className="fixed z-30 p-2 rounded-full md:hidden bg-emerald-950 top-2 right-2"
+        className="fixed z-30 p-2 rounded-full md:hidden bg-emerald-900 top-2 right-2"
         src={hamburger}
         alt="hamburger menu"
         onClick={toggleNav}

@@ -50,7 +50,7 @@ export default function LocationDetail() {
       </Tile>
     </div>
   ) : (
-    <div className="mt-2 mb-6 space-y-6">
+    <div className="mt-2 mb-4 space-y-6 lg:wrapper-tile">
       <TileXL>
         <h1 className="pt-4 font-bold text-center text-emerald-800">
           Location detail
@@ -64,8 +64,8 @@ export default function LocationDetail() {
                     {/* PostGis PointField has coordinates [lat, long], while leaflet needs [lng, lat]. Therefore, deepcopy must be made and coordinates reversed
             in: MapContainer (center), Marker */}
                     <MapContainer
-                      className="border-mint/99 border-2 rounded-md m-4 h-[95%]"
-                      id="map smallmap"
+                      className="border-mint/99 border-2 rounded-md h-[95%]"
+                      id="smallmap"
                       center={structuredClone(
                         location.location.coordinates
                       ).reverse()}
