@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axiosInstance from "../../../helpers/axios";
-import { resizeTiles } from "../../../helpers/utils";
 import AnimationLoading from "../../elements/AnimationLoading";
 import Carousel from "../../elements/Carousel";
 import Tile from "../../elements/Tile";
@@ -22,7 +21,6 @@ export default function PlantList() {
         setLoading(false);
       })
       .catch((err) => console.error(err))
-      .finally(resizeTiles());
   }, []);
 
   return loading ? (
@@ -44,7 +42,7 @@ export default function PlantList() {
             <div
               key={plant.id}
               id="emblaSlide"
-              className="relative w-screen h-auto overflow-hidden js__utils__resizeTiles embla-slide"
+              className="relative w-screen h-auto overflow-hidden max-h-[70vh] embla-slide"
             >
               <h2 className="pt-6 ml-2 text-4xl font-bold text-center text-emerald-800">
                 {plant.common_name_en}
@@ -91,7 +89,7 @@ export default function PlantList() {
                 </svg>
               </Link>
               <p className="px-4 mt-2 text-ellipsis" id="description">
-              {plant.description_en.slice(0,1200)}
+              {plant.description_en}
 
                 
                 <Link

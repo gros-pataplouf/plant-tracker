@@ -18,7 +18,7 @@ export default function Carousel({ children }) {
       {/* the previous and next buttons are only shown if more than 1 children */}
       {children.length > 1 && (
         <button
-          className="absolute z-10 rounded-full bg-slate-500/80 top-1/2 -left-6 md:left-0"
+          className="absolute z-10 rounded-full  bg-emerald-900/50  hover:bg-emerald-900/90 top-1/2 -left-6 md:left-0"
           onClick={scrollPrev}
         >
           <img src={chevron_left} alt="forward" />
@@ -26,7 +26,7 @@ export default function Carousel({ children }) {
       )}
       {children.length > 1 && (
         <button
-          className="absolute z-10 rounded-full bg-slate-500/80 top-1/2 -right-6 md:right-0"
+          className="absolute z-10 rounded-full bg-emerald-900/50 top-1/2 -right-6 md:right-0 hover:bg-emerald-900/90"
           onClick={scrollNext}
         >
           <img src={chevron_right} alt="back" />

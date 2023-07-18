@@ -111,12 +111,15 @@ Install dependencies:
 
 ## Thanks & credits
 
-Free Lottie animations used:
+Background image by [Lauren Kan on Unsplash](https://unsplash.com/photos/AuoVzSAvpW4)
 
+Lottie animations:
 - Chinedu Chuks' [Plantix Animation](https://lottiefiles.com/130892-plantix-loader-logo-animation) has been the starting point for our loading page animation.
 - [Green loading dots](https://lottiefiles.com/jkd1w8obe5) by Ignacio Farías Valladares
 - [Transparent spinner](https://lottiefiles.com/46810-infinite-spinner) by Rav Kumar
 - Geolocation animation has been removed from [Lottie](https://lottiefiles.com/), unknown author.
 - All texts and information regarding invasive plant species origin from wikipedia and wikimedia, unless mentioned otherwise.
-- The axios interceptor code has been borrowed from Very Academy's [Django tutorial series](https://youtu.be/soxd_xdHR0o)
-- Last but not least, credits to my lovely wife Anja for her insights, design tips and valuable resources. ❤️
+
+The axios interceptor code has been borrowed from Very Academy's [Django tutorial series](https://youtu.be/soxd_xdHR0o)
+
+Last but not least, credits to my lovely wife Anja for her insights, design tips and valuable resources. ❤️

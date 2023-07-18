@@ -76,7 +76,9 @@ export default function Login() {
                   tests: ["notEmpty"],
                 }}
               />
-
+            <p className="py-2 font-bold text-red-800 text-3xl text-center">
+              {message && message}
+            </p>
               <button className="my-8 btn" type="submit">
                 Submit
               </button>
@@ -100,13 +102,13 @@ export default function Login() {
 
         {!submitting && !isLoggedIn && (
           <div>
+
             <p className="mt-4"> Password forgotten? </p>
             <button
               className="block pt-2 mr-10 font-bold text-emerald-900 active:decoration-solid"
               name="openModal"
               onClick={handleModal}
             >
-              {" "}
               👉 Reset password
             </button>
 
@@ -119,7 +121,6 @@ export default function Login() {
               className="block pt-2 mr-10 font-bold text-emerald-900 active:decoration-solid"
               to="/register"
             >
-              {" "}
               👉 Register
             </Link>
           </div>

@@ -5,6 +5,7 @@ import hamburger from "../../assets/icons/hamburger.svg";
 import home from "../../assets/icons/home.svg";
 import Logout from "./Logout";
 
+
 export default function Header({ props }) {
   const { isLoggedIn, setIsLoggedIn } = props;
   const [displayNav, setDisplayNav] = useState(false);
@@ -32,8 +33,7 @@ export default function Header({ props }) {
         <Logout props={{ isLoggedIn, setIsLoggedIn }} />
       )}
 
-      <nav id="titleContainer" className="flex md:h-content items-center">
-
+      <nav id="titleContainer" className="flex items-center">
         <ul className="z-30 flex w-screen [&>li]:text-4xl [&>li]:flex [&>li]:justify-start [&>li]:items-center text-white [&>li:not(:first-child)]:mx-auto bg-emerald-950 font-roboto-700">
         <li className="flex">
         <Link to={"/"}>
@@ -54,24 +54,24 @@ export default function Header({ props }) {
         </svg>
         </Link>
         
-        <Link className="hover:animate-link"  to={"/"}>
-        <h1 className="self-center h-full p-4 text-5xl font-normal text-yellow-50 md:text-5xl">
+        <Link to={"/"}>
+        <h1 className="self-center h-full p-4 text-5xl font-normal text-yellow-50 md:text-5xl hover:underline">
           Plant-Tracker
         </h1>
         </Link>
         </li>
           <li className="hidden md:inline-block">
-            <Link className="hidden md:inline-block hover:animate-link" to={"plants/"}>Plant Info</Link>
+            <Link id="#" className="hidden md:inline-block hover:underline decoration-yellow-200" to={"plants/"}>Plant Info</Link>
           </li>
           <li className="hidden md:inline-block">
-            <Link className="hidden md:inline-block hover:animate-link" to={"explore/"}>Explore</Link>
+            <Link className="hidden md:inline-block hover:underline decoration-red-200" to={"explore/"}>Explore</Link>
           </li>
           <li className="hidden md:inline-block">
-            <Link className="hidden md:inline-block hover:animate-link" to={"track/"}>Participate</Link>
+            <Link className="hidden md:inline-block hover:underline decoration-purple-200" to={"track/"}>Participate</Link>
           </li>
           {isLoggedIn && (
             <li className="hidden md:inline-block">
-              <Link className="hidden md:inline-block hover:animate-link" to={"account/"}>My Account</Link>
+              <Link className="hidden md:inline-block hover:underline decoration-blue-200" to={"account/"}>My Account</Link>
             </li>
           )}
         </ul>

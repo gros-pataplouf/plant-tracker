@@ -60,11 +60,11 @@ export default function LocationDetail() {
             {location.photos && (
               <Carousel>
                 {[
-                  <div className="embla-slide" key="map">
+                  <div className="embla-slide flex flex-col justify-center" key="map">
                     {/* PostGis PointField has coordinates [lat, long], while leaflet needs [lng, lat]. Therefore, deepcopy must be made and coordinates reversed
             in: MapContainer (center), Marker */}
                     <MapContainer
-                      className="border-mint/99 border-2 rounded-md h-[95%]"
+                      className="rounded-md"
                       id="smallmap"
                       center={structuredClone(
                         location.location.coordinates
