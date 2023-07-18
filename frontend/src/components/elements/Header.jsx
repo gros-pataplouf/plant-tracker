@@ -38,7 +38,7 @@ export default function Header({ props }) {
         <li className="flex">
         <Link to={"/"}>
         <svg 
-          className="lg:ml-4"
+          className="ml-4"
           xmlns="http://www.w3.org/2000/svg"
           height={window.innerHeight < 768 ? 32 : 48}
           viewBox="0 96 960 960"

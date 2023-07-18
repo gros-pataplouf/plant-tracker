@@ -40,6 +40,7 @@ class Location(models.Model):
     author = models.ForeignKey(User, on_delete=models.PROTECT)
     plant = models.ForeignKey(Plant, on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
+    
 
 class PlantImage(models.Model):
     image = models.ImageField(_("Photo"), upload_to=upload_to, blank=True, storage=PublicMediaStorage())

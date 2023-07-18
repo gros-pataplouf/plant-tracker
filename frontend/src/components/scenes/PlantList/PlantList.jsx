@@ -20,12 +20,9 @@ export default function PlantList() {
         setPlantList(values[0].data);
         setPlantImages(values[1].data);
         setLoading(false);
-        //ugly fix: wait 0.2 sec until tiles are rendered then resize them; should be solved by useRef
-        setTimeout(() => {
-          resizeTiles();
-        }, 300);
       })
-      .catch((err) => console.error(err));
+      .catch((err) => console.error(err))
+      .finally(resizeTiles());
   }, []);
 
   return loading ? (

@@ -19,8 +19,8 @@ Style: Finish styling mobile version:
     ✔ @high @hard scenes next => always clean up tailwind first  2 days @done(23-07-09 13:40)
 
 Style: desktop version:
-    ☐  elements first
-    ☐ @MVP scenes next
+    ✔  elements first @done(23-07-11 20:06)
+    ✔ @MVP scenes next @done(23-07-11 20:06)
 
 Security:
     ☐ request throttling (especially to plant image view => S3 bucket requests €€€!!!)
