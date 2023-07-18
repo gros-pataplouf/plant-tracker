@@ -5,7 +5,15 @@
 Planttracker App is a mobile-first Single Page Application allowing users to learn about invasive plant species, upload GPS coordinates and photos of their findings and discover other users' submitted data.
 Users can register to the app through email registration and manage and delete their account.
 
-![Screenshot of the loading page](https://github.com/gros-pataplouf/plant-tracker/blob/main/readme.png?raw=true)
+![Screenshot of the loading page](https://github.com/gros-pataplouf/plant-tracker/blob/main/readme1.png?raw=true)
+![Screenshot of the landing page](https://github.com/gros-pataplouf/plant-tracker/blob/main/readme2.png?raw=true)
+![Screenshot of the login page](https://github.com/gros-pataplouf/plant-tracker/blob/main/readme3.png?raw=true)
+![Screenshot how to locate plant](https://github.com/gros-pataplouf/plant-tracker/blob/main/readme4.png?raw=true)
+![Screenshot of discovery map](https://github.com/gros-pataplouf/plant-tracker/blob/main/readme5.png?raw=true)
+![Screenshot of plant catalogue](https://github.com/gros-pataplouf/plant-tracker/blob/main/readme6.png?raw=true)
+![Screenshot of account admin page](https://github.com/gros-pataplouf/plant-tracker/blob/main/readme7.png?raw=true)
+![Screenshot of location detail page](https://github.com/gros-pataplouf/plant-tracker/blob/main/readme8.png?raw=true)
+
 
 ---
 

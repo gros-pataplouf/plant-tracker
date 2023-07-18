@@ -16,6 +16,10 @@
   height: 200px !important;
 }
 
+#exploremap {
+  height: 65vh !important;
+}
+
 
 @layer base {
   html {

@@ -53,7 +53,7 @@ export default function Explore() {
 
         <MapContainer
           className="border-mint/99 border-2 rounded-lg h-[80vh] m-4"
-          id="map"
+          id="exploremap"
           center={[54.06325355147857, 9.86409912109375]}
           zoom={5}
           scrollWheelZoom={false}
