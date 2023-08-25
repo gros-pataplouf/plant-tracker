@@ -18,16 +18,18 @@ SECRET_KEY=os.getenv('SECRET_KEY')
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
 
-ALLOWED_HOSTS = []
-RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
-if RENDER_EXTERNAL_HOSTNAME:
-    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
-    DEBUG = False
+if not DEBUG: 
+    SECURE_HSTS_SECONDS = 360000
+    SECURE_SSL_REDIRECT = True
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_HSTS_PRELOAD = True
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -155,12 +157,6 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 
 CORS_ALLOWED_ORIGINS = [
-    "https://localhost:5173",
-    "https://192.168.178.25:5173",
-    "https://127.0.0.1:5173",
-    "https://localhost",
-    "https://192.168.178.25",
-    "https://127.0.0.1",
     "https://planttracker.onrender.com"
 ]
 
