@@ -11,9 +11,9 @@ EMAIL_HOST=os.getenv('EMAIL_HOST')
 EMAIL_PORT=os.getenv('EMAIL_PORT')
 EMAIL_HOST_USER=os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD=os.getenv('EMAIL_HOST_PASSWORD')
-
 SECRET_KEY=os.getenv('SECRET_KEY')
-
+GDAL_LIBRARY_PATH=os.getenv('GDAL_LIBRARY_PATH ')
+LD_LIBRARY_PATH=os.getenv('LD_LIBRARY_PATH')
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
