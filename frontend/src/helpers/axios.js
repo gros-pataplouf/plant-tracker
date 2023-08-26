@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseURL = "https://planttracker-be.onrender.com/";
+const baseURL = "https://plant-tracker.up.railway.app/";
 const axiosInstance = axios.create({
   baseURL: baseURL,
   timeout: 120000,
@@ -23,7 +23,6 @@ axiosInstance.interceptors.response.use(
   },
   async function (error) {
     const originalRequest = error.config;
-    console.log(error, originalRequest.url);
 
     if (typeof error.response === "undefined") {
       console.timeLog(
@@ -31,7 +30,6 @@ axiosInstance.interceptors.response.use(
           "Looks like CORS might be the problem. " +
           "Sorry about this - we will get it fixed shortly."
       );
-      console.log("original", originalRequest);
       return Promise.reject(error);
     }
 

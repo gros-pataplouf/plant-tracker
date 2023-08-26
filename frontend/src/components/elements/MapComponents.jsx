@@ -156,7 +156,7 @@ export function markers(plants, locations) {
 export function Legend({ props }) {
   const [plantList, setPlantList] = useState([]);
   const { locationList, setLocationList, initialLocationList } = props;
-  const [showLegend, setShowLegend] = useState(true);
+  const [showLegend, setShowLegend] = useState(false);
 
   useEffect(() => {
     axiosInstance
