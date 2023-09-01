@@ -20,7 +20,7 @@ export default function PlantList() {
         setPlantImages(values[1].data);
         setLoading(false);
       })
-      .catch((err) => console.error(err))
+      .catch((err) => console.error(err));
   }, []);
 
   return loading ? (
@@ -89,9 +89,8 @@ export default function PlantList() {
                 </svg>
               </Link>
               <p className="px-4 mt-2 text-ellipsis" id="description">
-              {plant.description_en}
+                {plant.description_en}
 
-                
                 <Link
                   className="absolute hidden italic bg-white px-4 rounded-lg lg:py-2 font-bold md:block bottom-0 right-2 text-emerald-800 active:text-emerald-950"
                   to={"/plants/" + plant.id}

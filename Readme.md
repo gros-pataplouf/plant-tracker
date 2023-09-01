@@ -14,7 +14,6 @@ Users can register to the app through email registration and manage and delete t
 ![Screenshot of account admin page](https://github.com/gros-pataplouf/plant-tracker/blob/main/readme7.png?raw=true)
 ![Screenshot of location detail page](https://github.com/gros-pataplouf/plant-tracker/blob/main/readme8.png?raw=true)
 
-
 ---
 
 ## [Live demo](https://planttracker.onrender.com/)
@@ -122,6 +121,7 @@ Install dependencies:
 Background image by [Lauren Kan on Unsplash](https://unsplash.com/photos/AuoVzSAvpW4)
 
 Lottie animations:
+
 - Chinedu Chuks' [Plantix Animation](https://lottiefiles.com/130892-plantix-loader-logo-animation) has been the starting point for our loading page animation.
 - [Green loading dots](https://lottiefiles.com/jkd1w8obe5) by Ignacio Farías Valladares
 - [Transparent spinner](https://lottiefiles.com/46810-infinite-spinner) by Rav Kumar

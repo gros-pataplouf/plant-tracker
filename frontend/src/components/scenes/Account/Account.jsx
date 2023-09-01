@@ -52,61 +52,61 @@ export default function Account() {
         <h1 className="my-6">My account settings</h1>
         <table className="[&>tbody>tr]:h-12 text-3xl">
           <tbody>
-          <tr>
-            <td>Username:</td>
-            <td>{user && user.username}</td>
-          </tr>
-          <tr>
-            <td>Email:</td>
-            <td>{user && user.email}</td>
-          </tr>
-          <tr>
-            <td>
-              <button
-                className="text-3xl text-emerald-900"
-                name="openModal"
-                onClick={handleModal}
-              >
-                Update email
-              </button>
-              {/* Change email */}
-              <Modal>
-                <UpdateEmail props={{ changes, setChanges }} />
-              </Modal>
-            </td>
-          </tr>
+            <tr>
+              <td>Username:</td>
+              <td>{user && user.username}</td>
+            </tr>
+            <tr>
+              <td>Email:</td>
+              <td>{user && user.email}</td>
+            </tr>
+            <tr>
+              <td>
+                <button
+                  className="text-3xl text-emerald-900"
+                  name="openModal"
+                  onClick={handleModal}
+                >
+                  Update email
+                </button>
+                {/* Change email */}
+                <Modal>
+                  <UpdateEmail props={{ changes, setChanges }} />
+                </Modal>
+              </td>
+            </tr>
 
-          {/* Password change */}
-          <tr>
-            <td>
-              <button
-                onClick={handleModal}
-                className="text-3xl text-emerald-900"
-                name="openModal"
-              >
-                Change password
-              </button>
-              <Modal>
-                <ChangePassword />
-              </Modal>
-            </td>
-          </tr>
-          {/* Delete account */}
-          <tr>
-            <td>
-              <button
-                className="text-3xl text-red-800"
-                name="openModal"
-                onClick={handleModal}
-              >
-                Delete account
-              </button>
-              <Modal>
-                <DeleteAccount />
-              </Modal>
-            </td>
-            <td></td>
-          </tr>
+            {/* Password change */}
+            <tr>
+              <td>
+                <button
+                  onClick={handleModal}
+                  className="text-3xl text-emerald-900"
+                  name="openModal"
+                >
+                  Change password
+                </button>
+                <Modal>
+                  <ChangePassword />
+                </Modal>
+              </td>
+            </tr>
+            {/* Delete account */}
+            <tr>
+              <td>
+                <button
+                  className="text-3xl text-red-800"
+                  name="openModal"
+                  onClick={handleModal}
+                >
+                  Delete account
+                </button>
+                <Modal>
+                  <DeleteAccount />
+                </Modal>
+              </td>
+              <td></td>
+            </tr>
           </tbody>
         </table>
       </TileXL>

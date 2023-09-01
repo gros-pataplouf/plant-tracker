@@ -14,7 +14,9 @@ import TileXL from "../../../elements/TileXL";
 import Tile from "../../../elements/Tile";
 
 function Animation() {
-  return <Lottie animationData={locating} loop={true} style={{height: "50vh"}} />;
+  return (
+    <Lottie animationData={locating} loop={true} style={{ height: "50vh" }} />
+  );
 }
 
 // the leaflet map

@@ -1,12 +1,14 @@
 import { Outlet } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "./components/elements/Header";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(
     Boolean(localStorage.getItem("planttrackerAccess"))
   );
-
+  window.addEventListener("storage", () => {
+    setIsLoggedIn(Boolean(localStorage.getItem("planttrackerAccess")));
+  });
   function discardTooltips(e) {
     const openTooltips = document.querySelectorAll(
       "div[role=tooltip]:not(.hidden)"

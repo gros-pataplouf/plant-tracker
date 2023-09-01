@@ -20,7 +20,6 @@
   height: 65vh !important;
 }
 
-
 @layer base {
   html {
     font-size: 62.5%;
@@ -73,9 +72,7 @@
   .loadingHero {
     animation: loadingHero 3s linear;
   }
-  
-  
-  
+
   @keyframes loadingHero {
     0% {
       color: hsl(0, 90%, 27%);
@@ -87,7 +84,6 @@
       color: hsl(55, 92%, 95%);
     }
   }
-  
 
   @font-face {
     font-family: "Roboto Slab";

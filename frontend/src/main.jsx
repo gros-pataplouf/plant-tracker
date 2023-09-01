@@ -15,10 +15,7 @@ import Register from "./components/scenes/Register/Register";
 import Reset from "./components/scenes/Reset/Reset";
 import Track from "./components/scenes/Track/Track";
 import "./index.css";
-import { StrictMode } from 'react';
-
-
-
+import { StrictMode } from "react";
 
 const router = createHashRouter([
   {
@@ -76,6 +73,6 @@ const router = createHashRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <StrictMode>
-  <RouterProvider router={router} />
+    <RouterProvider router={router} />
   </StrictMode>
 );

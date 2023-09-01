@@ -66,15 +66,16 @@ export function Search({ props }) {
 
   function inputHandler() {
     // get list of possible geolocation data for search string from OSM API
-    if (inputField && inputField.value){
-    const url = `${API_OSM_NOMINATIM}?q=${inputField.value}&limit=8&format=json`;
-    axiosInstance
-      .get(url)
-      .then((res) => {
-        setResults(res.data);
-      })
-      .catch((e) => console.error(e));
-  }}
+    if (inputField && inputField.value) {
+      const url = `${API_OSM_NOMINATIM}?q=${inputField.value}&limit=8&format=json`;
+      axiosInstance
+        .get(url)
+        .then((res) => {
+          setResults(res.data);
+        })
+        .catch((e) => console.error(e));
+    }
+  }
 
   // empty search field, search results in state and go to selected result
   function goToResult(e) {
@@ -156,7 +157,7 @@ export function markers(plants, locations) {
 export function Legend({ props }) {
   const [plantList, setPlantList] = useState([]);
   const { locationList, setLocationList, initialLocationList } = props;
-  const [showLegend, setShowLegend] = useState(false);
+  const [showLegend, setShowLegend] = useState();
 
   useEffect(() => {
     axiosInstance

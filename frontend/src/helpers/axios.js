@@ -12,7 +12,6 @@ axiosInstance.interceptors.request.use(function (config) {
   const refreshToken = localStorage.getItem("planttrackerRefresh");
   config.headers.Authorization = accessToken ? `JWT ${accessToken}` : null;
   config.headers["Content-Type"] = "multipart/form-data";
-  console.log(config.data);
 
   return config;
 });
@@ -23,6 +22,7 @@ axiosInstance.interceptors.response.use(
   },
   async function (error) {
     const originalRequest = error.config;
+    console.log("request was", originalRequest, baseURL);
 
     if (typeof error.response === "undefined") {
       console.timeLog(
@@ -35,10 +35,16 @@ axiosInstance.interceptors.response.use(
 
     if (
       error.response.status === 401 &&
-      originalRequest.url === baseURL + "token/refresh/"
+      originalRequest.url === "accounts/token/refresh/"
     ) {
-      window.alert("got 401 instead of access token from token/refresh");
+      console.error(
+        "got 401 instead of access token from accounts/token/refresh"
+      );
+      localStorage.removeItem("planttrackerRefresh");
+      localStorage.removeItem("plantAccess");
+      window.location.reload();
       window.location.href = "/#/login/";
+
       return Promise.reject(error);
     }
 
@@ -47,15 +53,21 @@ axiosInstance.interceptors.response.use(
       error.response.status === 401
     ) {
       const refreshToken = localStorage.getItem("planttrackerRefresh");
-      console.log(refreshToken);
+      console.log("refresh token", refreshToken);
 
-      if (refreshToken) {
-        const tokenParts = JSON.parse(atob(refreshToken.split(".")[1]));
-
-        // exp date in token is expressed in seconds, while now() returns milliseconds:
-        const now = Math.ceil(Date.now() / 1000);
-        console.log(tokenParts.exp);
-
+      if (refreshToken && refreshToken !== "undefined") {
+        try {
+          const tokenParts = JSON.parse(atob(refreshToken.split(".")[1]));
+          // exp date in token is expressed in seconds, while now() returns milliseconds:
+          const now = Math.ceil(Date.now() / 1000);
+          console.log(tokenParts.exp);
+        } catch {
+          console.error("Corrupted refresh token.");
+          localStorage.removeItem("planttrackerRefresh");
+          localStorage.removeItem("planttrackerAccess");
+          window.dispatchEvent(new Event("storage"));
+          window.location.href = "#/login/";
+        }
         if (tokenParts.exp > now) {
           return axiosInstance
             .post("accounts/token/refresh/", { refresh: refreshToken })
@@ -77,15 +89,19 @@ axiosInstance.interceptors.response.use(
               console.log(err);
             });
         } else {
-          window.alert("Refresh token is expired", tokenParts.exp, now);
+          console.error("Refresh token is expired", tokenParts.exp, now);
+          localStorage.removeItem("planttrackerRefresh");
+          localStorage.removeItem("planttrackerAccess");
           window.location.href = "#/login/";
         }
       } else {
-        console.log("Refresh token not available.");
+        console.error("Refresh token not available.");
+        localStorage.removeItem("planttrackerRefresh");
+        localStorage.removeItem("planttrackerAccess");
+        window.dispatchEvent(new Event("storage"));
         window.location.href = "#/login/";
       }
     }
-
     // specific error handling done elsewhere
     return Promise.reject(error);
   }
