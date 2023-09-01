@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../helpers/axios";
 import AnimationLoading from "../../elements/AnimationLoading";
+import { useOutletContext } from "react-router-dom";
 import { Modal, handleModal } from "../../elements/Modal";
 import Tile from "../../elements/Tile";
 import TileXL from "../../elements/TileXL";
@@ -14,8 +15,18 @@ export default function Account() {
   const [submissions, setSubmissions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [changes, setChanges] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useOutletContext();
 
   useEffect(() => {
+    if (!isLoggedIn) {
+      window.alert("You need to be logged in to access your account.");
+      return (window.location.href = `/login?${window.location.href
+        .replaceAll("/", " ")
+        .trim()
+        .split(" ")
+        .at(-1)}`);
+    }
+
     axiosInstance
       .get("accounts/me/")
       //backend filters out the right user
@@ -36,7 +47,7 @@ export default function Account() {
       .catch((err) => {
         console.error(err);
       });
-  }, [changes]);
+  }, [changes, isLoggedIn]);
 
   return loading ? (
     <div className="wrapper-tile">

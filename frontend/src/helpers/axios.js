@@ -42,8 +42,19 @@ axiosInstance.interceptors.response.use(
       );
       localStorage.removeItem("planttrackerRefresh");
       localStorage.removeItem("plantAccess");
-      window.location.reload();
-      window.location.href = "/#/login/";
+      window.location.href = "/login/";
+
+      return Promise.reject(error);
+    }
+
+    if (
+      error.response.status === 401 &&
+      originalRequest.url === "accounts/me/"
+    ) {
+      console.error("got 401 from accounts/me");
+      localStorage.removeItem("planttrackerRefresh");
+      localStorage.removeItem("plantAccess");
+      window.location.href = "/login/";
 
       return Promise.reject(error);
     }
@@ -66,7 +77,7 @@ axiosInstance.interceptors.response.use(
           localStorage.removeItem("planttrackerRefresh");
           localStorage.removeItem("planttrackerAccess");
           window.dispatchEvent(new Event("storage"));
-          window.location.href = "#/login/";
+          window.location.href = "/login/";
         }
         if (tokenParts.exp > now) {
           return axiosInstance
@@ -92,14 +103,14 @@ axiosInstance.interceptors.response.use(
           console.error("Refresh token is expired", tokenParts.exp, now);
           localStorage.removeItem("planttrackerRefresh");
           localStorage.removeItem("planttrackerAccess");
-          window.location.href = "#/login/";
+          window.location.href = "/login/";
         }
       } else {
         console.error("Refresh token not available.");
         localStorage.removeItem("planttrackerRefresh");
         localStorage.removeItem("planttrackerAccess");
         window.dispatchEvent(new Event("storage"));
-        window.location.href = "#/login/";
+        window.location.href = "/login/";
       }
     }
     // specific error handling done elsewhere

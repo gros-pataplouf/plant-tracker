@@ -1,6 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { RouterProvider, createHashRouter } from "react-router-dom";
+import {
+  RouterProvider,
+  createBrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
 import App from "./App";
 import Account from "./components/scenes/Account/Account";
 import Activate from "./components/scenes/Activate/Activate";
@@ -15,9 +20,8 @@ import Register from "./components/scenes/Register/Register";
 import Reset from "./components/scenes/Reset/Reset";
 import Track from "./components/scenes/Track/Track";
 import "./index.css";
-import { StrictMode } from "react";
 
-const router = createHashRouter([
+const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
@@ -72,7 +76,5 @@ const router = createHashRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <StrictMode>
-    <RouterProvider router={router} />
-  </StrictMode>
+  <RouterProvider router={router} />
 );

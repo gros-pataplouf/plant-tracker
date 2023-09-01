@@ -11,7 +11,7 @@ export default function Activate() {
     .then((res) => {
       if (res.status === 204) {
         setMessage("Your account has been activated, please log in.");
-        return (window.location.href = "#/login/");
+        return (window.location.href = "/login/");
       }
     })
     .catch((err) => {

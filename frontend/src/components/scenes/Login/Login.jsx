@@ -31,7 +31,7 @@ export default function Login() {
         setSubmitting(false);
         setIsLoggedIn(true);
         if (location.search) {
-          return (window.location.href = `#/${location.search.slice(1)}`);
+          return (window.location.href = `/${location.search.slice(1)}`);
         } else {
           return null;
         }

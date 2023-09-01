@@ -25,12 +25,9 @@ export default function Logout({ props }) {
         localStorage.removeItem("planttrackerAccess");
         localStorage.removeItem("planttrackerRefresh");
         setIsLoggedIn(false);
-        window.location.href = "#/login/";
       })
       .catch((err) => {
         console.error(err);
-        localStorage.removeItem("planttrackerAccess");
-        localStorage.removeItem("planttrackerRefresh");
         setIsLoggedIn(false);
         setLoading(false);
         window.alert(

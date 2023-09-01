@@ -29,7 +29,7 @@ export default function Reset() {
       .then((res) => {
         setMessage("Your password has been reset ✅");
         setTimeout(() => {
-          window.location.href = "#/login/";
+          window.location.href = "/login/";
         }, 5000);
       })
       .catch((error) => {
