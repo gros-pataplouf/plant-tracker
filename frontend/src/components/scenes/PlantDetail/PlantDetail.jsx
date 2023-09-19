@@ -63,6 +63,7 @@ export default function PlantList() {
                     className="block object-scale-down max-h-[95%] m-auto"
                     src={photo.image}
                     alt={photo.description_en}
+                    loading="lazy"
                   />
                   <figcaption className="block mx-auto mb-2 text-center">
                     {photo.description_en}
@@ -87,6 +88,7 @@ export default function PlantList() {
                     className="block object-scale-down max-h-[95%] m-auto"
                     src={photo.image}
                     alt={photo.description_en}
+                    loading="lazy"
                   />
                   <figcaption className="block mx-auto text-center">
                     {photo.description_en}

@@ -66,6 +66,7 @@ export default function PlantList() {
                           .image
                   }
                   alt={plant.common_name_en}
+                  loading="lazy"
                 />
                 <figcaption className="block mx-auto italic font-bold text-center">
                   {plant.scientific_name}

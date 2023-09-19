@@ -1,4 +1,5 @@
 import React from "react";
+import { lazy, Suspense } from 'react';
 import ReactDOM from "react-dom/client";
 import {
   RouterProvider,
@@ -7,18 +8,20 @@ import {
   Route,
 } from "react-router-dom";
 import App from "./App";
-import Account from "./components/scenes/Account/Account";
-import Activate from "./components/scenes/Activate/Activate";
-import ErrorPage from "./components/scenes/ErrorPage/ErrorPage";
-import Explore from "./components/scenes/Explore/Explore";
-import Hero from "./components/scenes/Hero/Hero";
-import LocationDetail from "./components/scenes/LocationDetail/LocationDetail";
-import Login from "./components/scenes/Login/Login";
-import PlantDetail from "./components/scenes/PlantDetail/PlantDetail";
-import PlantList from "./components/scenes/PlantList/PlantList";
-import Register from "./components/scenes/Register/Register";
-import Reset from "./components/scenes/Reset/Reset";
-import Track from "./components/scenes/Track/Track";
+import AnimationLoading from "./components/elements/AnimationLoading";
+const Account = lazy(() => import("./components/scenes/Account/Account"));
+const PlantList = lazy(() => import("./components/scenes/PlantList/PlantList"));
+const Activate = lazy(() => import ("./components/scenes/Activate/Activate"));
+const ErrorPage = lazy(() => import ("./components/scenes/ErrorPage/ErrorPage"));
+const Explore = lazy(() => import ("./components/scenes/Explore/Explore"));
+const Hero = lazy(() => import("./components/scenes/Hero/Hero"));
+const LocationDetail = lazy(() => import("./components/scenes/LocationDetail/LocationDetail"));
+const Login = lazy(() => import("./components/scenes/Login/Login"));
+const PlantDetail = lazy(() => import("./components/scenes/PlantDetail/PlantDetail"));
+const Register = lazy(() => import("./components/scenes/Register/Register"));
+const Reset = lazy(() => import("./components/scenes/Reset/Reset"));
+const Track = lazy(() => import ("./components/scenes/Track/Track"));
+
 import "./index.css";
 
 const router = createBrowserRouter([
@@ -29,47 +32,80 @@ const router = createBrowserRouter([
     children: [
       {
         path: "plants/",
-        element: <PlantList />,
+        element: 
+        <Suspense fallback={<AnimationLoading/>}>
+          <PlantList />,
+        </Suspense>
       },
       {
         path: "/",
-        element: <Hero />,
+        element: 
+        <Suspense fallback={<AnimationLoading/>}>
+          <Hero />,
+        </Suspense>
       },
       {
         path: "plants/:id/",
-        element: <PlantDetail />,
+        element: 
+        <Suspense fallback={<AnimationLoading/>}>
+          <PlantDetail />,
+        </Suspense>
       },
       {
         path: "register/",
-        element: <Register />,
+        element: 
+        <Suspense fallback={<AnimationLoading/>}>
+          <Register />,
+        </Suspense>
       },
       {
         path: "login/",
-        element: <Login />,
+        element:
+        <Suspense fallback={<AnimationLoading/>}>
+        <Login />
+        </Suspense>
       },
       {
         path: "track/",
-        element: <Track />,
+        element: 
+        <Suspense fallback={<AnimationLoading/>}>
+          <Track />,
+        </Suspense>
       },
       {
         path: "activate/",
-        element: <Activate />,
+        element: 
+        <Suspense fallback={<AnimationLoading/>}>
+          <Activate />,
+        </Suspense>
       },
       {
         path: "explore/",
-        element: <Explore />,
+        element: 
+        <Suspense fallback={<AnimationLoading/>}>
+          <Explore />,
+        </Suspense>
       },
       {
         path: "locations/:id/",
-        element: <LocationDetail />,
+        element: 
+        <Suspense fallback={<AnimationLoading/>}>
+          <LocationDetail />,
+        </Suspense>
       },
       {
         path: "reset/",
-        element: <Reset />,
+        element: 
+        <Suspense fallback={<AnimationLoading/>}>
+          <Reset />,
+        </Suspense>
       },
       {
         path: "account/",
-        element: <Account />,
+        element: 
+        <Suspense fallback={<AnimationLoading/>}>
+          <Account />,
+        </Suspense>
       },
     ],
   },

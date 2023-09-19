@@ -99,6 +99,7 @@ export default function LocationDetail() {
                           className="block object-scale-down max-h-[95%] m-auto"
                           src={_.image}
                           alt=""
+                          loading="lazy"
                         />
                       </figure>
                     );
