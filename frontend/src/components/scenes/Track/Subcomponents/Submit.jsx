@@ -5,7 +5,10 @@ import addphoto from "../../../../assets/icons/addphoto.svg";
 import bin from "../../../../assets/icons/bin.svg";
 import axiosInstance from "../../../../helpers/axios";
 import Carousel from "../../../elements/Carousel";
-import Tile from "../../../elements/Tile";
+import TileXL from "../../../elements/TileXL";
+import { compressAccurately } from 'image-conversion';
+import Lottie from "lottie-react";
+import spinner from "../../../../assets/animations/spinner.json";
 
 export default function TrackForm({ props }) {
   const { location } = props;
@@ -15,10 +18,26 @@ export default function TrackForm({ props }) {
   const [success, setSuccess] = useState(false);
   const [message, setMessage] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [processing, setProcessing] = useState(false);
 
-  function handleChange(e) {
-    setImages([...images, ...e.target.files]);
-  }
+  async function handleChange(e) {
+    setProcessing(true);
+    
+    console.log("images", images);
+    let imageArray = [];
+    for await (let file of e.target.files) {
+    setProcessing(true);
+    //compress to 200kb
+    compressAccurately(file, 200).then(res=>{
+    //     // restore filename if lost during blob conversion (will be needed later)
+    let fileFromBlob = new File([res], file.name)
+    imageArray.push(fileFromBlob);
+    setImages([...images, ...imageArray]);
+    setProcessing(false);
+    })
+    };
+  };
+
   function deleteImage(e) {
     e.preventDefault();
     let fileToDeleteName =
@@ -73,16 +92,15 @@ export default function TrackForm({ props }) {
   }
 
   return (
-    <div className="wrapper-tile">
-      <Tile>
+      <TileXL>
         {!submitting && !success && (
           <form
-            className="flex flex-col space-y-2 md:space-y-6"
+            className="flex flex-col my-auto space-y-4 md:space-y-6"
             method="post"
             encType="multipart/form-data"
             id="submitform"
           >
-            <h1 className="pt-4 text-emerald-800">Complete and submit</h1>
+            <h1 className="text-emerald-800">Complete and submit</h1>
 
             <label htmlFor="location">Surface (m²)</label>
             <input
@@ -99,7 +117,7 @@ export default function TrackForm({ props }) {
             <textarea name="description" id="description" rows="4" cols="50" />
 
             <label htmlFor="description">Species</label>
-            <select className="mb-6" name="plant" id="plant" required>
+            <select name="plant" id="plant" required>
               <option value="">Select a species</option>
               {plantList.map((plant) => {
                 return (
@@ -113,17 +131,24 @@ export default function TrackForm({ props }) {
                 );
               })}
             </select>
+            <div></div>
             <label
-              className="block text-slate-950 pr-[26px] my-4 whitespace-nowrap font-bold rounded-lg w-min p-2 px-4 bg-lime/50 border-2 border-emerald-800"
+              className="block text-white text-center whitespace-nowrap py-2 font-bold rounded-lg w-full bg-emerald-800 border-2 border-emerald-800"
               htmlFor="images"
             >
-              Add photo
-              <img
+              {!processing ? "Add photo " : "Compressing "}
+              {!processing ? (<img
                 className="inline-block"
                 id="camsymbol"
                 src={addphoto}
                 alt="add photo"
-              />
+              />) :
+              <Lottie
+              animationData={spinner}
+              loop={true}
+              style={{height: 20, display: "inline-block"}}
+              /> }
+
             </label>
             <input
               className="hidden"
@@ -135,15 +160,16 @@ export default function TrackForm({ props }) {
               onChange={handleChange}
             />
             {/* in order to show preview, convert FileList to Ecmascript array if there are any images in state*/}
-            {images.length > 0 && (
+            {images.length > 0 && !processing && (
               <Carousel>
                 {Array.from(images).map((img) => {
+                  console.log(img);
                   return (
                     <div
                       id="emblaSlide"
                       key={img.name}
                       dataindex={img.name}
-                      className="relative embla-slide overflow-hidden border-b-8 h-[20vh] flex-[0_0_100%]"
+                      className="relative embla-slide overflow-hidden h-[20vh] flex-[0_0_100%]"
                     >
                       <button onClick={deleteImage}>
                         <img
@@ -152,7 +178,7 @@ export default function TrackForm({ props }) {
                           alt="delete"
                         />
                       </button>
-                      <img src={URL.createObjectURL(img)} alt="preview" />
+                      <img className="block object-scale-down max-h-[95%] m-auto" src={URL.createObjectURL(img)} alt="preview" />
                     </div>
                   );
                 })}
@@ -188,7 +214,7 @@ export default function TrackForm({ props }) {
             </Link>
           </div>
         )}
-      </Tile>
-    </div>
+      </TileXL>
+    
   );
 }
