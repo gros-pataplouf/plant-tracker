@@ -1,5 +1,6 @@
 import axios from "axios";
 const baseURL = "https://plant-tracker.up.railway.app/";
+
 const axiosInstance = axios.create({
   baseURL: baseURL,
   timeout: 120000,

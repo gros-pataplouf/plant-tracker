@@ -9,12 +9,16 @@ export default function Activate() {
   axiosInstance
     .get(`accounts/activate/${activationToken}`)
     .then((res) => {
-      if (res.status === 204) {
+      //to do : reset to only checking for 204 once backend bug in views.py:111 is resolved
+      if (res.status === 204 || res.status === 200) {
         setMessage("Your account has been activated, please log in.");
         return (window.location.href = "/login/");
+      } else {
+        console.log(res)
       }
     })
     .catch((err) => {
+      console.error(err);
       setMessage(
         "Oh no! An error has occured. Please request another activation token."
       );

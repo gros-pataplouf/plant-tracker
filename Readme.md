@@ -16,7 +16,7 @@ Users can register to the app through email registration and manage and delete t
 
 ---
 
-## [Live demo](https://planttracker.onrender.com/)
+## [Live demo](https://planttracker.vercel.app/)
 
 ⚠️ _Please be patient while our backend service wakes up. Render's free instance spins down after 15 minutes of inactivity and it can take up to 2 minutes until the service responds to a new web request._
 

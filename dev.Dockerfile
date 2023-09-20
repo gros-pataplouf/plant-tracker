@@ -1,5 +1,5 @@
 # Use a suitable base image
-FROM --platform=$BUILDPLATFORM python:3.10-slim-bookworm AS builder
+FROM python:3.10-slim-bookworm AS builder
 
 WORKDIR /app
 
@@ -11,17 +11,12 @@ RUN apt-get update && apt-get install -y \
 
 ENV GDAL_LIBRARY_PATH /usr/lib/libgdal.so
 
-
 WORKDIR /app
 
 COPY requirements.txt /app/
-RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . /app/
 EXPOSE 8000
-
-ENTRYPOINT ["python"]
-RUN python manage.py collectstatic --noinput
-
-CMD ["gunicorn", "core.wsgi"]
+ENTRYPOINT ["python", "manage.py"]
+CMD ["runserver", "0.0.0.0:8000"]

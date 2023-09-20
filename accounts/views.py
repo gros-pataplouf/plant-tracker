@@ -1,4 +1,5 @@
-import json, re, uuid
+import json, re, uuid, os
+from dotenv import load_dotenv
 from datetime import datetime
 from django.contrib.auth import get_user_model
 from django.core.mail import send_mail
@@ -16,7 +17,9 @@ from core.throttles import AnonBurstRateThrottle, AnonSustainedRateThrottle
 
 User = get_user_model()
 JWT_authenticator = JWTAuthentication()
+load_dotenv()
 
+FRONTEND_URL = os.getenv("FRONTEND_URL")
 
 class MyAccount(generics.RetrieveUpdateDestroyAPIView):
     """
@@ -50,14 +53,14 @@ class MyAccount(generics.RetrieveUpdateDestroyAPIView):
     def destroy(self, request, *args, **kwargs):
         """
         soft delete feature:
-        scramble username and email, set user inactive
+        scramble username and email, set user inactive{"success": "Password reset successful"}, status=status.HTTP_200_OK
         """
         user = self.get_object()
         user.username = uuid.uuid4()
         user.email = f'{uuid.uuid4()}@deleted.com'
         user.is_active = False
         user.save()
-        return Response({"success": "Account successfully deleted."}, status=status.HTTP_204_NO_CONTENT)
+        return Response({"success": "Account successfully deleted."}, status=status.HTTP_200_OK)
     
 class UserList(generics.CreateAPIView):
     """Endpoint for anonymous user for account creation"""
@@ -86,7 +89,7 @@ class UserList(generics.CreateAPIView):
                     "Dear Nature Lover🌻!", 
                     "Thank you for participating in the planttracker project.",
                     "Please click on the following link to activate your account:",
-                    f"https://planttracker.onrender.com/#/activate?{uuid}",
+                    f"{FRONTEND_URL}/activate?{uuid}",
                     "Yours sincerely",
                     "Your Planttracker Team"
                     ]),
@@ -99,7 +102,6 @@ class UserList(generics.CreateAPIView):
             return Response({"success": "Your account has been created. An email with an activation code has been sent."}, status=status.HTTP_201_CREATED)
         else:
             return Response(user_serializer.errors, status=status.HTTP_403_FORBIDDEN)
-        return Response({"error": "An unknown error has occured"}, status=status.HTTP_400_BAD_REQUEST)
 
 class UserActivate(generics.RetrieveAPIView):
     queryset = ActivationUUID.objects.all()
@@ -112,10 +114,11 @@ class UserActivate(generics.RetrieveAPIView):
                 uuid_instance.delete()
                 user_instance = uuid_instance.user
                 user_instance.is_active = True
-                user_instance.save()               
-                return Response({"success": "Your account has been activated."}, status=status.HTTP_204_NO_CONTENT)
-        return Response({"error": "Something went wrong, request another activation token."}, status=status.HTTP_404_NOT_FOUND)
-
+                user_instance.save()
+                # bug_1 to do: setting a 204  response triggers a 502 from railway and / or eliminates the CORS headers. cannot be reproduced locally. Fix: send 200_OK instead.             
+                return Response({"success": "Activation sucessful"}, status=status.HTTP_200_OK)
+        else:
+            return Response({"error": "This token does not exist."}, status=status.HTTP_400_BAD_REQUEST)
 
 class CreateResetLink(generics.CreateAPIView):
     throttle_classes = [AnonBurstRateThrottle, AnonSustainedRateThrottle]
@@ -133,7 +136,7 @@ class CreateResetLink(generics.CreateAPIView):
                 "\n".join(["Dear Nature Lover🌻!",
                 "You have requested a password reset link.",
                 "Please reset your password by clicking on the following link:",
-                f"https://planttracker.onrender.com/#/reset?{uuid}.",
+                f"{FRONTEND_URL}/reset?{uuid}.",
                 "See you soon on The Planttracker Project!"
                 ])
                 ,
@@ -164,7 +167,8 @@ class ResetPassword(generics.UpdateAPIView):
                     user_instance.set_password(request.data['password'])
                     user_instance.save()
                     uuid_instance.delete()
-                    return Response({"success":"Your password has been reset."}, status=status.HTTP_204_NO_CONTENT)
+                    # bug_2: same issue as UserActivate.retrieve (bug_1)
+                    return Response({"success": "Password reset successful"}, status=status.HTTP_200_OK)
                 else:
                     return Response({"error": "Something went wrong, please try again."}, status=status.HTTP_400_BAD_REQUEST)
         return Response({"error": "Something went wrong, please request another reset link."}, status=status.HTTP_200_OK)

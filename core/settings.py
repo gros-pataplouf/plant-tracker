@@ -14,6 +14,7 @@ EMAIL_HOST_PASSWORD=os.getenv('EMAIL_HOST_PASSWORD')
 SECRET_KEY=os.getenv('SECRET_KEY')
 GDAL_LIBRARY_PATH=os.getenv('GDAL_LIBRARY_PATH ')
 LD_LIBRARY_PATH=os.getenv('LD_LIBRARY_PATH')
+FRONTEND_URL=os.getenv('FRONTEND_URL')
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -152,13 +153,10 @@ if not DEBUG:
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOWED_ORIGINS = [
-    "https://planttracker.onrender.com"
+    "https://planttracker.vercel.app",
 ]
 
-
-CORS_ALLOW_CREDENTIALS = False
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
