@@ -233,7 +233,7 @@ function Checkbox({ props }) {
     for (let box of inputBoxes) {
       let id = parseInt(box.getAttribute("id"));
       if (box.checked) {
-        userChoices.push(id);
+        userChoices = [...userChoices, id];
       }
     }
 

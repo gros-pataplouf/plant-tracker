@@ -29,9 +29,9 @@ export default function TrackForm({ props }) {
     setProcessing(true);
     //compress to 200kb
     compressAccurately(file, 200).then(res=>{
-    //     // restore filename if lost during blob conversion (will be needed later)
+    // restore filename if lost during blob conversion (will be needed later)
     let fileFromBlob = new File([res], file.name)
-    imageArray.push(fileFromBlob);
+    imageArray = [...imageArray, fileFromBlob];
     setImages([...images, ...imageArray]);
     setProcessing(false);
     })
