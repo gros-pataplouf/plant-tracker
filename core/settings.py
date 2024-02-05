@@ -19,7 +19,7 @@ FRONTEND_URL=os.getenv('FRONTEND_URL')
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 
 if not DEBUG: 
@@ -50,7 +50,11 @@ INSTALLED_APPS = [
     'accounts',
     'drf_yasg',
     'rest_framework_simplejwt.token_blacklist',
-    'storages'
+    'storages',
+    #oauth
+    'oauth2_provider',
+    'social_django',
+    'drf_social_oauth2'
 
 ]
 
@@ -92,6 +96,7 @@ AUTH_USER_MODEL = 'accounts.User'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
     'ENGINE': 'django.contrib.gis.db.backends.postgis',
@@ -101,7 +106,14 @@ DATABASES = {
     'HOST': os.getenv("DB_HOST"),
     'PORT': os.getenv("DB_PORT"),
     }
-}
+} if not DEBUG else     {'default': {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'gis',
+        'USER': 'user001',
+        'PASSWORD': '123456789',
+        'HOST': 'localhost',
+        'PORT': '5432'
+    }}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -154,9 +166,9 @@ if not DEBUG:
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOWED_ORIGINS = [
-    "https://planttracker.vercel.app",
+    "https://planttracker.vercel.app", "https://localhost:5173"
+    
 ]
-
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (

@@ -1,5 +1,6 @@
 import axios from "axios";
-const baseURL = "https://plant-tracker.up.railway.app/";
+
+const baseURL = import.meta.env.DEV ?  "http://localhost:8000/": "https://plant-tracker.up.railway.app/"
 
 const axiosInstance = axios.create({
   baseURL: baseURL,
@@ -22,6 +23,7 @@ axiosInstance.interceptors.response.use(
     return response;
   },
   async function (error) {
+    console.log(error)
     const originalRequest = error.config;
     console.log("request was", originalRequest, baseURL);
 

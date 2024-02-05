@@ -42,4 +42,4 @@ whitenoise = {version = "==6.5.0", extras = ["brotli"]}
 [dev-packages]
 
 [requires]
-python_version = "3.10"
+python_version = "3"
