@@ -41,3 +41,9 @@ def test_authenticated_updated_pwd(authuser_clientheaders, db):
     endpoint = reverse('accounts_me')
     request = client.patch(endpoint, {'password': '123SafePwd!'})
     assert request.status_code == 200
+
+def test_insecure_pwd_update_not_accepted(authuser_clientheaders, db):
+    [user, client] = authuser_clientheaders
+    endpoint = reverse('accounts_me')
+    request = client.patch(endpoint, {'password': 'password'})
+    assert request.status_code == 400
