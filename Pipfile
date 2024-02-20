@@ -38,6 +38,11 @@ typing-extensions = "==4.7.1"
 uritemplate = "==4.1.1"
 urllib3 = "==1.26.17"
 whitenoise = {version = "==6.5.0", extras = ["brotli"]}
+pytest = "*"
+pytest-django = "*"
+pytest-factoryboy = "*"
+faker = "*"
+pytest-fixtures = "*"
 
 [dev-packages]
 

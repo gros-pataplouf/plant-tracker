@@ -23,4 +23,4 @@ class TestPlant(
     url = lambda_fixture(lambda: reverse('api_plant_list'))
     def test_it_returns_plantlist(self, json):
         print("plantlist:", self, json)
-        assert True
+        assert self == "hello"

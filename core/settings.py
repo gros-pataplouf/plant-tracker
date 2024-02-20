@@ -18,7 +18,6 @@ FRONTEND_URL=os.getenv('FRONTEND_URL')
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 
@@ -51,11 +50,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'rest_framework_simplejwt.token_blacklist',
     'storages',
-    #oauth
-    'oauth2_provider',
-    'social_django',
-    'drf_social_oauth2'
-
+ 
 ]
 
 MIDDLEWARE = [
@@ -93,9 +88,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'core.wsgi.application'
 
 AUTH_USER_MODEL = 'accounts.User'
-# Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
 
 DATABASES = {
     'default': {
@@ -148,14 +140,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# Following settings only make sense on production and may break development environments.
 if not DEBUG:
-    # Tell Django to copy statics to the `staticfiles` directory
-    # in your application directory on Render.
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-    # Turn on WhiteNoise storage backend that takes care of compressing static files
-    # and creating unique names for each version so they can safely be cached forever.
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
@@ -167,7 +153,6 @@ if not DEBUG:
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOWED_ORIGINS = [
     "https://planttracker.vercel.app", "https://localhost:5173"
-    
 ]
 
 REST_FRAMEWORK = {
@@ -213,9 +198,7 @@ SIMPLE_JWT = {
     "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
     "TOKEN_TYPE_CLAIM": "token_type",
     "TOKEN_USER_CLASS": "rest_framework_simplejwt.models.TokenUser",
-
     "JTI_CLAIM": "jti",
-
     "SLIDING_TOKEN_REFRESH_EXP_CLAIM": "refresh_exp",
     "SLIDING_TOKEN_LIFETIME": timedelta(hours=10),
     "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=11),

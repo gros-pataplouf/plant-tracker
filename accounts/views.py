@@ -1,4 +1,4 @@
-import json, re, uuid, os
+import uuid, os
 from dotenv import load_dotenv
 from datetime import datetime
 from django.contrib.auth import get_user_model
@@ -8,7 +8,7 @@ from rest_framework.throttling import AnonRateThrottle
 from rest_framework.response import Response
 from rest_framework import generics, status
 from rest_framework.decorators import permission_classes, authentication_classes
-from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny, IsAuthenticated
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from .models import ActivationUUID, ResetUUID
