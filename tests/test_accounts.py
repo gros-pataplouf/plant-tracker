@@ -36,3 +36,8 @@ def test_invalid_email_update_not_accepted(authuser_clientheaders, db):
     request = client.patch(endpoint, {'email': 'i am invalid'})
     assert request.status_code == 400
 
+def test_authenticated_updated_pwd(authuser_clientheaders, db):
+    [user, client] = authuser_clientheaders
+    endpoint = reverse('accounts_me')
+    request = client.patch(endpoint, {'password': '123SafePwd!'})
+    assert request.status_code == 200
