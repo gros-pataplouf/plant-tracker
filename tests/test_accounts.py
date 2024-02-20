@@ -2,7 +2,7 @@ import jwt
 from django.urls import reverse
 from factories import fake_password
 from core.settings import SECRET_KEY
-
+from accounts.models import User
 
 def test_can_get_tokens(client, unauthenticated_user, db):
     endpoint = reverse('token_obtain_pair')
@@ -47,3 +47,13 @@ def test_insecure_pwd_update_not_accepted(authuser_clientheaders, db):
     endpoint = reverse('accounts_me')
     request = client.patch(endpoint, {'password': 'password'})
     assert request.status_code == 400
+
+def test_authenticated_softdeletes_account(authuser_clientheaders, db):
+    [user, client] = authuser_clientheaders
+    endpoint = reverse('accounts_me')
+    request = client.delete(endpoint)
+    user = list(User.objects.values())
+    assert request.status_code == 200
+    assert "@deleted.com" in user[0].get('email') #this would fail if more than one user in db during the test.
+
+
