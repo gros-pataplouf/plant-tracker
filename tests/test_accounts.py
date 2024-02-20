@@ -27,3 +27,9 @@ def test_authenticated_gets_account_details(authuser_clientheaders, db):
     request = client.get(endpoint)
     assert request.status_code == 200
 
+def test_authenticated_updates_email(authuser_clientheaders, db):
+    [user, client] = authuser_clientheaders
+    endpoint = reverse('accounts_me')
+    request = client.patch(endpoint, {'email': 'testmail@test.com'})
+    assert request.status_code == 200
+
