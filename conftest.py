@@ -1,12 +1,14 @@
-import pytest
+import pytest, json
 from django.urls import reverse
 from pytest_factoryboy import register
-from  tests.factories import UserFactory
+from tests.factories import UserFactory, PlantFactory
 from tests.factories import fake_password
 from rest_framework_simplejwt.authentication import JWTAuthentication
-
 from rest_framework.test import APIClient
+
 register(UserFactory)
+register(PlantFactory)
+
 
 @pytest.fixture
 def client():
@@ -25,3 +27,8 @@ def authuser_clientheaders(user_factory, db):
     client.credentials(HTTP_AUTHORIZATION='JWT ' + request.data.get('access'))
     return user, client
 
+@pytest.fixture
+def plants_db(plant_factory, db, plants=None):
+    plant1 = plant_factory.create(scientific_name="Plantum plantum", common_name_en="Plant", family="Plantae")
+    plant2 = plant_factory.create(scientific_name="Ficus benjamini", common_name_en="Gummibaum", family="Topfpflanzen")
+    return [plant1, plant2]
