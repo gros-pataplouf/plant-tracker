@@ -49,6 +49,15 @@ class LocationList(generics.ListCreateAPIView):
             setattr(request.data, '_mutable', True)
             request.data['author'] = token.payload['user_id']
             # get coordinates out of query dict
+            #conditions for valid coordinations: key "location", length 2, both are floats
+            # perform prevalidation with dummy display address
+            request.data['display_name'] = 'unknown address'
+
+            location_serializer = LocationSerializer(data=request.data)
+            if not location_serializer.is_valid():
+                print(location_serializer.errors)
+                return Response("Data submitted are invalid or incomplete.", status=status.HTTP_400_BAD_REQUEST)
+
             coordinates = json.loads(dict(request.data)['location'][0])['coordinates']
             lon = str(coordinates[0])
             lat = str(coordinates[1])

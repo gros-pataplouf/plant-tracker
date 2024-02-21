@@ -30,5 +30,10 @@ def test_cannot_create_location_without_token(client):
     assert request.status_code == 401
 
 
+def test_invalid_location_data_with_token_return_400(authuser_clientheaders, db):
+    [user, client] = authuser_clientheaders
+    endpoint = reverse("api_location_list")
+    request = client.post(endpoint, {"data": "some gibberish"})
+    assert request.status_code == 400
 
 
