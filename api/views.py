@@ -27,17 +27,20 @@ class PlantList(generics.ListAPIView):
 class PlantDetail(generics.RetrieveAPIView):
     queryset = Plant.objects.all()
     serializer_class = PlantSerializer
-    
+
+
 class LocationList(generics.ListCreateAPIView):
     queryset = Location.objects.all()
     serializer_class = LocationSerializer
     permission_classes = [ IsAuthenticatedOrReadOnly ]
     parser_classes = [ MultiPartParser, FormParser ]
 
-    def get_queryset(self):
+    
+    def get_queryset(self): # needed for map filtering feature
         query = self.request.GET
         return Location.objects.filter(**query.dict())
-
+    
+   
     def create(self, request, format=None):
         auth_data = JWT_authenticator.authenticate(request)
         if auth_data is not None:
@@ -76,10 +79,14 @@ class LocationList(generics.ListCreateAPIView):
 class LocationDetail(generics.RetrieveAPIView):
     queryset = Location.objects.all()
     serializer_class = LocationSerializer
+    authentication_classes = []
+
 
 class PlantImages(generics.ListAPIView):
     queryset = PlantImage.objects.all()
     serializer_class = PlantImageSerializer
+    authentication_classes = []
+
 
 class LocationImages(generics.ListCreateAPIView):
     permission_classes = [ IsAuthenticatedOrReadOnly ]
