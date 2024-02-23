@@ -12,7 +12,7 @@ def test_can_get_plants_without_token(plants_db, client, db):
 def test_can_get_plant_detail_without_token(client, plants_db, db):
     existing_plant_id = Plant.objects.filter(scientific_name="Plantum plantum")[0].id
     endpoint = reverse("api_plant_detail", args=[existing_plant_id])
-    request = client.get(f"{endpoint}")
+    request = client.get(endpoint)
     assert request.status_code == 200
 
 
@@ -53,3 +53,8 @@ def test_valid_location_data_with_token_returns_201(authuser_clientheaders, plan
         },
         format='multipart')
     assert request.status_code == 201
+
+def test_can_get_plant_images_without_auth(client, db):
+    endpoint = reverse("api_plant_images")
+    request = client.get(endpoint)
+    assert request.status_code == 200

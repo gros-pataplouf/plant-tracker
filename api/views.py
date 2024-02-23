@@ -63,7 +63,7 @@ class LocationList(generics.ListCreateAPIView):
                             if location_img_serializer.is_valid():
                                 location_img_serializer.save()
                             else:
-                                return Response("Data submitted are invalid or incomplete.", status=status.HTTP_400_BAD_REQUEST)
+                                return Response("There seems to be a problem with your image file.", status=status.HTTP_400_BAD_REQUEST)
                 return Response(location_id, status=status.HTTP_201_CREATED)
             else: 
                 print(location_serializer.errors)
@@ -73,13 +73,11 @@ class LocationList(generics.ListCreateAPIView):
 class LocationDetail(generics.RetrieveAPIView):
     queryset = Location.objects.all()
     serializer_class = LocationSerializer
-    authentication_classes = []
 
 
 class PlantImages(generics.ListAPIView):
     queryset = PlantImage.objects.all()
     serializer_class = PlantImageSerializer
-    authentication_classes = []
 
 
 class LocationImages(generics.ListCreateAPIView):
