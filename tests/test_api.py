@@ -58,3 +58,8 @@ def test_can_get_plant_images_without_auth(client, db):
     endpoint = reverse("api_plant_images")
     request = client.get(endpoint)
     assert request.status_code == 200
+
+def test_can_get_location_images_without_auth(client, db):
+    endpoint = reverse("api_location_images")
+    request = client.get(endpoint)
+    assert request.status_code == 200
