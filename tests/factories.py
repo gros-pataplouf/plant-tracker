@@ -12,7 +12,16 @@ fake_password = '1234Test!'
 class UserFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = User
-    username = fake.name().replace(" ", "")
+    username = fake.unique.name().replace(" ", "")
+    email = f"{username}@test.com"
+    password = factory.PostGenerationMethodCall('set_password', fake_password)
+    is_staff = False
+    is_active = True
+
+class UserFactory2(factory.django.DjangoModelFactory):
+    class Meta:
+        model = User
+    username = fake.unique.name().replace(" ", "")
     email = f"{username}@test.com"
     password = factory.PostGenerationMethodCall('set_password', fake_password)
     is_staff = False

@@ -9,6 +9,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from .models import Plant, Location, PlantImage, LocationImage
 from .serializers import PlantSerializer, LocationSerializer, LocationImageSerializer, PlantImageSerializer
+from .permissions import IsAuthorOrReadOnly
 from .helpers import get_osm_display_name
 
 User = get_user_model()
@@ -64,6 +65,7 @@ class LocationList(generics.ListCreateAPIView):
 class LocationDetail(generics.RetrieveDestroyAPIView):
     queryset = Location.objects.all()
     serializer_class = LocationSerializer
+    permission_classes = [IsAuthorOrReadOnly]
 
 class PlantImages(generics.ListAPIView):
     queryset = PlantImage.objects.all()

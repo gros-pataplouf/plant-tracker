@@ -90,3 +90,23 @@ def test_author_can_delete_location(authuser_clientheaders, plants_db, db):
     endpoint_detail = reverse("api_location_detail", args=[location_id])
     deletion_request = client.delete(endpoint_detail)
     assert deletion_request.status_code == 204
+
+def test_cannot_delete_location_if_not_author(authuser_clientheaders, authuser_clientheaders2, plants_db, db):
+    endpoint_list = reverse("api_location_list")
+    [user, client] = authuser_clientheaders
+    [user2, client2] = authuser_clientheaders2
+    existing_plant = Plant.objects.filter(scientific_name="Plantum plantum")
+    request = client.post(endpoint_list, {
+            "plant": existing_plant[0].id,
+            "area": 1,
+            "location": 
+            json.dumps({ #must be converted to string bc multipart requests cannot be nested
+                "type": "Point",
+                "coordinates": [50.123, -10.123]})
+                },
+            format='multipart'
+            )
+    location_id = request.data
+    endpoint_detail = reverse("api_location_detail", args=[location_id])
+    deletion_request = client2.delete(endpoint_detail)
+    assert deletion_request.status_code == 403
