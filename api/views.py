@@ -13,7 +13,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from .models import Plant, Location, PlantImage, LocationImage
 from .serializers import PlantSerializer, LocationSerializer, LocationImageSerializer, PlantImageSerializer
-from core.throttles import AnonBurstRateThrottle, AnonSustainedRateThrottle
+from .helpers import get_osm_display_name
 
 User = get_user_model()
 
@@ -50,22 +50,7 @@ class LocationList(generics.ListCreateAPIView):
             request.data['author'] = token.payload['user_id']
             # get coordinates out of query dict
             #conditions for valid coordinations: key "location", length 2, both are floats
-            # perform prevalidation with dummy display address
-            request.data['display_name'] = 'unknown address'
-
-            location_serializer = LocationSerializer(data=request.data)
-            if not location_serializer.is_valid():
-                print(location_serializer.errors)
-                return Response("Data submitted are invalid or incomplete.", status=status.HTTP_400_BAD_REQUEST)
-
-            coordinates = json.loads(dict(request.data)['location'][0])['coordinates']
-            lon = str(coordinates[0])
-            lat = str(coordinates[1])
-            url = f"https://nominatim.openstreetmap.org/reverse?format=json&lat={lat}&lon={lon}"
-            geocoded = requests.get(url)
-            display_name = geocoded.json().get('display_name', 'unknown address')
-            request.data['display_name'] = display_name
-
+            request.data['display_name'] = get_osm_display_name(request.data)
             location_serializer = LocationSerializer(data=request.data)
             if location_serializer.is_valid():
                 location_serializer.save()
