@@ -22,6 +22,6 @@ COPY . /app/
 EXPOSE 8000
 
 ENTRYPOINT ["python"]
-RUN python manage.py collectstatic --noinput
+RUN python manage.py collectstatic --noinput --settings=core.settings.production
 
 CMD ["gunicorn", "core.wsgi"]
