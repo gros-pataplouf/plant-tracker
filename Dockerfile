@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y \
     python3-gdal
 
 ENV GDAL_LIBRARY_PATH /usr/lib/libgdal.so
-
+ENV SECRET_KEY dummy_value_for_railway_setup_will_be_overwritten_as_soon_as_wsgi_takes_over
 
 WORKDIR /app
 
@@ -22,6 +22,6 @@ COPY . /app/
 EXPOSE 8000
 
 ENTRYPOINT ["python"]
-RUN python manage.py collectstatic --noinput
+RUN python manage.py collectstatic --noinput --settings=core.settings.production
 
 CMD ["gunicorn", "core.wsgi"]

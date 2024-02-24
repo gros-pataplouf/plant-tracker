@@ -11,9 +11,7 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 ALLOWED_HOSTS = ["*"]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
 CORS_ALLOWED_ORIGINS = ["https://planttracker.vercel.app"]
-print("secure_key", SECRET_KEY, DEBUG)
 
 DATABASES = {
     'default': {
