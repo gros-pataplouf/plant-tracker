@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y \
     python3-gdal
 
 ENV GDAL_LIBRARY_PATH /usr/lib/libgdal.so
-
+ENV SECRET_KEY dummy_value_for_railway_setup_will_be_overwritten_as_soon_as_wsgi_takes_over
 
 WORKDIR /app
 
