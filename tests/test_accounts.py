@@ -1,7 +1,7 @@
 import jwt
 from django.urls import reverse
 from factories import fake_password
-from core.settings import SECRET_KEY
+from core.settings.base import SECRET_KEY
 from accounts.models import User
 
 def test_can_get_tokens(client, unauthenticated_user, db):

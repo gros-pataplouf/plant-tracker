@@ -3,7 +3,6 @@ from django.urls import reverse
 from pytest_factoryboy import register
 from tests.factories import UserFactory, PlantFactory, UserFactory2
 from tests.factories import fake_password
-from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.test import APIClient
 
 register(UserFactory)

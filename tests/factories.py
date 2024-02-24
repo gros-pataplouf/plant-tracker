@@ -1,9 +1,7 @@
 import factory
 from faker import Faker
-from faker.providers import DynamicProvider
 from accounts.models import User
 from api.models import Plant
-from django.contrib.auth.hashers import make_password
 
 fake = Faker()
 
