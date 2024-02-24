@@ -1,10 +1,11 @@
 import jwt
 from django.urls import reverse
 from factories import fake_password
-from core.settings.base import SECRET_KEY
+from core.settings.dev import SECRET_KEY
 from accounts.models import User
 
 def test_can_get_tokens(client, unauthenticated_user, db):
+    print(SECRET_KEY)
     endpoint = reverse('token_obtain_pair')
     request = client.post(endpoint, {'username': unauthenticated_user.username, 'password': fake_password}, format='json')
     assert request.status_code == 200
