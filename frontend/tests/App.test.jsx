@@ -1,4 +1,4 @@
-import { test, expect } from "vitest";
+import { test, expect, vi } from "vitest";
 import { render, waitFor } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
@@ -27,14 +27,40 @@ test('App mounts properly', () => {
       await user.click(loginLink);
       await waitFor(() => expect(window.location.pathname).to.contain('login'))
     })
-    test.skip('Clicking plants leads to /plants', () => {
 
+    test('Clicking plants leads to /plants', async () => {
+      const wrapper = render(
+        <BrowserRouter>
+        <App />
+        </BrowserRouter>
+      )
+      const plantLink = wrapper.getByTestId('plantLink');
+      await user.click(plantLink);
+      await waitFor(() => expect(window.location.pathname).to.contain('plants'))
     })
-    test.skip('Clicking explore leads to /explore', () => {
 
+    test('Clicking explore leads to /explore', async () => {
+      const wrapper = render(
+        <BrowserRouter>
+        <App />
+        </BrowserRouter>
+      )
+      const exploreLink = wrapper.getByTestId('exploreLink');
+      await user.click(exploreLink);
+      await waitFor(() => expect(window.location.pathname).to.contain('explore'))
     })
-    test.skip('Clicking participate leads to /participate', () => {
-
+    test('Clicking participate leads triggers a window alert for an unlogged user', async () => {
+      const alertMock = vi.spyOn(window,'alert').mockImplementation(); 
+      const wrapper = render(
+        <BrowserRouter>
+        <App />
+        </BrowserRouter>
+      )
+      const trackLink = wrapper.getByTestId('trackLink');
+      await user.click(trackLink);
+      await waitFor(() => expect(window.location.pathname).to.contain('track'))
+      await waitFor(() => expect(alertMock).toHaveBeenCalledTimes(1))
+      
     })
   })
 
