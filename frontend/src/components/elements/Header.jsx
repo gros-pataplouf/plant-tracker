@@ -21,7 +21,7 @@ export default function Header({ props }) {
       {!isLoggedIn ? (
         <div className="py-2 md:py-4 bg-emerald-950 h-[4vh] flex items-center">
           <button className="px-2 ml-6 font-bold rounded-lg md:text-3xl text-emerald-950 bg-yellow-50">
-            <Link to={"login/"}>Log in</Link>
+            <Link data-testid="loginLink" to={"login/"}>Log in</Link>
           </button>
           <span className="ml-3 text-yellow-50 md:text-3xl"> or</span>
           <button className="px-2 font-bold rounded-lg md:text-3xl text-yellow-50">
