@@ -1,0 +1,162 @@
+[
+    {
+        "id": 16,
+        "author": 1,
+        "plant": 1,
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                10.320911214711028,
+                54.20637229565677
+            ]
+        },
+        "display_name": "Mühlenberg, Wielen, Wahlstorf, Preetz-Land, Plön, Schleswig-Holstein, 24211, Deutschland",
+        "area": 10,
+        "description": "Bordering the hiking path in the forest",
+        "created_at": "2023-06-04T10:43:42.968759Z"
+    },
+    {
+        "id": 17,
+        "author": 1,
+        "plant": 1,
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                10.009099491323646,
+                54.08154153077746
+            ]
+        },
+        "display_name": "Am Dosenbek, Brachenfeld, Brachenfeld/Ruthenberg, Neumünster, Schleswig-Holstein, 24536, Deutschland",
+        "area": 100,
+        "description": "Wiesenrand, wird vom Besitzer nicht aktiv bekämpft",
+        "created_at": "2023-06-04T12:29:51.939221Z"
+    },
+    {
+        "id": 18,
+        "author": 29,
+        "plant": 1,
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                10.009889858521372,
+                54.081532501296174
+            ]
+        },
+        "display_name": "Am Dosenbek, Brachenfeld, Brachenfeld/Ruthenberg, Neumünster, Schleswig-Holstein, 24536, Deutschland",
+        "area": 100,
+        "description": "Rand der Schrebergärten",
+        "created_at": "2023-06-04T19:29:19.337186Z"
+    },
+    {
+        "id": 19,
+        "author": 29,
+        "plant": 1,
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                10.01158654689789,
+                54.08508531401062
+            ]
+        },
+        "display_name": "Am Dosenbek, Brachenfeld, Brachenfeld/Ruthenberg, Neumünster, Schleswig-Holstein, 24536, Deutschland",
+        "area": 2,
+        "description": "",
+        "created_at": "2023-06-04T19:39:53.412373Z"
+    },
+    {
+        "id": 20,
+        "author": 29,
+        "plant": 1,
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                5.820990234101156,
+                46.1227689748491
+            ]
+        },
+        "display_name": "Pertes de la Valserine, Sentier des Pertes de Valserine, Lancrans, Valserhône, Nantua, Lancrans, Ain, Auvergne-Rhône-Alpes, France métropolitaine, 01200, France",
+        "area": 20,
+        "description": "bord de rivière et jardin privé",
+        "created_at": "2023-06-05T15:58:16.352484Z"
+    },
+    {
+        "id": 21,
+        "author": 29,
+        "plant": 4,
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                13.4245,
+                52.5353
+            ]
+        },
+        "display_name": "Abenteuerspielplatz an der Marie, 45, Marienburger Straße, Winsviertel, Prenzlauer Berg, Pankow, Berlin, 10405, Deutschland",
+        "area": 56,
+        "description": "test",
+        "created_at": "2023-06-05T16:00:29.563858Z"
+    },
+    {
+        "id": 22,
+        "author": 29,
+        "plant": 2,
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                7.526559195478347,
+                51.1020439715856
+            ]
+        },
+        "display_name": "Zum Waldfrieden, Marienheide, Schmitzwipper, Oberwipper, Marienheide, Oberbergischer Kreis, Nordrhein-Westfalen, 51709, Deutschland",
+        "area": 89,
+        "description": "test",
+        "created_at": "2023-06-05T16:05:48.546883Z"
+    },
+    {
+        "id": 23,
+        "author": 29,
+        "plant": 2,
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                10.1213,
+                51.3359
+            ]
+        },
+        "display_name": "Vor dem Stein, Lutter, Uder, Landkreis Eichsfeld, Thüringen, 37308, Deutschland",
+        "area": 8,
+        "description": "test",
+        "created_at": "2023-06-05T16:21:56.561057Z"
+    },
+    {
+        "id": 24,
+        "author": 1,
+        "plant": 4,
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                13.404954,
+                52.5200066
+            ]
+        },
+        "display_name": "Karl-Liebknecht-Straße, Spandauer Vorstadt, Mitte, Berlin, 10178, Deutschland",
+        "area": 9,
+        "description": "test",
+        "created_at": "2023-06-13T18:47:51.426177Z"
+    },
+    {
+        "id": 25,
+        "author": 1,
+        "plant": 1,
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                13.404954,
+                52.5200066
+            ]
+        },
+        "display_name": "Karl-Liebknecht-Straße, Spandauer Vorstadt, Mitte, Berlin, 10178, Deutschland",
+        "area": 4,
+        "description": "",
+        "created_at": "2023-06-17T11:47:03.694498Z"
+    }
+]

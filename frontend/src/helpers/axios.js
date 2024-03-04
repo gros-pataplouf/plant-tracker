@@ -43,7 +43,7 @@ axiosInstance.interceptors.response.use(
         "got 401 instead of access token from accounts/token/refresh"
       );
       localStorage.removeItem("planttrackerRefresh");
-      localStorage.removeItem("plantAccess");
+      localStorage.removeItem("planttrackerAccess");
       window.location.href = "/login/";
 
       return Promise.reject(error);
@@ -55,7 +55,7 @@ axiosInstance.interceptors.response.use(
     ) {
       console.error("got 401 from accounts/me");
       localStorage.removeItem("planttrackerRefresh");
-      localStorage.removeItem("plantAccess");
+      localStorage.removeItem("planttrackerAccess");
       window.location.href = "/login/";
 
       return Promise.reject(error);

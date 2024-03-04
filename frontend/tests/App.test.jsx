@@ -3,7 +3,7 @@ import { render, waitFor } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 import App from "../src/App"
-
+import PlantList from "../src/components/scenes/PlantList/PlantList";
 const user = userEvent.setup();
 
 
@@ -65,7 +65,7 @@ test('App mounts properly', () => {
   })
 
   describe('An unauthenticated User', () => {
-    test.skip('Can see the plant catalogue', () => {
+    test('Can see the plant catalogue', async () => {
 
     })
     test.skip('Can see a map with locations', () => {
