@@ -17,7 +17,15 @@ export const restHandlers = [
   ,
   http.get(`http://localhost:8000/api/plants/images`, () => {
     return HttpResponse.json(plantImages)
-  })
+  }),
+  http.get(`http://localhost:8000/api/locations`, () => {
+    return HttpResponse.json(locations)
+  }),
+  http.get('http://localhost:8000/api/plants/:id', async ({ request, params, cookies}) => {
+    const { id } = params
+    console.log(request, params)
+    return HttpResponse.json(plants.filter(plant => plant.id === id))})
+
 ]
 
 export const server = setupServer(...restHandlers)

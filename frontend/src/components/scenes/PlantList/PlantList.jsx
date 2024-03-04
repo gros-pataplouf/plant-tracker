@@ -36,7 +36,7 @@ export default function PlantList() {
   ) : (
     <div className="wrapper-tile md:mt-6">
       <TileXL>
-        <h1 className="pt-6 ml-2 text-center text-emerald-950" data-testid="catalogTitle">
+        <h1 className="pt-6 ml-2 text-center text-emerald-950" data-testid="plantCatalogTitle">
           Catalogue of invasive plants
         </h1>
         <Carousel>
@@ -46,7 +46,7 @@ export default function PlantList() {
               id="emblaSlide"
               className="relative w-screen h-auto overflow-hidden max-h-[70vh] embla-slide"
             >
-              <h2 className="pt-6 ml-2 text-4xl font-bold text-center text-emerald-800">
+              <h2 className="pt-6 ml-2 text-4xl font-bold text-center text-emerald-800" data-testid="plantCommonName">
                 {plant.common_name_en}
               </h2>
 

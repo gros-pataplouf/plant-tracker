@@ -1,9 +1,13 @@
 import { test, expect, vi } from "vitest";
-import { render, waitFor } from "@testing-library/react";
+import { render, waitFor, screen } from "@testing-library/react";
+import {createMemoryHistory} from 'history'
 import { BrowserRouter } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 import App from "../src/App"
 import PlantList from "../src/components/scenes/PlantList/PlantList";
+import PlantDetail from "../src/components/scenes/PlantDetail/PlantDetail"
+import plants from './data/plants.json'
+
 const user = userEvent.setup();
 
 
@@ -73,9 +77,26 @@ test('App mounts properly', () => {
       )
       expect(wrapper).toBeTruthy()
       await waitFor(() => {
-        expect(wrapper.getAllByTestId('catalogTitle')).toBeTruthy()
+        expect(wrapper.getByTestId('plantCatalogTitle')).toBeTruthy()
+        expect(wrapper.getAllByTestId('plantCommonName')).toHaveLength(plants.length)
       })
+    })
 
+    test('Can see details about a specific plant', async () => {
+      const history = createMemoryHistory()
+      history.push('/plants/1')
+
+      const wrapper = render(
+        <BrowserRouter history={history}>
+        <PlantDetail/>
+        </BrowserRouter>
+      )
+
+      expect(wrapper).toBeTruthy()
+      await waitFor(() => {
+        expect(wrapper.getByText('Reynoutria japonica')).toBeInTheDocument()
+        screen.debug()
+      })
     })
     test.skip('Can see a map with locations', () => {
 
