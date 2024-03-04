@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axiosInstance from "../../../helpers/axios";
 import AnimationLoading from "../../elements/AnimationLoading";
 import Carousel from "../../elements/Carousel";
 import Tile from "../../elements/Tile";
 import TileXL from "../../elements/TileXL";
+import plantService from "../../../services/plants"
+import plantImageService from "../../../services/plantsImages"
+
 
 export default function PlantList() {
   const [plantList, setPlantList] = useState(false);
@@ -12,12 +14,12 @@ export default function PlantList() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const plantDataPromise = axiosInstance.get("api/plants/");
-    const plantImagesPromise = axiosInstance.get("api/plants/images/");
+    const plantDataPromise = plantService.getAll()
+    const plantImagesPromise = plantImageService.getAll()
     Promise.all([plantDataPromise, plantImagesPromise])
       .then((values) => {
-        setPlantList(values[0].data);
-        setPlantImages(values[1].data);
+        setPlantList(values[0]);
+        setPlantImages(values[1]);
         setLoading(false);
       })
       .catch((err) => console.error(err));

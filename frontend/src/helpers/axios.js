@@ -1,6 +1,5 @@
 import axios from "axios";
-
-const baseURL = import.meta.env.DEV ?  "http://localhost:8000/": "https://plant-tracker.up.railway.app/"
+import { baseURL } from "../constants";
 
 const axiosInstance = axios.create({
   baseURL: baseURL,
