@@ -66,6 +66,15 @@ test('App mounts properly', () => {
 
   describe('An unauthenticated User', () => {
     test('Can see the plant catalogue', async () => {
+      const wrapper = render(
+        <BrowserRouter>
+        <PlantList/>
+        </BrowserRouter>
+      )
+      expect(wrapper).toBeTruthy()
+      await waitFor(() => {
+        expect(wrapper.getAllByTestId('catalogTitle')).toBeTruthy()
+      })
 
     })
     test.skip('Can see a map with locations', () => {

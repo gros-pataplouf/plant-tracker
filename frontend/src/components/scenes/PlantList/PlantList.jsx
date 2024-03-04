@@ -36,7 +36,7 @@ export default function PlantList() {
   ) : (
     <div className="wrapper-tile md:mt-6">
       <TileXL>
-        <h1 className="pt-6 ml-2 text-center text-emerald-950">
+        <h1 className="pt-6 ml-2 text-center text-emerald-950" data-testid="catalogTitle">
           Catalogue of invasive plants
         </h1>
         <Carousel>

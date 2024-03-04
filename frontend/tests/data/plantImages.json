@@ -1,0 +1,110 @@
+[
+    {
+        "id": 7,
+        "image": "https://testdata.test/media/d5ed9ba7-fbb0-4bf2-ada1-183e5565ce34.png",
+        "type": "default",
+        "alt_en": "",
+        "alt_fr": "",
+        "alt_de": "",
+        "description_en": "",
+        "description_fr": "",
+        "description_de": "",
+        "plant": null
+    },
+    {
+        "id": 9,
+        "image": "https://testdata.test/media/f6e35114-3a08-4c45-b2bb-c4c950a8f6b3.jpg",
+        "type": "main",
+        "alt_en": "",
+        "alt_fr": "",
+        "alt_de": "",
+        "description_en": "",
+        "description_fr": "",
+        "description_de": "",
+        "plant": 2
+    },
+    {
+        "id": 11,
+        "image": "https://testdata.test/media/b150e8cb-c55f-4319-b912-4b781bc4c57b.jpg",
+        "type": "identification",
+        "alt_en": "",
+        "alt_fr": "",
+        "alt_de": "",
+        "description_en": "Rhizome",
+        "description_fr": "",
+        "description_de": "",
+        "plant": 1
+    },
+    {
+        "id": 13,
+        "image": "https://testdata.test/media/40bcce2f-2a71-4831-b93c-62b5667f70d2.jpg",
+        "type": "secondary",
+        "alt_en": "well established population, side of the road",
+        "alt_fr": "",
+        "alt_de": "",
+        "description_en": "well established population, side of the road",
+        "description_fr": "",
+        "description_de": "",
+        "plant": 1
+    },
+    {
+        "id": 12,
+        "image": "https://testdata.test/media/709fd8ea-5c8d-4f76-90fa-7283f05e6610.jpg",
+        "type": "identification",
+        "alt_en": "leaf",
+        "alt_fr": "",
+        "alt_de": "",
+        "description_en": "leaf",
+        "description_fr": "",
+        "description_de": "",
+        "plant": 1
+    },
+    {
+        "id": 14,
+        "image": "https://testdata.test/media/9ea733e7-1977-4512-a99d-e932f21ba574.jpg",
+        "type": "identification",
+        "alt_en": "canes",
+        "alt_fr": "",
+        "alt_de": "",
+        "description_en": "canes",
+        "description_fr": "",
+        "description_de": "",
+        "plant": 1
+    },
+    {
+        "id": 8,
+        "image": "https://testdata.test/media/c482c65d-ac63-4552-b4eb-212969b741c3.webp",
+        "type": "main",
+        "alt_en": "",
+        "alt_fr": "",
+        "alt_de": "",
+        "description_en": "",
+        "description_fr": "",
+        "description_de": "",
+        "plant": 1
+    },
+    {
+        "id": 10,
+        "image": "https://testdata.test/media/f89c0be9-0e78-4f02-8dc5-38d9c335154b.webp",
+        "type": "main",
+        "alt_en": "",
+        "alt_fr": "",
+        "alt_de": "",
+        "description_en": "",
+        "description_fr": "",
+        "description_de": "",
+        "plant": 3
+    },
+    {
+        "id": 15,
+        "image": "https://testdata.test/media/7497e12a-fd99-480b-833e-cb38a71365df.webp",
+        "type": "main",
+        "alt_en": "",
+        "alt_fr": "",
+        "alt_de": "",
+        "description_en": "",
+        "description_fr": "",
+        "description_de": "",
+        "plant": 4
+    }
+]
